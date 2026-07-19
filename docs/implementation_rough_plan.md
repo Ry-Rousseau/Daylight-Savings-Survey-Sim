@@ -1,0 +1,66 @@
+# Phase Plan
+
+## Principle
+
+This project is built as a walking skeleton, thickened one axis of
+complexity at a time. Every phase boundary is a runnable checkpoint that
+isolates exactly one new unknown, so that if something breaks, the phase
+that caused it is unambiguous. Full ambition (all five layers, full rule
+set, 100 agents, mature survey subsystem) is the target of the *whole* plan,
+not of any single phase.
+
+Each phase should end with:
+- A **spike question** resolved and written up as an ADR in `docs/adr/`
+- A **definition of done** that is objectively checkable, not vibes-based
+- A **working system** — nothing left half-wired
+
+## Two rule buckets
+
+Not every rule in `design_layers.md` needs code written for it in the phase
+where it's first listed. Split rules into:
+
+- **Build requirements** — need actual implementation this phase
+- **Standing constraints** — need to simply not be violated as later features
+  are added (cost nothing until convenience tempts you to break them)
+
+---
+
+## Phase table
+
+| Phase | Spike question(s) | Deliverable | Definition of done | Layers touched | Rules activated |
+|---|---|---|---|---|---|
+| **0 — Walking skeleton** | Does local model + constrained decoding reliably return schema-valid JSON? Does a minimal LangGraph fan-out/gather work for 3 agents? | 3 hardcoded agents, no memory, one hardcoded survey question, structured output only | 3 agents answer 1 question, 3 parseable responses returned | Architecture (minimal) | R1, R20 |
+| **1 — Memory** | Which local embedding model is fast enough at this scale? Does recency/importance/relevance retrieval actually change output? | In-memory or SQLite vector store; recency/importance/relevance scoring; seeded memories per agent | Two agents with different seeded memories give measurably different survey answers | Architecture, Persona (begins) | R2, R19 |
+| **2 — Game Master / interaction** | Minimal action schema + resolution logic for one interaction type? | Symbolic action-resolution layer; world-state store separate from agent memory | Two agents complete one resolved interaction; both memories and world state update consistently | Architecture, Dynamics (begins) | R2, R3 |
+| **3 — Scheduling & throughput** | What agent count / tick rate is sustainable on home hardware with batched local inference? | Warm/cold scheduler; vLLM (or Ollama) batching benchmarked | 20–30 agents run multiple ticks without failure, with logged latency/cost | Architecture | R5, R6 |
+| **4 — Topology** | How much does the divergence metric change under different graph structures at this N? | Pluggable interaction graph (fully-connected vs. clustered/small-world), swappable at runtime | Same persona set, different topology, measurably different homogeneity metric | Dynamics | R4, R10–R13 |
+| **5 — Persona depth + validation wiring** | What minimum persona content prevents identity collapse over N ticks? | Value/disposition-anchored personas; periodic drift probing; full R14–17 metrics logged per tick | Full validation dashboard running against a null-model baseline | Persona, Validation | R7–R9, R14–R17 |
+| **6 — Scale to full population** | Does the phase-3 infra plan hold at 100 agents, or does something non-linear break? | Push N to 100; re-run infra benchmarks | Full 100-agent run completes with clean logs | Architecture (re-validated) | R5, R6, R17 |
+| **7 — Survey subsystem maturity** | Do repeated surveys over simulated time produce coherent, traceable answer evolution rather than noise? | Multi-timepoint survey capability; response-to-memory writeback; optional calibration check | Same survey run twice at different simulated timepoints, differences attributable to logged events | Persona, Validation | R18, R19, R21 |
+
+---
+
+## Notes on sequencing
+
+- Phases 0–2 are pure architecture: cheap to debug, no live-population cost.
+- Phase 3 is infrastructure/throughput: validate before scaling agent count,
+  not after.
+- Phases 4–5 are where the actual research questions live (dynamics and
+  persona) — deliberately sequenced *after* infra is proven solid, so a bad
+  result there is a finding, not a bug.
+- Phases 6–7 are scale-out and the actual deliverable (survey the
+  population). Nothing new architecturally should be discovered here if
+  0–5 were done properly — this is where that assumption gets tested.
+
+## Status
+
+Update this section as phases complete.
+
+- [ ] Phase 0
+- [ ] Phase 1
+- [ ] Phase 2
+- [ ] Phase 3
+- [ ] Phase 4
+- [ ] Phase 5
+- [ ] Phase 6
+- [ ] Phase 7

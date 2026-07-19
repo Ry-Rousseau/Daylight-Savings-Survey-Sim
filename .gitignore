@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtualenv (also self-ignored by .venv/.gitignore)
+.venv/
+
+# Env / secrets
+.env
+.env.*
+
+# Notebooks
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Regenerable build data (see conventions.md); dir kept via .gitkeep.
+# output/figures/ stays tracked — figures have stable names and render on GitHub.
+data/*
+!data/.gitkeep
+
+# Per-run artifacts (versioned by config, not git)
+runs/
+*.duckdb
+*.sqlite
+
+# reference/ holds local reading material (papers + vendored repos), not tracked here.
+# Vendored repos carry their own .git and would become broken embedded gitlinks.
+reference/*
+!reference/.gitkeep
