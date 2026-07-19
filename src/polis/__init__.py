@@ -4,4 +4,23 @@ Source-first engine (the deliverable). Notebooks import down from here;
 they never redefine its logic. See docs/design/polis-object.md.
 """
 
+from .agent import Agent
+from .graph import build_survey_graph, run_survey
+from .llm import LLMClient, LLMConfig, LLMError
+from .persona import SEED_PERSONAS, Persona
+from .survey import SurveyAnswer, SurveyQuestion
+
 __version__ = "0.0.0"
+
+__all__ = [
+    "Agent",
+    "LLMClient",
+    "LLMConfig",
+    "LLMError",
+    "Persona",
+    "SEED_PERSONAS",
+    "SurveyAnswer",
+    "SurveyQuestion",
+    "build_survey_graph",
+    "run_survey",
+]

@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "polis"
+version = "0.0.0"
+description = "A census-seeded LLM-persona silicon sample of NYC opinion on daylight saving time."
+requires-python = ">=3.11,<3.12"
+dependencies = [
+    "openai>=1.40",
+    "langgraph>=0.2",
+    "pydantic>=2.7",
+    "python-dotenv>=1.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+notebooks = ["ipykernel>=6.29", "apify-client>=1.8"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
