@@ -3,12 +3,12 @@
 A surveyable **silicon sample of New York City** — ~100 census-seeded LLM personas, polled with single-select survey questions on **daylight saving time**, to estimate what the real NYC population thinks. The engineering focus is treating opinion **convergence** (loss of realistic diversity) as a layered, cross-cutting risk — decided at each layer boundary, not patched at the end.
 
 - **The object:** `src/polis/` — a source-first opinion-simulation engine. See `docs/design/polis-object.md`.
-- **How we work:** `docs/conventions.md` (house style) · `docs/design_layers.md` (the R-number architecture rules) · `CLAUDE.md` (routing).
+- **How we work:** `docs/conventions.md` (house style) · `docs/ARCHITECTURE.md` (the R-number architecture rules) · `CLAUDE.md` (routing).
 - **Where we are:** `docs/status.md`.
 
 ## Phase map
 
-Built as a **walking skeleton, thickened one axis of complexity at a time** — every phase boundary is a runnable checkpoint isolating exactly one new unknown. Full source of truth (spike questions, layers touched, rules activated): `docs/implementation_rough_plan.md`.
+Built as a **walking skeleton, thickened one axis of complexity at a time** — every phase boundary is a runnable checkpoint isolating exactly one new unknown. Full source of truth (spike questions, layers touched, rules activated): `docs/PHASE_PLAN.md`.
 
 | Phase | Deliverable | Definition of done |
 |---|---|---|
@@ -25,4 +25,4 @@ Phases are re-planned deliberately via ADRs in `docs/adr/`, never by drift.
 
 ## Quickstart (dev)
 
-Python 3.12 via the `py` launcher (the bare `python` alias is the Windows Store stub). LLM backend is a local vLLM server (`Qwen/Qwen3-8B-AWQ`) — see `CLAUDE.md` for the launch command. Environment and dependencies are set up at the start of Phase 0.
+Python **3.11** via the project virtualenv (`.venv`, pinned in `.python-version`) — run with `.venv/Scripts/python.exe` or activate it. Install deps with `uv pip install -e ".[dev,notebooks]"`. LLM backend is a **remote** vLLM server (`Qwen/Qwen3-8B-AWQ`) — see `CLAUDE.md` and `docs/query_handbook.md`. For notebooks, register the venv as a Jupyter kernel once (`.venv/Scripts/python.exe -m ipykernel install --user --name polis --display-name "Python 3.11 (polis .venv)"`) and select it in the kernel picker.

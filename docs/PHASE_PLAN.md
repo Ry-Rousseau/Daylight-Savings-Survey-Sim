@@ -16,7 +16,7 @@ Each phase should end with:
 
 ## Two rule buckets
 
-Not every rule in `design_layers.md` needs code written for it in the phase
+Not every rule in `ARCHITECTURE.md` needs code written for it in the phase
 where it's first listed. Split rules into:
 
 - **Build requirements** — need actual implementation this phase
@@ -56,7 +56,7 @@ where it's first listed. Split rules into:
 
 Update this section as phases complete.
 
-- [ ] Phase 0
+- [x] Phase 0 — walking skeleton (2026-07-19); see checkpoints/phase-0.md
 - [ ] Phase 1
 - [ ] Phase 2
 - [ ] Phase 3

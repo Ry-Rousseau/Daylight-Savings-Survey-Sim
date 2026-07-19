@@ -1,6 +1,6 @@
 The full architecture is on a very fundamental-level prompt-in-a-loop directed at a specific LLM endpoint. But everything around it requires detailed system design and local engineering. The current literature does converge on several genuine engineering subsystems that sit underneath the prompting, and they're the difference between "chained prompts" and something that scales, stays coherent, and produces auditable behavior.
 
-# The non-LLM prompt features (liking with layers described in `design_layers.md`)
+# The non-LLM prompt features (liking with layers described in `ARCHITECTURE.md`)
 
 ## 1. Embeddings-based memory retrieval (not just "context")
 
@@ -28,4 +28,4 @@ There's active work formalizing this further as hybrid symbolic-neural agent loo
 
 Important: real humans don't always choose a side, a lot of human beings are ambivilent about a topic and need exposure / interaction for that to change. Weightiness and inertia in human opinion is real and should not be underestimated in design choices.
 
-We also don't want convergence - this is primary design principles behind the principle laid out in `design_layers.md`
+We also don't want convergence - this is primary design principles behind the principle laid out in `ARCHITECTURE.md`

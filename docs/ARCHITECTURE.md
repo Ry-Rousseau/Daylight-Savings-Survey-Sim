@@ -85,6 +85,8 @@ no one ever surveyed it.
 | R19 | Survey responses are written back into the responding agent's memory stream as an event, so repeated surveys over simulated time remain coherent rather than independently sampled |
 | R20 | Survey response schema is enforced via constrained decoding, identical in kind to any in-simulation action output |
 | R22 | Two distinct orchestration tools for two distinct task shapes: a custom open-ended tick loop for the simulation core, and a bounded fan-out/gather tool (LangGraph) for the query layer — one framework does not have to do both |
+| R23 | Action space is a closed, versioned enumeration with a structured payload — not open-ended free text — so it stays schema-constrainable (R20) and quantitatively loggable (R14–R17) |
+| R24 | Every action type has an explicit, deterministic resolution function in the Game Master before it ships — no action type is added speculatively without resolution logic |
 
 ### Layer 2 — Persona
 
@@ -102,6 +104,8 @@ no one ever surveyed it.
 | R11 | Build an explicit affordance for "committed minority" sub-populations if modeling faction persistence — minorities above a critical size can flip majority conventions |
 | R12 | Information exchange volume per tick is a tunable parameter — consensus pressure scales with how much cross-agent exposure occurs per unit time |
 | R13 | Topology must be freezable/swappable mid-run to support counterfactual comparisons (same personas, different graph) |
+| R25 | `abstain`/no-op is always a valid action — forcing substantive action every tick is itself a homogenizing pressure |
+| R26 | Topology-mutating actions (tie formation/dissolution) are logged as a distinct stream from content-exchange actions, since they change the graph rather than exchange information over it |
 
 ### Layer 4 — Validation & Metrics
 
@@ -111,6 +115,7 @@ no one ever surveyed it.
 | R15 | Metrics are logged continuously per tick, not just at endpoint — trajectory, not just final state, is needed to diagnose *when* convergence happened |
 | R16 | Maintain a null-model baseline (no persona, or non-interacting agents) to separate genuine emergent divergence from model/architecture artifacts |
 | R17 | Every run is versioned against its config (architecture params + persona set + topology) so any observed convergence/divergence is traceable to the layer that caused it |
+| R27 | Action-space adequacy is checked separately from homogeneity metrics — narrow action spaces can suppress observable divergence in a way the R16 null-model baseline won't catch, since the ceiling is set before the null-model comparison runs |
 
 ### Layer 5 — Interface / Query
 

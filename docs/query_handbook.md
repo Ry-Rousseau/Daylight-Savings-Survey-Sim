@@ -1,6 +1,25 @@
 # Query handbook — persona LLM endpoint
 
-How to call the persona model. It is served by **vLLM** (`Qwen/Qwen3-8B-AWQ`) on a **remote GPU host** (RunPod / Koyeb / similar), exposing an **OpenAI-compatible** API; we call it via the OpenAI SDK pointed at the host. Rationale: ADR 0001.
+How to call the persona model. **Phases 0–2 (now): OpenRouter** — a managed OpenAI-compatible endpoint. **Phases 5+: self-hosted vLLM** (`Qwen/Qwen3-8B-AWQ`) on a remote GPU host. Rationale: ADR 0001 + ADR 0002. Both are OpenAI-compatible, so `src/polis/llm.py` is unchanged across the switch.
+
+## Current backend — OpenRouter (Phases 0–2)
+
+- Base URL `https://openrouter.ai/api/v1` · model `qwen/qwen3-8b` · key `OPENROUTER_API_KEY` in `.env`.
+- **Disable Qwen3 reasoning for survey answers:** `extra_body={"reasoning": {"enabled": False}}` — with it on, a JSON schema can derail into unclosed output, and it burns tokens (ADR 0003).
+- **Structured single-select:** `response_format={"type":"json_schema","json_schema":{"name":...,"strict":True,"schema":{...enum...}}}`. On OpenRouter this is *soft*-enforced → validate `choice ∈ options` and retry (`LLMClient.choose`). The hard grammar (`guided_choice`/`guided_json`) comes with self-hosted vLLM below.
+
+```python
+from polis import LLMClient
+res = LLMClient().choose(system="You are a New Yorker.",
+                         user="DST view? Choose one: ...", options=[...])
+# -> {"choice", "reason", "model", "usage"}
+```
+
+---
+
+## Self-hosted vLLM (Phases 5+)
+
+The sections below describe the P5+ path — running `Qwen/Qwen3-8B-AWQ` under vLLM on a remote GPU host for the reportable runs.
 
 ## Endpoint
 - Base URL: `http://<host>:8000/v1` — `<host>` is whatever public URL/IP the provider gives you. **Ephemeral — set per session**, don't hardcode.

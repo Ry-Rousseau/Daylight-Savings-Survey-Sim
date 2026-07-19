@@ -24,10 +24,11 @@ run.metrics   # divergence trajectory: pairwise distance / dominant-share / clus
 Everything hangs off two headline operations: **seed a population** and **survey it** (optionally after running interaction dynamics).
 
 ## Layer map (where the R-rules bite)
-- **L1 Engine:** per-agent generation params; strict global (shared, read-only) vs per-agent private state; model pinned & logged; no cross-agent sharing of cached reasoning (R1–R6). Backend: local vLLM / `Qwen3-8B-AWQ`.
+- **L1 Engine:** per-agent generation params; strict global vs per-agent private state; model pinned & logged; no cross-agent shared reasoning; two-tool orchestration — custom tick loop for the sim core + LangGraph for query fan-out (R1–R6, R18–R20, R22). Backend: remote vLLM / `Qwen3-8B-AWQ`.
 - **L2 Persona:** value/disposition-anchored, strength measured not assumed, diversity necessary-not-sufficient (R7–R9).
 - **L3 Dynamics:** pluggable/freezable topology, tunable exchange volume, committed-minority affordance (R10–R13).
 - **L4 Validation:** divergence metric defined *before* runs, logged per tick, against a null baseline, versioned by config (R14–R17).
+- **L5 Interface/Query:** the survey/interview subsystem — a separately invokable op (R18) whose responses write back to the agent's memory stream (R19), enforced by constrained decoding (R20). Exists only when there's an external question to ask.
 
 ## Subsystems under the prompt (`requirements_features.md`)
 Embedding-based **memory retrieval** (recency / importance / relevance + reflection) · **constrained/structured output** → a fixed action vocabulary · a **non-LLM world-state / action-resolution** layer ("Game Master" pattern). Sequenced per the phase plan: structured output lands in the Phase 0 walking skeleton, memory in Phase 1, the Game Master in Phase 2, topology in Phase 4, persona depth + full validation in Phase 5.

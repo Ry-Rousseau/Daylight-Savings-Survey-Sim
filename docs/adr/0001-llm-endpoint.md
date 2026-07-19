@@ -1,6 +1,6 @@
 # ADR 0001: Remote vLLM (Qwen3-8B-AWQ) as the persona LLM backend
 
-Status: accepted
+Status: accepted (amended by ADR 0002 — phased: OpenRouter for P0–2, self-hosted vLLM for P5+)
 Phase: 0
 
 ## Spike question

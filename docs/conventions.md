@@ -45,6 +45,6 @@ Match the surrounding code (patterns, naming, error-handling). Extend a module o
 
 ## Docs & session loop
 
-- `design/` = what the object is · `decisions/YYYY-MM-DD-*.md` = why a choice was made, with a **"Declined" ledger** (don't re-litigate) · `status.md` = current phase, next unit, open threads.
+- `design/` = what the object is · `adr/NNNN-*.md` = numbered ADRs (why a choice was made, options weighed, rules touched — a rejected-options ledger; don't re-litigate), format in `adr/template.md` · `status.md` = current phase, next unit, open threads.
 - **Session start:** read `conventions.md`, `status.md`, the current brief. **Session end (state changed):** update `status.md`, write the handoff, record any decision.
 - `sandbox/` = free scratch, deletable; anything worth keeping graduates out.

@@ -1,24 +1,29 @@
 # Status
 
-**Phase:** pre-P0 — scoping & scaffold (wrapping up)
+**Phase:** Phase 0 — walking skeleton ✅ **complete**. Next: Phase 1 — Memory.
 **Updated:** 2026-07-19
 
 ## Now
-Scaffold laid down: project tree (per conventions), README phase map (mirrors `implementation_rough_plan.md`), `CLAUDE.md`, `docs/design/polis-object.md`, ADR 0001 (LLM endpoint), and the Phase 0 brief. Object agreed = `polis`. Phase plan is authoritative in `implementation_rough_plan.md` (8 phases, walking skeleton → survey maturity). Awaiting review + your commit.
+Phase 0 built and green on `main` (no branch, per your call). `src/polis/` = `survey`, `llm` (OpenRouter client), `persona`, `agent`, `graph` (LangGraph fan-out/gather), `__main__`. `python -m polis` surveys 3 personas on DST → 3 schema-valid answers. 5 tests pass (1 live). Endpoint phased (ADR 0002). Checkpoint: `docs/checkpoints/phase-0.md`. Large uncommitted set on `main` awaiting your commit.
 
-## Next unit
-Kick off **Phase 0 — walking skeleton** (see `docs/briefs/phase-0.md`). First task: reconcile the Python env, install deps (LangGraph + OpenAI-compatible client + pydantic + pytest), stand up the vLLM server, and get 3 hardcoded agents to return schema-valid JSON to one survey question.
+## Next unit — Phase 1 (Memory)
+DoD: two agents with different **seeded memories** give measurably different survey answers. Add a per-agent memory store + recency/importance/relevance retrieval the agent reads before `choose()`. See `PHASE_PLAN.md` Phase 1. Spikes: embedding model (candidate: local on the 4070Ti), vector store, scoring/decay.
 
 ## Open threads
-- **Push:** no `origin` remote set yet — need the GitHub URL (`gh` not installed). Commits are yours.
-- **Env:** `.venv` is Python 3.11 but the pin / `py` is 3.12 — reconcile before installing deps.
-- **Endpoint:** persona model is served by **remote** vLLM (RunPod/Koyeb), OpenAI-compatible — host is ephemeral, set per session via `POLIS_LLM_BASE_URL`. Call details + params: `docs/query_handbook.md`. Local 4070Ti reserved for lightweight local models (e.g. Phase 1 embeddings).
-- **Reference:** Concordia cloned into `reference/reference/` (carries its own `.git`) — gitignored so it doesn't create a broken embedded gitlink; kept locally for reading.
-- **Undefined rules:** the phase plan cites **R18–R21**, but `design_layers.md` defines only R1–R17. Need writing up (which rules are these?).
-- **Doc reconciliations:** (a) `conventions.md` describes date-named `decisions/`; plan + `handoff_template.md` use numbered **ADRs in `docs/adr/`** — going with `docs/adr/`; reconcile `conventions.md` wording. (b) ADR template cites `ARCHITECTURE.md`; the R-rules live in `docs/design_layers.md` — same doc, or rename? (c) `handoff_template.md` holds an ADR (decision) template, not a session-handoff template — want a separate handoff template too?
-- **Census dataset:** which source for NYC demographic seeds? (likely ACS PUMS) — to confirm (Phase 5 seeding, but decide early).
-- **Validation ground truth:** which published DST opinion figure do we calibrate against? — to confirm (Phase 5/7).
-- **viz_theme:** categoricals deferred until the persona schema is fixed (~Phase 5).
+- **Push:** `origin` now set (`github.com/Ry-Rousseau/NYC-Daylight-Savings-Sim`); branch is up to date with `origin/main`. No longer blocked.
+- **Endpoint:** phased (ADR 0002) — **OpenRouter** `qwen/qwen3-8b` now (P0–2), self-hosted vLLM at P5+. Details: `docs/query_handbook.md`. Local 4070Ti reserved for lightweight local models (e.g. P1 embeddings).
+- **Census dataset:** working choice = **ACS PUMS** for NYC demographic seeds (confirmed direction; finalize field mapping at Phase 5).
+- **Validation ground truth:** a published DST opinion figure to calibrate against — to source at Phase 5/7. (R21 calibration hold-out is intentionally out of current scope.)
+- **viz_theme:** categoricals deferred until the persona schema firms up (~Phase 5).
+
+## Resolved this session
+- **Env:** Python **3.11** via the project `.venv` — no reconciliation needed; run via `.venv/Scripts/python.exe`.
+- **`.venv` setup:** `.venv` was created by `uv venv` with no `pip` and no registered Jupyter kernel (the only kernel on the machine pointed at an unrelated Python 3.13 install). Fixed: installed `pip` + the Phase 0 baseline via `uv pip install`; registered a `polis` kernel (`ipykernel install --user --name polis`) whose kernel.json points at the `.venv` interpreter by absolute path. Notebooks must select the "Python 3.11 (polis .venv)" kernel, not the default "Python 3 (ipykernel)" one.
+- **`pyproject.toml` (brief task 1):** already existed on disk (with `src/polis` + `tests/test_smoke.py`, `pytest` green) but was **untracked** — not yet `git add`ed from an earlier session. Added a `notebooks` optional-dependency group (`ipykernel`, `apify-client`) so `uv pip install -e ".[dev,notebooks]"` reproduces the working env from a fresh clone instead of silently missing the packages `notebooks/engineering/twitter_apify_toolkit.ipynb` needs. README quickstart updated to match. `pyproject.toml`/`tests/test_smoke.py` still need `git add` + commit — left for the user (commits are the user's).
+- **`twitter_apify_toolkit.ipynb`:** cleared the stale `ModuleNotFoundError` traceback baked into its outputs (artifact of the missing-pip issue) and pinned its kernelspec metadata to `polis` so it opens with the right kernel automatically instead of prompting/defaulting to the stray 3.13 one.
+- **Rules:** R18–R20, R22–R27 defined in `ARCHITECTURE.md` (R23/R24 action space + Game Master resolution, R25 abstain, R26 topology-mutation logging, R27 action-space adequacy); R21 dropped from scope.
+- **Doc reconciliation:** architecture rules → `docs/ARCHITECTURE.md`; phase plan → `docs/PHASE_PLAN.md`; decisions → numbered ADRs in `docs/adr/` with `docs/adr/template.md`; session handoffs live here in `status.md`. `conventions.md` updated to match.
+- **Phase 0 built:** `src/polis/` (survey/llm/persona/agent/graph/__main__), 5 tests green (1 live), `python -m polis` works. Endpoint = OpenRouter (ADR 0002); Qwen3 reasoning off + soft json_schema validate/retry (ADR 0003).
 
 ## Handoff format
-On a state-changing session end: update this file — what changed, what's live vs half-done, decisions + why, blockers. Any decision gets an ADR in `docs/adr/` (format: `docs/handoff_template.md`).
+On a state-changing session end: update this file — what changed, what's live vs half-done, decisions + why, blockers. Any decision gets an ADR in `docs/adr/` (format: `docs/adr/template.md`).
