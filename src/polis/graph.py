@@ -16,6 +16,7 @@ try:  # Send's import path shifts across langgraph versions
 except ImportError:  # pragma: no cover
     from langgraph.constants import Send
 
+from .llm import retry_on_llm_error
 from .survey import SurveyQuestion
 
 
@@ -31,8 +32,15 @@ def _fan_out(state: _SurveyState):
 
 
 def _ask(state: _SurveyState):
+    # Retry the agent's answer, then *skip* it if the endpoint keeps returning a
+    # schema-invalid response — one flaky agent must not abort the whole survey (the
+    # soft json_schema enforcement means any model can occasionally miss). A skipped
+    # agent contributes no answer, exactly like an abstain; the survey returns those
+    # it collected.
     agent = state["agent"]
-    ans = agent.answer(state["question"])
+    ans = retry_on_llm_error(lambda: agent.answer(state["question"]))
+    if ans is None:
+        return {"answers": []}
     return {"answers": [{"agent_id": agent.persona.id, "choice": ans.choice, "reason": ans.reason}]}
 
 

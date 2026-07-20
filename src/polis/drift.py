@@ -23,18 +23,17 @@ network-free; only ``capture_baseline`` / ``probe_drift`` touch the live agents.
 """
 from __future__ import annotations
 
-import time
 from dataclasses import dataclass
 
 import numpy as np
 
-from .llm import LLMError
+from .llm import retry_on_llm_error
 from .survey import SurveyQuestion
 
-# The persona endpoint (Qwen3 on OpenRouter) occasionally returns a schema-invalid
-# blob under strict JSON; the sim's decides absorb that via the scheduler's retries,
-# but the probe calls the survey path directly, so it retries then skips a flaky
-# agent — a diagnostic tolerates a missed probe rather than aborting the whole run.
+# The persona endpoint occasionally returns a schema-invalid blob under strict JSON;
+# the sim's decides absorb that via the scheduler's retries, but the probe calls the
+# survey path directly, so it retries then skips a flaky agent — a diagnostic tolerates
+# a missed probe rather than aborting the whole run.
 _PROBE_ATTEMPTS = 3
 
 
@@ -81,14 +80,12 @@ def _probe_voice(
     Returns ``None`` if the endpoint fails to yield a schema-valid answer after
     ``attempts`` tries (with backoff), so one flaky probe skips that agent instead of
     aborting the whole measurement."""
-    for i in range(attempts):
-        try:
-            ans = agent.answer(probe, now=now, remember=False)
-            return np.asarray(agent.embedder.encode(ans.reason), dtype=np.float64)
-        except LLMError:
-            if i + 1 < attempts:
-                time.sleep(0.5 * (i + 1))
-    return None
+    ans = retry_on_llm_error(
+        lambda: agent.answer(probe, now=now, remember=False), attempts=attempts
+    )
+    if ans is None:
+        return None
+    return np.asarray(agent.embedder.encode(ans.reason), dtype=np.float64)
 
 
 def capture_baseline(

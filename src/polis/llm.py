@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import json
 import os
+import time
 from dataclasses import dataclass
 
 from dotenv import find_dotenv, load_dotenv
@@ -29,6 +30,22 @@ class LLMError(RuntimeError):
     """Raised when the endpoint fails to return a usable, in-vocabulary answer."""
 
 
+def retry_on_llm_error(fn, *, attempts: int = 3, backoff: float = 0.5):
+    """Call ``fn`` (a structured LLM call), retrying on :class:`LLMError` with linear
+    backoff. Returns ``fn()``'s result, or ``None`` if it never succeeds within
+    ``attempts`` — so one flaky agent can be *skipped* rather than aborting a whole
+    batch (the survey fan-out, the drift probe). Only ``LLMError`` is caught; real
+    bugs propagate. The endpoint's own soft json_schema enforcement means any model
+    can occasionally miss, so this resilience is model-agnostic, not Qwen-specific."""
+    for i in range(attempts):
+        try:
+            return fn()
+        except LLMError:
+            if i + 1 < attempts:
+                time.sleep(backoff * (i + 1))
+    return None
+
+
 @dataclass(frozen=True)
 class LLMConfig:
     model: str = DEFAULT_MODEL
@@ -36,7 +53,14 @@ class LLMConfig:
     temperature: float = 0.8  # per-agent generation param (R1)
     top_p: float = 1.0
     max_tokens: int = 512
-    reasoning: bool = False  # Qwen3 thinking off for survey answers
+    # Structured (json_schema) calls get their own budget: a verbose or reasoning model
+    # can truncate a JSON object mid-object under a tight cap, which then fails to parse.
+    # Separate from ``max_tokens`` so the free-form ``complete`` path is unaffected.
+    structured_max_tokens: int = 512
+    # Provider-specific "thinking"/reasoning toggle (OpenRouter forwards it to Qwen3).
+    # ``True``/``False`` sends the toggle; ``None`` omits the param entirely, so swapping
+    # to a model/backend that doesn't understand it needs no code change here.
+    reasoning: bool | None = False
 
 
 class LLMClient:
@@ -50,23 +74,35 @@ class LLMClient:
             raise LLMError("OPENROUTER_API_KEY is not set (add it to .env).")
         self._client = OpenAI(base_url=self.config.base_url, api_key=key)
 
+    def _extra_body(self) -> dict | None:
+        """Provider-specific extras. The reasoning toggle is sent only when configured
+        (``None`` => omitted), so a non-Qwen model isn't handed a param it doesn't
+        understand. ``None`` return means 'no extra body' to the OpenAI client."""
+        if self.config.reasoning is None:
+            return None
+        return {"reasoning": {"enabled": self.config.reasoning}}
+
     def complete(self, messages, *, temperature=None, max_tokens=None) -> str:
         resp = self._client.chat.completions.create(
             model=self.config.model,
             messages=messages,
             temperature=self.config.temperature if temperature is None else temperature,
             max_tokens=max_tokens or self.config.max_tokens,
-            extra_body={"reasoning": {"enabled": self.config.reasoning}},
+            extra_body=self._extra_body(),
         )
         return resp.choices[0].message.content
 
     def _structured_call(self, *, system, user, schema, schema_name, validate,
-                         temperature=None, max_tokens=300, retries=1):
+                         temperature=None, max_tokens=None, retries=1):
         """Shared json_schema call + parse + validate + retry (soft-enforced on
         OpenRouter; hard grammar arrives with vLLM at P5, ADR 0002). Returns
         ``(data, resp)`` for the first response that parses and passes
-        ``validate``; raises ``LLMError`` if none does within ``retries``."""
+        ``validate``; raises ``LLMError`` if none does within ``retries``.
+
+        ``max_tokens=None`` falls back to ``config.structured_max_tokens`` so a
+        verbose/reasoning model gets enough room not to truncate its JSON."""
         last = None
+        tokens = self.config.structured_max_tokens if max_tokens is None else max_tokens
         for _ in range(retries + 1):
             resp = self._client.chat.completions.create(
                 model=self.config.model,
@@ -79,8 +115,8 @@ class LLMClient:
                     "json_schema": {"name": schema_name, "strict": True, "schema": schema},
                 },
                 temperature=self.config.temperature if temperature is None else temperature,
-                max_tokens=max_tokens,
-                extra_body={"reasoning": {"enabled": self.config.reasoning}},
+                max_tokens=tokens,
+                extra_body=self._extra_body(),
             )
             last = resp.choices[0].message.content
             try:
@@ -91,7 +127,7 @@ class LLMClient:
                 return data, resp
         raise LLMError(f"No valid {schema_name} after {retries + 1} tries; last={last!r}")
 
-    def choose(self, *, system, user, options, temperature=None, max_tokens=300, retries=1) -> dict:
+    def choose(self, *, system, user, options, temperature=None, max_tokens=None, retries=1) -> dict:
         """Single-select with a short rationale, validated against ``options``.
 
         Returns ``{"choice", "reason", "model", "usage"}``. Raises ``LLMError``
@@ -120,7 +156,7 @@ class LLMClient:
         }
 
     def decide(self, *, system, user, schema, valid_types, temperature=None,
-               max_tokens=300, retries=1) -> dict:
+               max_tokens=None, retries=1) -> dict:
         """Structured action decode for the tick loop (R20/R23). Validates only
         that ``action_type`` is in the closed vocabulary; payload validity
         (a well-formed SPEAK) is the Game Master's call (R24), so a payload-light
