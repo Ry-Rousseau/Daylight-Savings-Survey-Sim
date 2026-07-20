@@ -25,4 +25,15 @@ Phases are re-planned deliberately via ADRs in `docs/adr/`, never by drift.
 
 ## Quickstart (dev)
 
-Python **3.11** via the project virtualenv (`.venv`, pinned in `.python-version`) — run with `.venv/Scripts/python.exe` or activate it. Install deps with `uv pip install -e ".[dev,notebooks]"`. LLM backend is a **remote** vLLM server (`Qwen/Qwen3-8B-AWQ`) — see `CLAUDE.md` and `docs/query_handbook.md`. For notebooks, register the venv as a Jupyter kernel once (`.venv/Scripts/python.exe -m ipykernel install --user --name polis --display-name "Python 3.11 (polis .venv)"`) and select it in the kernel picker.
+Python **3.11** via the project virtualenv (`.venv`, pinned in `.python-version`) — run with `.venv/Scripts/python.exe` or activate it.
+
+**GPU embeddings (Phase 1+):** the memory layer embeds locally on the GPU (`sentence-transformers`, `BAAI/bge-small-en-v1.5`). `torch` must come from the CUDA wheel index — a bare install yields the CPU build:
+
+```
+uv pip install --python .venv/Scripts/python.exe torch --index-url https://download.pytorch.org/whl/cu124
+uv pip install -e ".[dev,notebooks]"
+```
+
+Confirm with `.venv/Scripts/python.exe -c "import torch; print(torch.cuda.is_available())"` → `True`.
+
+LLM backend is a **remote** vLLM server (`Qwen/Qwen3-8B-AWQ`) — see `CLAUDE.md` and `docs/query_handbook.md`. For notebooks, register the venv as a Jupyter kernel once (`.venv/Scripts/python.exe -m ipykernel install --user --name polis --display-name "Python 3.11 (polis .venv)"`) and select it in the kernel picker.

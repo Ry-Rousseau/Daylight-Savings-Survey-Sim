@@ -87,6 +87,7 @@ no one ever surveyed it.
 | R22 | Two distinct orchestration tools for two distinct task shapes: a custom open-ended tick loop for the simulation core, and a bounded fan-out/gather tool (LangGraph) for the query layer — one framework does not have to do both |
 | R23 | Action space is a closed, versioned enumeration with a structured payload — not open-ended free text — so it stays schema-constrainable (R20) and quantitatively loggable (R14–R17) |
 | R24 | Every action type has an explicit, deterministic resolution function in the Game Master before it ships — no action type is added speculatively without resolution logic |
+| R28 | Within-tick state updates use an explicit, configurable update scheme (simultaneous vs sequential) recorded as a run parameter — never an implementation accident — because the interleaving of per-agent reads and writes changes within-tick contagion and therefore convergence |
 
 ### Layer 2 — Persona
 
@@ -116,6 +117,7 @@ no one ever surveyed it.
 | R16 | Maintain a null-model baseline (no persona, or non-interacting agents) to separate genuine emergent divergence from model/architecture artifacts |
 | R17 | Every run is versioned against its config (architecture params + persona set + topology) so any observed convergence/divergence is traceable to the layer that caused it |
 | R27 | Action-space adequacy is checked separately from homogeneity metrics — narrow action spaces can suppress observable divergence in a way the R16 null-model baseline won't catch, since the ceiling is set before the null-model comparison runs |
+| R29 | Every agent decision logs its causal inputs — the retrieved memory set and their recency/importance/relevance component scores — so an observed opinion is traceable to the memories that produced it, not merely to the model's self-reported rationale (which is post-hoc and unreliable) |
 
 ### Layer 5 — Interface / Query
 

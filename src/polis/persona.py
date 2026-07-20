@@ -3,6 +3,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from . import prompts
+
 
 @dataclass(frozen=True)
 class Persona:
@@ -11,10 +13,7 @@ class Persona:
     temperature: float = 0.8  # per-agent generation param (R1)
 
     def system_prompt(self) -> str:
-        return (
-            f"You are {self.description} You live in New York City. "
-            "Answer the survey as this person would, in their own voice and interests."
-        )
+        return prompts.persona_system(self.description)
 
 
 # Phase 0 walking-skeleton cast: three deliberately different New Yorkers.
