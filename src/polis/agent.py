@@ -50,7 +50,9 @@ class Agent:
         # in the run config so faction persistence is traceable to its cause.
         self.committed_stance = committed_stance
 
-    def answer(self, question: SurveyQuestion, *, now: float = 0.0) -> SurveyAnswer:
+    def answer(
+        self, question: SurveyQuestion, *, now: float = 0.0, remember: bool = True
+    ) -> SurveyAnswer:
         query_emb = self.embedder.encode(question.text)
         hits = self.memory.retrieve(query_emb, now, self.retrieval)
         user = prompts.survey_user(
@@ -63,7 +65,11 @@ class Agent:
             temperature=self.persona.temperature,
         )
         answer = SurveyAnswer(choice=result["choice"], reason=result["reason"])
-        self._remember_answer(question, answer, now)
+        # R19 writeback is on by default. The R8 drift probe re-asks the same identity
+        # question repeatedly *to measure* the persona; passing remember=False keeps
+        # that measurement from perturbing the memory stream it is measuring.
+        if remember:
+            self._remember_answer(question, answer, now)
         return answer
 
     def act(
