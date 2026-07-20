@@ -9,10 +9,19 @@ from dataclasses import dataclass
 
 import numpy as np
 
+import pytest
+
 from polis.agent import Agent
 from polis.memory import KIND_HEARD, MemoryStore
 from polis.persona import Persona
-from polis.runlog import EVENT_MEMORY_WRITE, EVENT_RETRIEVAL, EVENT_WORLD_UPDATE
+from polis.runlog import (
+    EVENT_ACTION,
+    EVENT_MEMORY_WRITE,
+    EVENT_RETRIEVAL,
+    EVENT_TICK_METRICS,
+    EVENT_WORLD_UPDATE,
+)
+from polis.scheduler import SchedulerConfig
 from polis.simulation import DynamicsConfig, Population, Simulation
 
 STANCE = "Adopt permanent daylight saving time"
@@ -24,25 +33,36 @@ class FakeEmbedder:
 
 
 @dataclass
-class _Cfg:
+class _CfgWithUrl:
     model: str = "fake-model"
+    base_url: str = "https://fake.endpoint/v1"
 
 
 class FakeClient:
-    """Returns a fixed action every decision; no network."""
+    """Returns a fixed action every decision; no network. ``usage`` lets a test
+    exercise the token-accounting path; ``fail_times`` makes the first N calls
+    raise so the scheduler's retry path is exercised deterministically."""
 
-    def __init__(self, action: dict):
+    def __init__(self, action: dict, *, usage: dict | None = None, fail_times: int = 0):
         self.action = action
-        self.config = _Cfg()
+        self.usage = usage
+        self.config = _CfgWithUrl()
+        self._fails_left = fail_times
 
     def decide(self, **kw) -> dict:
-        return dict(self.action)
+        if self._fails_left > 0:
+            self._fails_left -= 1
+            raise RuntimeError("429 rate limited")
+        out = dict(self.action)
+        out["model"] = self.config.model
+        out["usage"] = self.usage
+        return out
 
 
-def _agent(pid: str, action: dict) -> Agent:
+def _agent(pid: str, action: dict, **kw) -> Agent:
     return Agent(
         Persona(pid, f"a person called {pid}"),
-        FakeClient(action),
+        FakeClient(action, **kw),
         embedder=FakeEmbedder(),
         memory=MemoryStore(),
     )
@@ -113,3 +133,88 @@ def test_config_is_versioned():
     assert run.config["topology"] == "fully_connected"
     assert {p["id"] for p in run.config["personas"]} == {"a1", "a2"}
     assert len(run.config_hash) == 64  # sha-256 hex
+
+
+# --- Phase 3: scheduling & throughput ----------------------------------------
+
+
+def test_concurrent_decide_preserves_effect_and_log_consistency():
+    """The serial-writer invariant holds under the concurrent decide phase: with
+    10 agents fanned out at concurrency 4, every SPEAK still lands once and the log
+    has no orphan effects (all log writes stay on the main thread)."""
+    agents = [_agent(f"a{i}", _speak_action()) for i in range(10)]
+    pop = Population(agents)
+    run = Simulation(pop, scheduler_config=SchedulerConfig(max_concurrency=4)).run(2)
+    # Fully-connected, 10 agents, both ticks: each agent hears the other 9 each tick.
+    total_memories = sum(len(a.memory) for a in pop.agents)
+    assert total_memories == 10 * 9 * 2
+    assert len(run.events(event_type=EVENT_MEMORY_WRITE)) == total_memories
+    assert len(run.events(event_type=EVENT_WORLD_UPDATE)) == sum(pop.world.stance_tally.values())
+
+
+def test_action_events_carry_latency_and_tokens():
+    pop = Population([_agent("a1", _speak_action(), usage={
+        "prompt_tokens": 100, "completion_tokens": 20, "total_tokens": 120})])
+    run = Simulation(pop).run(1)
+    action_events = run.events(event_type=EVENT_ACTION)
+    assert len(action_events) == 1
+    p = action_events[0]["payload"]
+    assert p["total_tokens"] == 120 and p["prompt_tokens"] == 100
+    assert p["model"] == "fake-model"  # R6: model pinned per call
+    assert p["latency_s"] >= 0 and p["attempts"] == 1
+
+
+def test_tick_metrics_logged_per_tick():
+    pop = _two_speakers()
+    run = Simulation(pop).run(3)
+    tms = run.events(event_type=EVENT_TICK_METRICS)
+    assert [e["payload"]["tick"] for e in tms] == [0, 1, 2]  # one per tick (R15 trajectory)
+    assert all(e["payload"]["n_calls"] == 2 for e in tms)
+
+
+def test_run_throughput_aggregate():
+    pop = Population([_agent(f"a{i}", _speak_action(), usage={
+        "prompt_tokens": 10, "completion_tokens": 5, "total_tokens": 15}) for i in range(3)])
+    run = Simulation(pop, scheduler_config=SchedulerConfig(
+        max_concurrency=3, price_per_mtok=(1.0, 2.0))).run(2)
+    t = run.throughput
+    assert t["n_agents"] == 3 and t["n_calls"] == 6
+    assert t["total_tokens"] == 6 * 15
+    assert t["prompt_tokens"] == 60 and t["completion_tokens"] == 30
+    # cost = (60 * $1 + 30 * $2) / 1e6
+    assert t["est_cost_usd"] == pytest.approx((60 * 1.0 + 30 * 2.0) / 1_000_000)
+    assert t["decides_per_s"] > 0 and t["max_concurrency"] == 3
+
+
+def test_provider_and_scheduler_pinned_in_config():
+    """R6/R17: provider (base_url + model) and the throughput knobs are versioned."""
+    pop = _two_speakers()
+    run = Simulation(pop, scheduler_config=SchedulerConfig(max_concurrency=5)).run(1)
+    assert run.config["provider"]["base_url"] == "https://fake.endpoint/v1"
+    assert run.config["provider"]["model"] == "fake-model"
+    assert run.config["scheduler"]["max_concurrency"] == 5
+    assert run.config["scheduler"]["executor"] == "concurrent"
+
+
+def test_transient_failure_is_retried_then_succeeds():
+    # First call raises, scheduler retries; the run completes and records the retry.
+    pop = Population([_agent("a1", _speak_action(), fail_times=1,
+                            usage={"prompt_tokens": 1, "completion_tokens": 1, "total_tokens": 2})])
+    run = Simulation(pop, scheduler_config=SchedulerConfig(backoff_base=0.0)).run(1)
+    assert run.throughput["retries"] == 1 and run.throughput["failures"] == 0
+    assert run.events(event_type=EVENT_ACTION)[0]["payload"]["attempts"] == 2
+
+
+def test_unrecoverable_failure_aborts_the_run():
+    # Fails more times than retries allow → the run raises rather than silently
+    # abstaining (which would distort dynamics).
+    pop = Population([_agent("a1", _speak_action(), fail_times=99)])
+    with pytest.raises(RuntimeError, match="decide failed"):
+        Simulation(pop, scheduler_config=SchedulerConfig(max_retries=1, backoff_base=0.0)).run(1)
+
+
+def test_sequential_scheme_also_logs_throughput():
+    pop = _two_speakers()
+    run = Simulation(pop, dynamics=DynamicsConfig(update_scheme="sequential")).run(1)
+    assert run.throughput["n_calls"] == 2
+    assert len(run.events(event_type=EVENT_TICK_METRICS)) == 1

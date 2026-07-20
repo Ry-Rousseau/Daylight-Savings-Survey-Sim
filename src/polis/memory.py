@@ -22,6 +22,7 @@ import numpy as np
 KIND_SEED = "seed"
 KIND_SURVEY = "survey"
 KIND_HEARD = "heard"  # something another agent said, delivered by the Game Master (P2)
+KIND_FEED = "feed"  # an external shared signal (e.g. an X post) delivered by the environment (R3)
 
 
 @dataclass

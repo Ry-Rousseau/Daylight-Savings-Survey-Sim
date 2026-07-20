@@ -7,6 +7,13 @@ they never redefine its logic. See docs/design/polis-object.md.
 from .actions import Action, ActionDecision, ActionType, RetrievalProvenance
 from .agent import Agent
 from .embeddings import EmbeddingModel
+from .feed import (
+    FeedEvent,
+    FeedProvider,
+    NullFeedProvider,
+    RagFeedProvider,
+    ScriptedFeedProvider,
+)
 from .game_master import GameMaster
 from .graph import build_survey_graph, run_survey
 from .llm import LLMClient, LLMConfig, LLMError
@@ -14,6 +21,7 @@ from .memory import MemoryRecord, MemoryStore, RetrievalConfig
 from .persona import SEED_PERSONAS, Persona
 from .questions import DST_QUESTION
 from .runlog import RunLog
+from .scheduler import Scheduler, SchedulerConfig
 from .simulation import DynamicsConfig, Population, Run, Simulation, fully_connected
 from .survey import SurveyAnswer, SurveyQuestion
 from .world import WorldState, WorldView
@@ -28,7 +36,12 @@ __all__ = [
     "DST_QUESTION",
     "DynamicsConfig",
     "EmbeddingModel",
+    "FeedEvent",
+    "FeedProvider",
     "GameMaster",
+    "NullFeedProvider",
+    "RagFeedProvider",
+    "ScriptedFeedProvider",
     "LLMClient",
     "LLMConfig",
     "LLMError",
@@ -41,6 +54,8 @@ __all__ = [
     "Run",
     "RunLog",
     "SEED_PERSONAS",
+    "Scheduler",
+    "SchedulerConfig",
     "Simulation",
     "SurveyAnswer",
     "SurveyQuestion",

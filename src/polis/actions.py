@@ -154,7 +154,13 @@ class RetrievalProvenance:
 
 @dataclass(frozen=True)
 class ActionDecision:
-    """What ``Agent.act`` returns: the chosen action plus its retrieval provenance."""
+    """What ``Agent.act`` returns: the chosen action plus its retrieval provenance.
+
+    ``usage``/``model`` carry the decode's token counts and the pinned model id
+    (R6) up to the scheduler for throughput/cost logging (P3). Both default to
+    ``None`` so fakes and non-LLM constructions stay valid."""
 
     action: Action
     provenance: RetrievalProvenance
+    usage: dict[str, Any] | None = None
+    model: str | None = None

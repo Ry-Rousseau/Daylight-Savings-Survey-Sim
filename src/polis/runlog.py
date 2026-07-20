@@ -24,10 +24,12 @@ from typing import Any
 # type without guessing; topology-mutating actions (R26) get their own type when
 # they arrive at P4 rather than being folded into ``action``.
 EVENT_TICK = "tick_marker"
+EVENT_TICK_METRICS = "tick_metrics"  # per-tick throughput summary (P3; R15-style trajectory)
 EVENT_ACTION = "action"
 EVENT_MEMORY_WRITE = "memory_write"
 EVENT_WORLD_UPDATE = "world_update"
 EVENT_RETRIEVAL = "retrieval"  # R29 decision provenance
+EVENT_FEED = "feed_delivery"  # a deliberately shared external signal, logged so its effect is traceable (R3)
 
 _SCHEMA = """
 CREATE TABLE IF NOT EXISTS runs (
