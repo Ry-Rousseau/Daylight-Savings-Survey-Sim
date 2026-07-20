@@ -21,8 +21,8 @@ from datetime import datetime, timezone
 from typing import Any
 
 # Event-stream vocabulary. Kept as a closed set so offline queries can filter by
-# type without guessing; topology-mutating actions (R26) get their own type when
-# they arrive at P4 rather than being folded into ``action``.
+# type without guessing; topology-mutating actions (R26) get their own type,
+# distinct from content-exchange ``action`` events.
 EVENT_TICK = "tick_marker"
 EVENT_TICK_METRICS = "tick_metrics"  # per-tick throughput summary (P3; R15-style trajectory)
 EVENT_ACTION = "action"
@@ -30,6 +30,11 @@ EVENT_MEMORY_WRITE = "memory_write"
 EVENT_WORLD_UPDATE = "world_update"
 EVENT_RETRIEVAL = "retrieval"  # R29 decision provenance
 EVENT_FEED = "feed_delivery"  # a deliberately shared external signal, logged so its effect is traceable (R3)
+# R26 seam: tie formation/dissolution changes the graph rather than exchanging
+# information over it, so it gets its own stream. Reserved at P4 (topology is static
+# and swapped only *between* runs for the R13 counterfactual); tie-mutating actions
+# that emit this are a later dynamics feature, not built this phase.
+EVENT_TIE_CHANGE = "tie_change"
 
 _SCHEMA = """
 CREATE TABLE IF NOT EXISTS runs (
