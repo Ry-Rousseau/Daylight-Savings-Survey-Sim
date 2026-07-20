@@ -1,6 +1,6 @@
 # ADR 0002: Phased LLM provider — OpenRouter now, self-hosted vLLM at validation
 
-Status: accepted
+Status: accepted (model pin amended by ADR 0005 — baseline is now `qwen/qwen3-32b`; the provider phasing below is unchanged)
 Phase: 0
 
 ## Spike question

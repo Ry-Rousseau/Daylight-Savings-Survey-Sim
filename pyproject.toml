@@ -12,11 +12,17 @@ dependencies = [
     "langgraph>=0.2",
     "pydantic>=2.7",
     "python-dotenv>=1.0",
+    "numpy>=1.26",
+    "sentence-transformers>=3.0",
+    # torch must come from the CUDA index on this machine (RTX 4070 Ti SUPER);
+    # a bare `pip install torch` yields the CPU build. See README quickstart:
+    #   uv pip install torch --index-url https://download.pytorch.org/whl/cu124
+    "torch>=2.4",
 ]
 
 [project.optional-dependencies]
 dev = ["pytest>=8"]
-notebooks = ["ipykernel>=6.29", "apify-client>=1.8"]
+notebooks = ["ipykernel>=6.29", "apify-client>=1.8", "nbconvert>=7.16", "pandas>=2.2", "plotnine>=0.13"]
 
 [tool.setuptools.packages.find]
 where = ["src"]

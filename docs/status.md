@@ -1,15 +1,19 @@
 # Status
 
-**Phase:** Phase 0 — walking skeleton ✅ **complete**. Next: Phase 1 — Memory.
-**Updated:** 2026-07-19
+**Phase:** Phase 1 — Memory ✅ **complete** (DoD met) + model-capability addendum done (ADR 0005). Next: Phase 2 — Game Master / interaction.
+**Updated:** 2026-07-20
 
 ## Now
-Phase 0 built and green on `main` (no branch, per your call). `src/polis/` = `survey`, `llm` (OpenRouter client), `persona`, `agent`, `graph` (LangGraph fan-out/gather), `__main__`. `python -m polis` surveys 3 personas on DST → 3 schema-valid answers. 5 tests pass (1 live). Endpoint phased (ADR 0002). Checkpoint: `docs/checkpoints/phase-0.md`. Large uncommitted set on `main` awaiting your commit.
+Phase 1 built and green on branch **`phase-1-memory`** (uncommitted, awaiting your review). Per-agent memory: `embeddings` (BGE-small on CUDA), `memory` (numpy `MemoryStore`, Park recency/importance/relevance, `RetrievalConfig`), `prompts` (all stage prompts centralized), `importance` (pluggable, authored + LLM poignancy), `memory_seeds`, `questions` (canonical annotated `DST_QUESTION`). `Agent` now retrieves → injects → **unchanged** `choose()` → **R19** writeback. 13 tests pass (8 new deterministic). **DoD: same persona, opposite seeded memories → P(permanent-DST) delta +1.000, empty control on neither pole** (`notebooks/experiments/phase1_memory_dod.ipynb`, K=20). Checkpoint: `docs/checkpoints/phase-1.md`. ADRs: `0004` (memory stack). torch cu124 confirmed `cuda True` on the RTX 4070 Ti SUPER.
 
-## Next unit — Phase 1 (Memory)
-DoD: two agents with different **seeded memories** give measurably different survey answers. Add a per-agent memory store + recency/importance/relevance retrieval the agent reads before `choose()`. See `PHASE_PLAN.md` Phase 1. Spikes: embedding model (candidate: local on the 4070Ti), vector store, scoring/decay.
+## Model-capability addendum — done (ADR 0005)
+Swept the two-agent DoD across same-family **Qwen3 8b → 14b → 32b** (no Qwen3-72B exists), K=15, annotated + plain wording. Memory delta = 1.0 at all sizes (annotated); the option annotation is an **8B-only crutch** (plain-wording delta: 8b 0.0, 14b/32b 1.0); larger model *less* collapsed at baseline (weak single-persona proxy — real convergence test is P4/P5). **Baseline revised to `qwen/qwen3-32b`** (`llm.py:DEFAULT_MODEL`; amends ADR 0002; P5 self-host → Qwen3-32B-AWQ). Evidence: `notebooks/experiments/phase1_model_sweep.ipynb` + `data/phase1_model_sweep.csv`. Drop-back to 14B if P6 cost/latency bites.
+
+## Next unit — Phase 2 (Game Master / interaction)
+Symbolic action-resolution + world-state store separate from agent memory (R2/R3), the `Simulation`/`Population` container + custom tick loop, durable run-log substrate (R15/R17 foundation) with decision provenance (R29), and the simultaneous-vs-sequential within-tick update scheme (R28). Design authored ahead in `docs/design/run-architecture.md`; firm storage-tech + tick model into ADRs at P2. See `PHASE_PLAN.md` Phase 2.
 
 ## Open threads
+- **Run-level architecture (scope before P2):** persistence/logging substrate (R15/R17 assume it; nothing durable today), the `Simulation`/`Population` container + custom tick loop, and **retrieval provenance** for interpretability (we log the self-reported `reason` but not the scored memory set that drove an answer). Designed in `docs/design/run-architecture.md`; firm into ADRs at P2. Standing call: retrieval store stays in-RAM numpy (persistence is additive, no global vector index — R2).
 - **Push:** `origin` now set (`github.com/Ry-Rousseau/NYC-Daylight-Savings-Sim`); branch is up to date with `origin/main`. No longer blocked.
 - **Endpoint:** phased (ADR 0002) — **OpenRouter** `qwen/qwen3-8b` now (P0–2), self-hosted vLLM at P5+. Details: `docs/query_handbook.md`. Local 4070Ti reserved for lightweight local models (e.g. P1 embeddings).
 - **Census dataset:** working choice = **ACS PUMS** for NYC demographic seeds (confirmed direction; finalize field mapping at Phase 5).

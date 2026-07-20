@@ -19,7 +19,10 @@ from dotenv import find_dotenv, load_dotenv
 from openai import OpenAI
 
 DEFAULT_BASE_URL = "https://openrouter.ai/api/v1"
-DEFAULT_MODEL = "qwen/qwen3-8b"
+# Baseline model: Qwen3-32B (ADR 0005, amending ADR 0002's 8B pin). The P1
+# model-capability sweep found 8B needs hand-annotated survey options to answer
+# on the merits; 14B/32B do not. Model id is a per-call field (R1) and logged (R6).
+DEFAULT_MODEL = "qwen/qwen3-32b"
 
 
 class LLMError(RuntimeError):
