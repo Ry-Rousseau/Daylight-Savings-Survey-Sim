@@ -10,12 +10,36 @@ from __future__ import annotations
 from collections.abc import Iterable, Sequence
 
 
-def persona_system(description: str) -> str:
-    """System prompt anchoring the agent to its persona (R7 begins at P5)."""
-    return (
+def persona_system(
+    description: str,
+    values: Sequence[str] = (),
+    dispositions: Sequence[str] = (),
+) -> str:
+    """System prompt anchoring the agent to its persona (R7).
+
+    ``values`` (what the person cares about) and ``dispositions`` (how they hold and
+    voice a view) are the anchors R7 asks for: thin, label-only personas collapse
+    into the model's generic assistant voice over a run, so the value/disposition
+    content is stated as load-bearing, not decorative. With **no** values or
+    dispositions the string is byte-identical to the P0–P4 thin prompt, so the empty
+    persona survives unchanged as the R16 null-model baseline.
+    """
+    base = (
         f"You are {description} You live in New York City. "
         "Answer the survey as this person would, in their own voice and interests."
     )
+    if not values and not dispositions:
+        return base
+    parts = [base]
+    if values:
+        parts.append("These are the things you care about, and they shape how you "
+                     "see this question: " + "; ".join(values) + ".")
+    if dispositions:
+        parts.append("This is how you engage when the topic comes up: "
+                     + "; ".join(dispositions) + ".")
+    parts.append("Stay in this person's voice and convictions — do not drift into a "
+                 "neutral, generic tone.")
+    return " ".join(parts)
 
 
 def memory_block(memories: Sequence[str]) -> str:

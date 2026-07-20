@@ -1,4 +1,13 @@
-"""Phase 0 personas — deliberately thin (Phase 2 anchors them in values, R7)."""
+"""Personas — a persona is an agent's anchored identity (Layer 2).
+
+Through P4 a persona was deliberately thin (`id / description / temperature`) and
+diversity came from seeded *memory*, not identity. P5 (R7) adds value/disposition
+anchoring: ``values`` (what the person cares about) and ``dispositions`` (how they
+hold and voice a view). Both default empty, so the thin persona is unchanged and
+doubles as the R16 null-model baseline. The thick NYC cast lives in
+``personas_nyc``; the conviction-slider seam (seed-time opinion injection) rides on
+top of these fields + opinion seed memories, and is not built here.
+"""
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -11,9 +20,12 @@ class Persona:
     id: str
     description: str
     temperature: float = 0.8  # per-agent generation param (R1)
+    # Value/disposition anchors (R7). Tuples so the frozen dataclass stays hashable.
+    values: tuple[str, ...] = ()
+    dispositions: tuple[str, ...] = ()
 
     def system_prompt(self) -> str:
-        return prompts.persona_system(self.description)
+        return prompts.persona_system(self.description, self.values, self.dispositions)
 
 
 # Phase 0 walking-skeleton cast: three deliberately different New Yorkers.

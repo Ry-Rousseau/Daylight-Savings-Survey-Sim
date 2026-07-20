@@ -488,11 +488,15 @@ class Simulation:
                 "executor": cfg.executor,
             },
             "retrieval": asdict(agents[0].retrieval),
+            # Persona content is versioned (R17): a thick-vs-thin run's divergence must
+            # be traceable to the value/disposition anchors (R7), not just the id.
             "personas": [
                 {
                     "id": a.persona.id,
                     "description": a.persona.description,
                     "temperature": a.persona.temperature,
+                    "values": list(a.persona.values),
+                    "dispositions": list(a.persona.dispositions),
                 }
                 for a in agents
             ],
