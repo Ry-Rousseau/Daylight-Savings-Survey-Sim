@@ -37,6 +37,7 @@ class Agent:
         memory: MemoryStore | None = None,
         retrieval: RetrievalConfig | None = None,
         importance_fn: ImportanceFn | None = None,
+        committed_stance: str | None = None,
     ):
         self.persona = persona
         self.client = client
@@ -44,6 +45,10 @@ class Agent:
         self.memory = memory or MemoryStore()  # private per agent (R2)
         self.retrieval = retrieval or RetrievalConfig()
         self.importance_fn = importance_fn or constant()
+        # A committed-minority agent (R11): its stance is fixed and immovable, so it
+        # decides deterministically and never conditions on what it hears. Recorded
+        # in the run config so faction persistence is traceable to its cause.
+        self.committed_stance = committed_stance
 
     def answer(self, question: SurveyQuestion, *, now: float = 0.0) -> SurveyAnswer:
         query_emb = self.embedder.encode(question.text)
@@ -76,7 +81,12 @@ class Agent:
         action from the closed vocabulary (R23) rather than a survey choice.
         ``world_view`` is the tier-2 read seam; P2 agents condition only on their
         own memory (the shared tally is not yet a live consensus pressure).
+
+        A committed agent (R11) short-circuits: it SPEAKs its fixed stance with no
+        model call and no retrieval, since its position is immovable by design.
         """
+        if self.committed_stance is not None:
+            return self._committed_decision()
         query_emb = self.embedder.encode(topic)
         scored = self.memory.retrieve_scored(query_emb, now, self.retrieval)
         provenance = RetrievalProvenance(
@@ -111,6 +121,17 @@ class Agent:
             model=raw.get("model"),
         )
 
+    def _committed_decision(self) -> ActionDecision:
+        """A committed agent's deterministic SPEAK (R11): fixed stance, no model
+        call, empty provenance (its cause is its commitment, logged in the run
+        config — not a retrieved memory set, so R29 has nothing to record)."""
+        action = Action.speak(
+            self.committed_stance, f"I hold firmly that {self.committed_stance}."
+        )
+        return ActionDecision(
+            action=action, provenance=RetrievalProvenance(query="", hits=[])
+        )
+
     def _remember_answer(
         self, question: SurveyQuestion, answer: SurveyAnswer, now: float
     ) -> None:
@@ -126,3 +147,11 @@ class Agent:
                 kind=KIND_SURVEY,
             )
         )
+
+
+def committed(persona: Persona, client: LLMClient, stance: str, **kwargs) -> Agent:
+    """Build a committed-minority agent (R11) that always SPEAKs ``stance``.
+
+    Thin constructor helper for seeding a fixed faction over a persona set; the
+    agent still answers surveys normally (only :meth:`Agent.act` is short-circuited)."""
+    return Agent(persona, client, committed_stance=stance, **kwargs)

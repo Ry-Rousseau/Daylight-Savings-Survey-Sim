@@ -21,8 +21,10 @@ from polis.runlog import (
     EVENT_TICK_METRICS,
     EVENT_WORLD_UPDATE,
 )
+from polis.questions import DST_OPTIONS
 from polis.scheduler import SchedulerConfig
 from polis.simulation import DynamicsConfig, Population, Simulation
+from polis.topology import RingLattice
 
 STANCE = "Adopt permanent daylight saving time"
 
@@ -218,3 +220,72 @@ def test_sequential_scheme_also_logs_throughput():
     run = Simulation(pop, dynamics=DynamicsConfig(update_scheme="sequential")).run(1)
     assert run.throughput["n_calls"] == 2
     assert len(run.events(event_type=EVENT_TICK_METRICS)) == 1
+
+
+# --- Phase 4: topology / dynamics --------------------------------------------
+
+
+class RaisingClient:
+    """A client whose decide() must never be called (proves a committed agent
+    decides without the model). Carries a config so run-config building works."""
+
+    def __init__(self):
+        self.config = _CfgWithUrl()
+
+    def decide(self, **kw):  # pragma: no cover - asserted never reached
+        raise AssertionError("committed agent must not call the model")
+
+
+def _committed_agent(pid: str, stance: str) -> Agent:
+    return Agent(Persona(pid, f"a person called {pid}"), RaisingClient(),
+                 committed_stance=stance, embedder=FakeEmbedder(), memory=MemoryStore())
+
+
+def test_committed_agent_speaks_fixed_stance_without_model_call():
+    """R11: a committed agent SPEAKs its stance deterministically, no client call."""
+    other = _agent("a2", _speak_action())
+    pop = Population([_committed_agent("a1", STANCE), other])
+    run = Simulation(pop).run(1)
+    a1_action = [e for e in run.events(event_type=EVENT_ACTION) if e["agent_id"] == "a1"][0]
+    assert a1_action["payload"]["action_type"] == "speak"
+    assert a1_action["payload"]["stance"] == STANCE
+    # It still reaches its neighbour, and the committed roster is versioned (R17).
+    assert "a1" in pop.by_id["a2"].memory.records[0].text
+    assert run.config["committed"] == [{"id": "a1", "stance": STANCE}]
+
+
+def test_topology_determines_reach():
+    """A sparse graph delivers a SPEAK to exactly its neighbours, not everyone."""
+    agents = [_agent(f"a{i}", _speak_action()) for i in range(5)]
+    pop = Population(agents)
+    run = Simulation(pop, topology=RingLattice(k=2)).run(1)
+    # Ring of 5, degree 2: each speaker delivers to 2 listeners → 10 memory writes.
+    assert len(run.events(event_type=EVENT_MEMORY_WRITE)) == 5 * 2
+    assert run.config["topology"] == {"name": "ring_lattice", "k": 2}
+
+
+def test_exchange_volume_caps_reach():
+    """R12: with a full graph but exchange_volume=1, each SPEAK reaches one listener."""
+    agents = [_agent(f"a{i}", _speak_action()) for i in range(5)]
+    pop = Population(agents)
+    run = Simulation(pop, dynamics=DynamicsConfig(exchange_volume=1, seed=1)).run(1)
+    assert len(run.events(event_type=EVENT_MEMORY_WRITE)) == 5 * 1
+    assert run.config["exchange_volume"] == 1
+
+
+def test_homogeneity_reads_from_a_real_run_log():
+    """End-to-end wiring: metrics read a real Simulation's SQLite log. Committed
+    agents give a deterministic stance split, so the homogeneity read is exact.
+    (Topology's *effect* on homogeneity is the live notebook's job — it needs LLM
+    agents that update on what they hear; committed agents by design do not.)"""
+    from polis.metrics import homogeneity, homogeneity_trajectory, stance_distribution
+
+    other = "Keep the current clock-change"
+    pop = Population([_committed_agent(f"a{i}", STANCE if i < 3 else other) for i in range(5)])
+    run = Simulation(pop, topology=RingLattice(k=2)).run(2)
+
+    dist = stance_distribution(run)
+    assert dist == {STANCE: 3, other: 2}
+    h = homogeneity(dist, support=len(DST_OPTIONS))
+    assert h["dominant_share"] == 0.6 and h["distinct"] == 2
+    assert len(homogeneity_trajectory(run)) == 2  # one row per tick (R15 trajectory)

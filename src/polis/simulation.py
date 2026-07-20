@@ -20,6 +20,7 @@ decision retrieval provenance (R29) are written to the durable run log (tier 3).
 """
 from __future__ import annotations
 
+import random
 import time
 from collections.abc import Callable, Sequence
 from dataclasses import asdict, dataclass, field
@@ -62,11 +63,18 @@ class DynamicsConfig:
     update_scheme: str = "simultaneous"  # or "sequential" (R28)
     topic: str = "daylight saving time"
     stances: Sequence[str] = field(default_factory=lambda: list(DST_OPTIONS))
+    # Information-exchange volume per tick (R12): the max number of a speaker's
+    # topological neighbours that actually hear a given SPEAK. ``None`` = full reach
+    # (every neighbour); a cap subsamples them so consensus pressure is tunable
+    # independently of the graph's density.
+    exchange_volume: int | None = None
     seed: int | None = None
 
     def __post_init__(self):
         if self.update_scheme not in ("simultaneous", "sequential"):
             raise ValueError(f"unknown update_scheme {self.update_scheme!r}")
+        if self.exchange_volume is not None and self.exchange_volume < 0:
+            raise ValueError(f"exchange_volume must be >= 0, got {self.exchange_volume}")
 
 
 @dataclass
@@ -292,12 +300,24 @@ class Simulation:
 
     def _resolve(self, agent, decision, tick):
         neighbors = self.topology(agent.persona.id, self.population.roster)
+        neighbors = self._sample_reach(neighbors, agent.persona.id, tick)
         return self.gm.resolve(
             decision.action,
             actor_label=agent.persona.description,
             neighbors=neighbors,
             now=float(tick),
         )
+
+    def _sample_reach(self, neighbors: list[str], agent_id: str, tick: int) -> list[str]:
+        """Cap a SPEAK's reach to ``exchange_volume`` neighbours (R12). The subset is
+        drawn deterministically from ``(seed, tick, agent_id)`` so a capped run stays
+        reproducible and versioned. Runs in the serial resolve phase, so no lock is
+        needed. ``None`` (or a cap >= degree) leaves the neighbour set untouched."""
+        k = self.dynamics.exchange_volume
+        if k is None or len(neighbors) <= k:
+            return neighbors
+        rng = random.Random(f"{self.dynamics.seed}-{tick}-{agent_id}")
+        return rng.sample(neighbors, k)
 
     def _apply_and_log(self, run_id, tick, actor, effects) -> None:
         for effect in effects:
@@ -411,6 +431,26 @@ class Simulation:
             "executor": cfg.executor,
         }
 
+    def _topology_config(self) -> dict[str, Any] | str:
+        """A structured descriptor for the topology if it exposes one (the P4
+        ``Topology`` classes do), else the legacy name of a plain callable seam."""
+        to_config = getattr(self.topology, "to_config", None)
+        if callable(to_config):
+            return to_config()
+        return getattr(self.topology, "__name__", "custom")
+
+    def _committed_config(self) -> list[dict[str, str]]:
+        """The committed-minority roster (R11), sorted by id — the fixed faction
+        whose stance is immovable, recorded so its effect on persistence is traceable."""
+        return sorted(
+            (
+                {"id": a.persona.id, "stance": a.committed_stance}
+                for a in self.population.agents
+                if getattr(a, "committed_stance", None) is not None
+            ),
+            key=lambda d: d["id"],
+        )
+
     def _build_config(self, ticks: int) -> dict[str, Any]:
         """The versioned run config (R17): everything that could change the run's
         trajectory, so an observed convergence is traceable to its cause."""
@@ -423,7 +463,13 @@ class Simulation:
             "update_scheme": self.dynamics.update_scheme,
             "topic": self.dynamics.topic,
             "stances": list(self.dynamics.stances),
-            "topology": getattr(self.topology, "__name__", "custom"),
+            # Topology is a versioned run parameter (R4/R17): a structured descriptor
+            # (name + graph params + seed) when the topology exposes one, so an observed
+            # convergence is traceable to the exact graph, not just its name.
+            "topology": self._topology_config(),
+            # Consensus-pressure knobs (R12/R11), versioned so their effect is traceable.
+            "exchange_volume": self.dynamics.exchange_volume,
+            "committed": self._committed_config(),
             # The external-signal source is part of the versioned config (R3/R17):
             # an observed convergence must be attributable to whether a feed ran.
             "feed_provider": type(self.feed).__name__,
