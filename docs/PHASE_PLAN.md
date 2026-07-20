@@ -63,7 +63,7 @@ Update this section as phases complete.
 
 - [x] Phase 0 — walking skeleton (2026-07-19); see checkpoints/phase-0.md
 - [x] Phase 1 — memory (2026-07-20); DoD met, P(permanent-DST) delta +1.000; see checkpoints/phase-1.md. Model-capability sweep addendum done (ADR 0005): baseline revised to Qwen3-32B; 8B's pass depended on annotated options, 14B/32B don't.
-- [ ] Phase 2
+- [x] Phase 2 — Game Master / interaction (2026-07-20); DoD met, 2 agents complete resolved SPEAK interactions over a tick loop, world + memory update consistently, durable SQLite run log with R29 provenance reopens from disk; see checkpoints/phase-2.md. ADRs: 0006 (SQLite run log), 0007 (simultaneous update default, R28), 0008 (SPEAK/ABSTAIN action space v1).
 - [ ] Phase 3
 - [ ] Phase 4
 - [ ] Phase 5

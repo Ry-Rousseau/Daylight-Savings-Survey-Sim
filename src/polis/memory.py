@@ -21,6 +21,7 @@ import numpy as np
 # exists now so reflections slot in without a schema migration.
 KIND_SEED = "seed"
 KIND_SURVEY = "survey"
+KIND_HEARD = "heard"  # something another agent said, delivered by the Game Master (P2)
 
 
 @dataclass
@@ -82,22 +83,36 @@ class MemoryStore:
     def add(self, record: MemoryRecord) -> None:
         self.records.append(record)
 
+    def score_components(
+        self, query_emb: np.ndarray, now: float, cfg: RetrievalConfig
+    ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+        """Per-record normalized (recency, importance, relevance) components and
+        the weighted total — the raw material for R29 decision provenance. Each
+        component is min-max normalized across the agent's own memories, exactly
+        as it enters the ranking. No mutation.
+        """
+        if not self.records:
+            z = np.zeros(0, dtype=np.float32)
+            return z, z, z, z
+        embs = np.stack([r.embedding for r in self.records])
+        ages = np.array([max(now - r.created_at, 0.0) for r in self.records])
+        recency = _min_max(cfg.decay**ages)
+        importance = _min_max(
+            np.array([r.importance for r in self.records], dtype=np.float32)
+        )
+        relevance = _min_max(embs @ query_emb)  # cosine (embeddings unit-normalized)
+        total = (
+            cfg.w_recency * recency
+            + cfg.w_importance * importance
+            + cfg.w_relevance * relevance
+        )
+        return recency, importance, relevance, total
+
     def score(
         self, query_emb: np.ndarray, now: float, cfg: RetrievalConfig
     ) -> np.ndarray:
         """Combined recency/importance/relevance score per record (no mutation)."""
-        if not self.records:
-            return np.zeros(0, dtype=np.float32)
-        embs = np.stack([r.embedding for r in self.records])
-        ages = np.array([max(now - r.created_at, 0.0) for r in self.records])
-        recency = cfg.decay**ages
-        importance = np.array([r.importance for r in self.records], dtype=np.float32)
-        relevance = embs @ query_emb  # cosine (embeddings are unit-normalized)
-        return (
-            cfg.w_recency * _min_max(recency)
-            + cfg.w_importance * _min_max(importance)
-            + cfg.w_relevance * _min_max(relevance)
-        )
+        return self.score_components(query_emb, now, cfg)[3]
 
     def retrieve(
         self, query_emb: np.ndarray, now: float, cfg: RetrievalConfig | None = None
@@ -112,6 +127,25 @@ class MemoryStore:
         for r in hits:
             r.last_accessed_at = now
         return hits
+
+    def retrieve_scored(
+        self, query_emb: np.ndarray, now: float, cfg: RetrievalConfig | None = None
+    ) -> list[tuple[MemoryRecord, tuple[float, float, float, float]]]:
+        """Top-N with each hit's (recency, importance, relevance, total) components,
+        for R29 provenance. Marks the returned records accessed, like ``retrieve``."""
+        cfg = cfg or RetrievalConfig()
+        if not self.records:
+            return []
+        recency, importance, relevance, total = self.score_components(query_emb, now, cfg)
+        order = np.argsort(-total)[: cfg.top_n]
+        out: list[tuple[MemoryRecord, tuple[float, float, float, float]]] = []
+        for i in order:
+            r = self.records[i]
+            r.last_accessed_at = now
+            out.append(
+                (r, (float(recency[i]), float(importance[i]), float(relevance[i]), float(total[i])))
+            )
+        return out
 
     def to_list(self) -> list[dict]:
         return [r.to_dict() for r in self.records]

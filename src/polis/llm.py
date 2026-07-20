@@ -60,6 +60,37 @@ class LLMClient:
         )
         return resp.choices[0].message.content
 
+    def _structured_call(self, *, system, user, schema, schema_name, validate,
+                         temperature=None, max_tokens=300, retries=1):
+        """Shared json_schema call + parse + validate + retry (soft-enforced on
+        OpenRouter; hard grammar arrives with vLLM at P5, ADR 0002). Returns
+        ``(data, resp)`` for the first response that parses and passes
+        ``validate``; raises ``LLMError`` if none does within ``retries``."""
+        last = None
+        for _ in range(retries + 1):
+            resp = self._client.chat.completions.create(
+                model=self.config.model,
+                messages=[
+                    {"role": "system", "content": system},
+                    {"role": "user", "content": user},
+                ],
+                response_format={
+                    "type": "json_schema",
+                    "json_schema": {"name": schema_name, "strict": True, "schema": schema},
+                },
+                temperature=self.config.temperature if temperature is None else temperature,
+                max_tokens=max_tokens,
+                extra_body={"reasoning": {"enabled": self.config.reasoning}},
+            )
+            last = resp.choices[0].message.content
+            try:
+                data = json.loads(last)
+            except (json.JSONDecodeError, TypeError):
+                continue
+            if validate(data):
+                return data, resp
+        raise LLMError(f"No valid {schema_name} after {retries + 1} tries; last={last!r}")
+
     def choose(self, *, system, user, options, temperature=None, max_tokens=300, retries=1) -> dict:
         """Single-select with a short rationale, validated against ``options``.
 
@@ -76,32 +107,33 @@ class LLMClient:
             "required": ["choice", "reason"],
             "additionalProperties": False,
         }
-        last = None
-        for _ in range(retries + 1):
-            resp = self._client.chat.completions.create(
-                model=self.config.model,
-                messages=[
-                    {"role": "system", "content": system},
-                    {"role": "user", "content": user},
-                ],
-                response_format={
-                    "type": "json_schema",
-                    "json_schema": {"name": "survey_answer", "strict": True, "schema": schema},
-                },
-                temperature=self.config.temperature if temperature is None else temperature,
-                max_tokens=max_tokens,
-                extra_body={"reasoning": {"enabled": self.config.reasoning}},
-            )
-            last = resp.choices[0].message.content
-            try:
-                data = json.loads(last)
-            except (json.JSONDecodeError, TypeError):
-                continue
-            if data.get("choice") in options:
-                return {
-                    "choice": data["choice"],
-                    "reason": data.get("reason", ""),
-                    "model": self.config.model,  # pinned & logged (R6)
-                    "usage": resp.usage.model_dump() if resp.usage else None,
-                }
-        raise LLMError(f"No valid choice after {retries + 1} tries; last={last!r}")
+        data, resp = self._structured_call(
+            system=system, user=user, schema=schema, schema_name="survey_answer",
+            validate=lambda d: d.get("choice") in options,
+            temperature=temperature, max_tokens=max_tokens, retries=retries,
+        )
+        return {
+            "choice": data["choice"],
+            "reason": data.get("reason", ""),
+            "model": self.config.model,  # pinned & logged (R6)
+            "usage": resp.usage.model_dump() if resp.usage else None,
+        }
+
+    def decide(self, *, system, user, schema, valid_types, temperature=None,
+               max_tokens=300, retries=1) -> dict:
+        """Structured action decode for the tick loop (R20/R23). Validates only
+        that ``action_type`` is in the closed vocabulary; payload validity
+        (a well-formed SPEAK) is the Game Master's call (R24), so a payload-light
+        action is returned as-is and degrades to a no-op downstream rather than
+        forcing a retry. Returns the parsed action dict plus ``model``/``usage``.
+        """
+        data, resp = self._structured_call(
+            system=system, user=user, schema=schema, schema_name="agent_action",
+            validate=lambda d: d.get("action_type") in valid_types,
+            temperature=temperature, max_tokens=max_tokens, retries=retries,
+        )
+        return {
+            **data,
+            "model": self.config.model,  # pinned & logged (R6)
+            "usage": resp.usage.model_dump() if resp.usage else None,
+        }
