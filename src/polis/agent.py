@@ -102,7 +102,14 @@ class Agent:
             stance=raw.get("stance"),
             utterance=raw.get("utterance"),
         )
-        return ActionDecision(action=action, provenance=provenance)
+        # usage/model surface the decode's token counts + pinned model id (R6) for
+        # the P3 throughput/cost log; absent on fake clients, hence .get.
+        return ActionDecision(
+            action=action,
+            provenance=provenance,
+            usage=raw.get("usage"),
+            model=raw.get("model"),
+        )
 
     def _remember_answer(
         self, question: SurveyQuestion, answer: SurveyAnswer, now: float

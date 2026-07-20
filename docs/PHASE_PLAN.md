@@ -37,6 +37,7 @@ where it's first listed. Split rules into:
 | **5 — Persona depth + validation wiring** | What minimum persona content prevents identity collapse over N ticks? | Value/disposition-anchored personas; periodic drift probing; full R14–17 metrics logged per tick | Full validation dashboard running against a null-model baseline | Persona, Validation | R7–R9, R14–R17 |
 | **6 — Scale to full population** | Does the phase-3 infra plan hold at 100 agents, or does something non-linear break? | Push N to 100; re-run infra benchmarks | Full 100-agent run completes with clean logs | Architecture (re-validated) | R5, R6, R17 |
 | **7 — Survey subsystem maturity** | Do repeated surveys over simulated time produce coherent, traceable answer evolution rather than noise? | Multi-timepoint survey capability; response-to-memory writeback; optional calibration check | Same survey run twice at different simulated timepoints, differences attributable to logged events | Persona, Validation | R18, R19, R21 |
+| **8 — Interactive GUI** *(optional / stretch)* | Can a thin front-end drive the already-parameterised engine — set N, topology, tick count, opinionated/feed fraction → run → watch the divergence metric — without leaking logic upward into the UI? | A small local app (e.g. Streamlit/Gradio) with sliders bound to the existing config fields (R1/R4/R12/R3) and a live divergence-trajectory plot; **no new engine logic** — the UI only *calls* `src/polis` | A non-technical user runs a simulation end-to-end from sliders and sees the divergence trajectory; every knob maps 1:1 to a logged run-config field (R17) | Interface / Query | (none new — consumes R14–R17) |
 
 ---
 
@@ -56,6 +57,11 @@ where it's first listed. Split rules into:
 - Phases 6–7 are scale-out and the actual deliverable (survey the
   population). Nothing new architecturally should be discovered here if
   0–5 were done properly — this is where that assumption gets tested.
+- Phase 8 (GUI) is optional and additive: it introduces **no engine logic**, only
+  a front-end that drives the existing config fields, so it can slot in any time
+  after P5 (which gives it a divergence metric to display). Cross-cutting seams it
+  would expose — the external-signal **feed** (ADR 0010) and the topology/dynamics
+  knobs — are built with the engine, not with the UI.
 
 ## Status
 
@@ -64,8 +70,9 @@ Update this section as phases complete.
 - [x] Phase 0 — walking skeleton (2026-07-19); see checkpoints/phase-0.md
 - [x] Phase 1 — memory (2026-07-20); DoD met, P(permanent-DST) delta +1.000; see checkpoints/phase-1.md. Model-capability sweep addendum done (ADR 0005): baseline revised to Qwen3-32B; 8B's pass depended on annotated options, 14B/32B don't.
 - [x] Phase 2 — Game Master / interaction (2026-07-20); DoD met, 2 agents complete resolved SPEAK interactions over a tick loop, world + memory update consistently, durable SQLite run log with R29 provenance reopens from disk; see checkpoints/phase-2.md. ADRs: 0006 (SQLite run log), 0007 (simultaneous update default, R28), 0008 (SPEAK/ABSTAIN action space v1).
-- [ ] Phase 3
+- [x] Phase 3 — Scheduling & throughput (2026-07-20); DoD met. Concurrent per-agent-per-tick scheduler (R5) + latency/token/cost logging (R6); live sweep of 25 agents × 3 ticks over concurrency [1,4,8,16] ran with **0 failures**, throughput scaling 5.7× (0.24→1.36 decides/s), latency ~flat — endpoint concurrency-bound. Premise reframed (ADR 0009): local GPU batching of the 32B model is infeasible on the 16 GB card and premature per ADR 0002, so P3 benchmarks request concurrency against managed OpenRouter and the vLLM continuous-batching path is a seam benchmarked at P5. 53 deterministic tests green. See checkpoints/phase-3.md. ADR 0009.
 - [ ] Phase 4
 - [ ] Phase 5
 - [ ] Phase 6
 - [ ] Phase 7
+- [ ] Phase 8 — Interactive GUI *(optional / stretch)*: a thin sliders-and-run front-end over the already-parameterised engine, added after P5's divergence metric exists to have something meaningful to display. UI calls `src/polis`, never redefines it. Sibling seam: the external-signal **feed** (ADR 0010) is one of the knobs such a UI would expose.
