@@ -29,6 +29,7 @@ data/*
 runs/
 *.duckdb
 *.sqlite
+*.db
 
 # reference/ holds local reading material (papers + vendored repos), not tracked here.
 # Vendored repos carry their own .git and would become broken embedded gitlinks.

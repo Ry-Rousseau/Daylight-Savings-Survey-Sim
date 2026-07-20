@@ -35,6 +35,24 @@ def survey_user(text: str, options: Iterable[str], *, memories: Sequence[str] = 
     return memory_block(memories) + body
 
 
+def action_user(topic: str, stances: Sequence[str], *, memories: Sequence[str] = ()) -> str:
+    """The per-tick action decision, prefixed with any retrieved memories.
+
+    Abstaining is offered as a first-class choice (R25): forcing everyone to
+    speak every tick is itself a homogenizing pressure, so the prompt makes
+    staying quiet a legitimate option rather than a failure.
+    """
+    body = (
+        f"You are talking with your neighbors about {topic}. Decide what you do this turn.\n"
+        '- To speak up, set "action_type" to "speak", choose the stance that matches your '
+        'view, and write a short, natural "utterance" (one or two sentences) in your own voice.\n'
+        '- To stay quiet this turn, set "action_type" to "abstain". Say nothing if you have '
+        "nothing you feel like adding — staying quiet is a fine choice.\n"
+        "Available stances:\n" + "\n".join(f"- {s}" for s in stances)
+    )
+    return memory_block(memories) + body
+
+
 def poignancy(text: str) -> str:
     """Ask the model to rate a memory's importance 1-10 (optional path, task 4)."""
     return (

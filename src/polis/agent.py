@@ -7,13 +7,24 @@ repeated surveys over simulated time stay coherent.
 """
 from __future__ import annotations
 
+from collections.abc import Sequence
+
 from . import prompts
+from .actions import (
+    Action,
+    ActionDecision,
+    ActionType,
+    ProvenanceEntry,
+    RetrievalProvenance,
+    action_json_schema,
+)
 from .embeddings import EmbeddingModel
 from .importance import ImportanceFn, constant
 from .llm import LLMClient
 from .memory import KIND_SURVEY, MemoryRecord, MemoryStore, RetrievalConfig
 from .persona import Persona
 from .survey import SurveyAnswer, SurveyQuestion
+from .world import WorldView
 
 
 class Agent:
@@ -49,6 +60,49 @@ class Agent:
         answer = SurveyAnswer(choice=result["choice"], reason=result["reason"])
         self._remember_answer(question, answer, now)
         return answer
+
+    def act(
+        self,
+        *,
+        topic: str,
+        stances: Sequence[str],
+        world_view: WorldView,
+        now: float = 0.0,
+    ) -> ActionDecision:
+        """Decide this tick's action (SPEAK a stance or ABSTAIN), returning the
+        action plus its retrieval provenance (R29).
+
+        Mirrors ``answer`` — retrieve → inject → constrained decode — but emits an
+        action from the closed vocabulary (R23) rather than a survey choice.
+        ``world_view`` is the tier-2 read seam; P2 agents condition only on their
+        own memory (the shared tally is not yet a live consensus pressure).
+        """
+        query_emb = self.embedder.encode(topic)
+        scored = self.memory.retrieve_scored(query_emb, now, self.retrieval)
+        provenance = RetrievalProvenance(
+            query=topic,
+            hits=[
+                ProvenanceEntry(
+                    text=r.text, kind=r.kind, created_at=r.created_at,
+                    recency=rec, importance=imp, relevance=rel, total=tot,
+                )
+                for r, (rec, imp, rel, tot) in scored
+            ],
+        )
+        user = prompts.action_user(topic, stances, memories=[r.text for r, _ in scored])
+        raw = self.client.decide(
+            system=self.persona.system_prompt(),
+            user=user,
+            schema=action_json_schema(list(stances)),
+            valid_types={t.value for t in ActionType},
+            temperature=self.persona.temperature,
+        )
+        action = Action(
+            action_type=raw["action_type"],
+            stance=raw.get("stance"),
+            utterance=raw.get("utterance"),
+        )
+        return ActionDecision(action=action, provenance=provenance)
 
     def _remember_answer(
         self, question: SurveyQuestion, answer: SurveyAnswer, now: float
