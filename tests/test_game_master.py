@@ -1,5 +1,12 @@
 """Game Master resolution tests — deterministic, no network (R24/R25)."""
-from polis.actions import Action, ActionType, MemoryWrite, WorldUpdate
+from polis.actions import (
+    ACTION_SPACE_VERSION,
+    Action,
+    ActionType,
+    MemoryWrite,
+    WorldUpdate,
+    action_json_schema,
+)
 from polis.game_master import GameMaster
 from polis.memory import KIND_HEARD
 
@@ -39,3 +46,43 @@ def test_speak_to_no_neighbors_still_updates_world():
     # An isolated speaker reaches nobody but its expressed stance still counts.
     effects = GM.resolve(Action.speak(STANCE, "hi"), actor_label="owner", neighbors=[], now=0.0)
     assert [type(e) for e in effects] == [WorldUpdate]
+
+
+# --- SHARE_CONSIDERATION: reasons, not votes (ADR 0017, R23/R24/R25) ----------
+
+CONSIDERATION = "As a night-shift nurse, my evenings are when I'm finally alive."
+
+
+def test_consideration_writes_to_listeners_with_no_world_update():
+    # A consideration reaches neighbours as a heard memory but emits NO WorldUpdate,
+    # so it never touches the stance tally (the key design point).
+    action = Action.consider(CONSIDERATION)
+    effects = GM.resolve(action, actor_label="a night-shift nurse", neighbors=["b", "c"], now=2.0)
+    writes = [e for e in effects if isinstance(e, MemoryWrite)]
+    assert {w.target_agent_id for w in writes} == {"b", "c"}  # never the sharer
+    assert all(w.kind == KIND_HEARD for w in writes)
+    assert all("a night-shift nurse shared:" in w.text for w in writes)
+    assert all(w.created_at == 2.0 for w in writes)
+    assert [e for e in effects if isinstance(e, WorldUpdate)] == []  # no vote → no tally
+
+
+def test_malformed_consideration_degrades_to_noop():
+    # SHARE_CONSIDERATION with no text must not corrupt the stream (like a bad SPEAK).
+    bad = Action(action_type=ActionType.SHARE_CONSIDERATION)
+    assert GM.resolve(bad, actor_label="owner", neighbors=["b"], now=0.0) == []
+
+
+def test_consider_helper_and_validity():
+    a = Action.consider(CONSIDERATION)
+    assert a.action_type is ActionType.SHARE_CONSIDERATION
+    assert a.stance is None and a.utterance is None
+    assert a.is_valid_consideration() and not a.is_valid_speak()
+    assert not Action(action_type=ActionType.SHARE_CONSIDERATION).is_valid_consideration()
+
+
+def test_action_space_version_bumped_and_schema_permits_consideration():
+    assert ACTION_SPACE_VERSION == 2
+    schema = action_json_schema([STANCE])
+    assert "share_consideration" in schema["properties"]["action_type"]["enum"]
+    assert schema["properties"]["consideration"] == {"type": "string"}
+    assert schema["required"] == ["action_type"]  # consideration GM-validated, not required

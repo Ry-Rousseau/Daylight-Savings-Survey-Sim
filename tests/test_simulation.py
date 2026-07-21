@@ -89,6 +89,23 @@ def test_speak_delivers_to_the_other_agent_only():
     assert pop.world.stance_tally == {STANCE: 2}
 
 
+def test_share_consideration_delivers_reason_without_touching_the_tally():
+    """A SHARE_CONSIDERATION tick lands the reason in each neighbour's memory (R2)
+    but records no stance, so the shared tally stays empty (ADR 0017)."""
+    consider = {"action_type": "share_consideration",
+                "consideration": "as a night-shift worker my evenings are my life"}
+    pop = Population([_agent("a1", consider), _agent("a2", consider)])
+    run = Simulation(pop).run(1)
+    a1, a2 = pop.by_id["a1"], pop.by_id["a2"]
+    assert len(a1.memory) == 1 and a1.memory.records[0].kind == KIND_HEARD
+    assert "a2 shared:" in a1.memory.records[0].text  # heard the other's reason
+    assert "a1 shared:" in a2.memory.records[0].text
+    assert pop.world.stance_tally == {}  # no vote cast → tally untouched
+    assert run.events(event_type=EVENT_WORLD_UPDATE) == []
+    # The consideration reaches listeners exactly as a SPEAK would (one write each).
+    assert len(run.events(event_type=EVENT_MEMORY_WRITE)) == 2
+
+
 def test_abstain_writes_nothing():
     pop = Population([_agent("a1", {"action_type": "abstain"}),
                      _agent("a2", {"action_type": "abstain"})])

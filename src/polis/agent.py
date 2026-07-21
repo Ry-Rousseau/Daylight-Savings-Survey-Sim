@@ -80,8 +80,9 @@ class Agent:
         world_view: WorldView,
         now: float = 0.0,
     ) -> ActionDecision:
-        """Decide this tick's action (SPEAK a stance or ABSTAIN), returning the
-        action plus its retrieval provenance (R29).
+        """Decide this tick's action (SPEAK a stance, SHARE_CONSIDERATION a reason
+        without a stance, or ABSTAIN), returning the action plus its retrieval
+        provenance (R29).
 
         Mirrors ``answer`` — retrieve → inject → constrained decode — but emits an
         action from the closed vocabulary (R23) rather than a survey choice.
@@ -117,6 +118,7 @@ class Agent:
             action_type=raw["action_type"],
             stance=raw.get("stance"),
             utterance=raw.get("utterance"),
+            consideration=raw.get("consideration"),
         )
         # usage/model surface the decode's token counts + pinned model id (R6) for
         # the P3 throughput/cost log; absent on fake clients, hence .get.

@@ -326,6 +326,7 @@ class Simulation:
                 "action_type": action.action_type.value,
                 "stance": action.stance,
                 "utterance": action.utterance,
+                "consideration": action.consideration,
                 # P3 throughput fields: model pinned per call (R6), token usage, latency.
                 "model": decision.model,
                 "latency_s": timing.latency_s,
