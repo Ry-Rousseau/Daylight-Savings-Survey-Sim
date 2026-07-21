@@ -70,6 +70,9 @@ def action_user(topic: str, stances: Sequence[str], *, memories: Sequence[str] =
         f"You are talking with your neighbors about {topic}. Decide what you do this turn.\n"
         '- To speak up, set "action_type" to "speak", choose the stance that matches your '
         'view, and write a short, natural "utterance" (one or two sentences) in your own voice.\n'
+        '- To share a personal consideration or stake without taking a side, set "action_type" '
+        'to "share_consideration" and put a first-person reason (one or two sentences) in '
+        '"consideration" — what this means for your life, not which option you back.\n'
         '- To stay quiet this turn, set "action_type" to "abstain". Say nothing if you have '
         "nothing you feel like adding — staying quiet is a fine choice.\n"
         "Available stances:\n" + "\n".join(f"- {s}" for s in stances)

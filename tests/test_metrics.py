@@ -83,6 +83,11 @@ def _speak_u(tick, agent_id, stance, utterance):
             "payload": {"action_type": "speak", "stance": stance, "utterance": utterance}}
 
 
+def _consider(tick, agent_id, consideration):
+    return {"event_type": EVENT_ACTION, "tick": tick, "agent_id": agent_id,
+            "payload": {"action_type": "share_consideration", "consideration": consideration}}
+
+
 class _TableEmbedder:
     """Maps a text to a fixed vector via a lookup table; handles str or list like the
     real EmbeddingModel (single -> (d,), list -> (n, d))."""
@@ -105,6 +110,15 @@ def test_stance_distribution_uses_most_recent_speak():
 def test_abstain_contributes_no_stance():
     run = FakeRun([_speak(0, "a1", "X"), _abstain(0, "a2")], ticks=1)
     assert stance_distribution(run) == {"X": 1}  # a2 holds no expressed position
+
+
+def test_consideration_contributes_no_stance_or_utterance():
+    # A SHARE_CONSIDERATION carries a reason but no stance, so the categorical stance
+    # read and the utterance read must both exclude it, exactly as they exclude an
+    # abstain — only the SPEAK counts (ADR 0017).
+    run = FakeRun([_speak_u(0, "a1", "X", "later light"), _consider(0, "a2", "my evenings matter")], ticks=1)
+    assert stance_distribution(run) == {"X": 1}
+    assert latest_utterances(run) == {"a1": "later light"}
 
 
 def test_trajectory_has_one_row_per_tick():
@@ -265,3 +279,27 @@ def test_adequacy_optional_embedding_dispersion():
     run = FakeRun([_speak_u(0, "a1", "X", "u1"), _speak_u(0, "a2", "Y", "u2")], ticks=1)
     m = action_space_adequacy(run, embedder=_TableEmbedder(table))
     assert m["utterance_dispersion"] == pytest.approx(1.0)
+
+
+def test_adequacy_reports_consideration_usage():
+    # R27: a run that circulates reasons shows up as consideration usage, and those
+    # actions count toward n_actions without inflating the stance/utterance reads.
+    run = FakeRun(
+        [_speak_u(0, "a1", "X", "u1"), _consider(0, "a2", "my evenings matter"),
+         _consider(1, "a3", "I drive at dawn")],
+        ticks=2,
+    )
+    m = action_space_adequacy(run)
+    assert m["n_consider"] == 2
+    assert m["n_speak"] == 1 and m["n_abstain"] == 0
+    assert m["n_actions"] == 3
+    assert m["consider_rate"] == pytest.approx(2 / 3)
+
+
+def test_adequacy_all_considerations_not_flagged_all_abstain():
+    # An all-consideration run expresses no stance but is NOT a degenerate space —
+    # it is exercising the new action, so all_abstain must not fire (ADR 0017).
+    run = FakeRun([_consider(0, "a1", "reason one"), _consider(0, "a2", "reason two")], ticks=1)
+    m = action_space_adequacy(run)
+    assert m["n_consider"] == 2 and m["n_speak"] == 0
+    assert "all_abstain" not in m["flags"]

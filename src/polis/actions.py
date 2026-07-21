@@ -20,22 +20,25 @@ from typing import Any
 
 from pydantic import BaseModel
 
-ACTION_SPACE_VERSION = 1
+ACTION_SPACE_VERSION = 2
 
 
 class ActionType(str, Enum):
     SPEAK = "speak"
     ABSTAIN = "abstain"
+    SHARE_CONSIDERATION = "share_consideration"
 
 
 class Action(BaseModel):
     """One agent's chosen action for a tick. ``stance``/``utterance`` are set only
-    for SPEAK; they are optional in the schema (OpenRouter soft-enforces) and the
-    Game Master validates them — a malformed SPEAK resolves as ABSTAIN."""
+    for SPEAK, ``consideration`` only for SHARE_CONSIDERATION; all are optional in
+    the schema (OpenRouter soft-enforces) and the Game Master validates them — a
+    malformed SPEAK or SHARE_CONSIDERATION resolves as a no-op."""
 
     action_type: ActionType
     stance: str | None = None
     utterance: str | None = None
+    consideration: str | None = None
 
     @classmethod
     def abstain(cls) -> "Action":
@@ -45,6 +48,10 @@ class Action(BaseModel):
     def speak(cls, stance: str, utterance: str) -> "Action":
         return cls(action_type=ActionType.SPEAK, stance=stance, utterance=utterance)
 
+    @classmethod
+    def consider(cls, consideration: str) -> "Action":
+        return cls(action_type=ActionType.SHARE_CONSIDERATION, consideration=consideration)
+
     def is_valid_speak(self) -> bool:
         return (
             self.action_type is ActionType.SPEAK
@@ -52,13 +59,21 @@ class Action(BaseModel):
             and bool(self.utterance)
         )
 
+    def is_valid_consideration(self) -> bool:
+        # A consideration carries a reason/stake but no stance; only its text must
+        # be present for it to resolve (mirrors is_valid_speak's guard).
+        return (
+            self.action_type is ActionType.SHARE_CONSIDERATION
+            and bool(self.consideration)
+        )
+
 
 def action_json_schema(stances: list[str]) -> dict[str, Any]:
     """json_schema for constrained action decoding (R20/R23).
 
     ``stances`` is the closed set of DST positions a SPEAK may express, so the
-    stance vocabulary is not hardcoded. ``action_type`` is required; stance and
-    utterance are optional here and enforced by the Game Master.
+    stance vocabulary is not hardcoded. ``action_type`` is required; stance,
+    utterance, and consideration are optional here and enforced by the Game Master.
     """
     return {
         "type": "object",
@@ -66,6 +81,7 @@ def action_json_schema(stances: list[str]) -> dict[str, Any]:
             "action_type": {"type": "string", "enum": [t.value for t in ActionType]},
             "stance": {"type": "string", "enum": list(stances)},
             "utterance": {"type": "string"},
+            "consideration": {"type": "string"},
         },
         "required": ["action_type"],
         "additionalProperties": False,

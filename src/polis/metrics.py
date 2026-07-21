@@ -278,7 +278,7 @@ def action_space_adequacy(
     rate, how many of the available stances were ever used, and how varied the
     utterances are (uniqueness, and optionally embedding dispersion if an ``embedder``
     is passed). ``flags`` lists obvious degeneracies that would cap divergence."""
-    n_speak = n_abstain = 0
+    n_speak = n_abstain = n_consider = 0
     speaks: list[dict] = []
     for e in run.events(event_type=EVENT_ACTION):
         p = e["payload"]
@@ -288,7 +288,9 @@ def action_space_adequacy(
             speaks.append(p)
         elif at == ActionType.ABSTAIN.value:
             n_abstain += 1
-    n_actions = n_speak + n_abstain
+        elif at == ActionType.SHARE_CONSIDERATION.value and p.get("consideration"):
+            n_consider += 1
+    n_actions = n_speak + n_abstain + n_consider
     stances_used = {p["stance"] for p in speaks}
     utterances = [p["utterance"] for p in speaks if p.get("utterance")]
     distinct_utterances = len(set(utterances))
@@ -296,6 +298,11 @@ def action_space_adequacy(
         "n_actions": n_actions,
         "n_speak": n_speak,
         "n_abstain": n_abstain,
+        # SHARE_CONSIDERATION usage (R27): a consideration circulates a reason with
+        # no stance, so it widens the action space beyond vote-broadcasting; a run
+        # exercising it is visible here even though it never moves the stance tally.
+        "n_consider": n_consider,
+        "consider_rate": (n_consider / n_actions) if n_actions else 0.0,
         "abstain_rate": (n_abstain / n_actions) if n_actions else 0.0,
         "distinct_stances_used": len(stances_used),
         "distinct_utterances": distinct_utterances,
@@ -314,8 +321,8 @@ def _adequacy_flags(m: dict[str, Any]) -> list[str]:
     is a reason a low homogeneity reading might be an artifact of the action space
     rather than genuine consensus."""
     flags = []
-    if m["n_actions"] > 0 and m["n_speak"] == 0:
-        flags.append("all_abstain")  # no expressed positions at all
+    if m["n_actions"] > 0 and m["n_speak"] == 0 and m.get("n_consider", 0) == 0:
+        flags.append("all_abstain")  # nothing but abstentions — the space collapsed
     if m["n_speak"] > 0 and m["distinct_stances_used"] <= 1:
         flags.append("single_stance")  # positions collapsed to one option
     if m["n_speak"] >= 2 and m["utterance_uniqueness"] < 0.5:

@@ -42,6 +42,8 @@ class GameMaster:
             return self._resolve_abstain()
         if action.action_type is ActionType.SPEAK:
             return self._resolve_speak(action, actor_label, neighbors, now)
+        if action.action_type is ActionType.SHARE_CONSIDERATION:
+            return self._resolve_consideration(action, actor_label, neighbors, now)
         raise ValueError(f"No resolution logic for action type {action.action_type!r} (R24)")
 
     def _resolve_abstain(self) -> list[Effect]:
@@ -66,3 +68,24 @@ class GameMaster:
         ]
         effects.append(WorldUpdate(stance=action.stance))
         return effects
+
+    def _resolve_consideration(
+        self, action: Action, actor_label: str, neighbors: Sequence[str], now: float
+    ) -> list[Effect]:
+        # A consideration circulates a persona-specific reason/stake, not a vote:
+        # it reaches listeners exactly as a SPEAK does, but emits *no* WorldUpdate,
+        # so it never touches the shared stance tally (that is the point — reasons,
+        # not votes, so hearing them cannot drive stance conformity). A malformed
+        # consideration (no text) degrades to a no-op, like a malformed SPEAK.
+        if not action.is_valid_consideration():
+            return []
+        return [
+            MemoryWrite(
+                target_agent_id=listener,
+                text=f"{actor_label} shared: {action.consideration}",
+                kind=KIND_HEARD,
+                importance=HEARD_IMPORTANCE,
+                created_at=now,
+            )
+            for listener in neighbors
+        ]
