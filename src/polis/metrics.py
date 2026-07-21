@@ -82,18 +82,22 @@ def homogeneity(
     }
 
 
+_STANCE_ACTIONS = {ActionType.SPEAK.value, ActionType.REBUT.value}
+
+
 def latest_speaks(run, tick: int | None = None) -> dict[str, dict]:
-    """Each agent's most-recent SPEAK *payload* as of ``tick`` (latest if ``None``),
-    keyed by agent id. Read from the ``action`` stream in append order, so a later
-    SPEAK overwrites an earlier one; an agent that has only ever ABSTAINed is absent
-    (it holds no expressed position yet). The shared reader behind both the
-    categorical stance read and the embedding utterance read."""
+    """Each agent's most-recent *stance-expressing* payload as of ``tick`` (latest if
+    ``None``), keyed by agent id. A SPEAK or a REBUT both state a position (a REBUT is
+    a SPEAK framed as pushback), so both count; a SHARE_CONSIDERATION carries no stance
+    and an ABSTAIN nothing, so an agent that has only done those is absent (it holds no
+    expressed position yet). The shared reader behind both the categorical stance read
+    and the embedding utterance read."""
     latest: dict[str, dict] = {}
     for e in run.events(event_type=EVENT_ACTION):
         if tick is not None and e["tick"] is not None and e["tick"] > tick:
             continue
         payload = e["payload"]
-        if payload.get("action_type") == ActionType.SPEAK.value and payload.get("stance"):
+        if payload.get("action_type") in _STANCE_ACTIONS and payload.get("stance"):
             latest[e["agent_id"]] = payload
     return latest
 
@@ -278,19 +282,23 @@ def action_space_adequacy(
     rate, how many of the available stances were ever used, and how varied the
     utterances are (uniqueness, and optionally embedding dispersion if an ``embedder``
     is passed). ``flags`` lists obvious degeneracies that would cap divergence."""
-    n_speak = n_abstain = n_consider = 0
-    speaks: list[dict] = []
+    n_speak = n_abstain = n_consider = n_rebut = 0
+    speaks: list[dict] = []  # stance-expressing actions (SPEAK + REBUT)
     for e in run.events(event_type=EVENT_ACTION):
         p = e["payload"]
         at = p.get("action_type")
         if at == ActionType.SPEAK.value and p.get("stance"):
             n_speak += 1
             speaks.append(p)
+        elif at == ActionType.REBUT.value and p.get("stance"):
+            n_rebut += 1
+            speaks.append(p)  # a rebut states a position, so it counts toward stances/utterances
         elif at == ActionType.ABSTAIN.value:
             n_abstain += 1
         elif at == ActionType.SHARE_CONSIDERATION.value and p.get("consideration"):
             n_consider += 1
-    n_actions = n_speak + n_abstain + n_consider
+    n_actions = n_speak + n_abstain + n_consider + n_rebut
+    n_stated = n_speak + n_rebut  # actions that expressed a stance
     stances_used = {p["stance"] for p in speaks}
     utterances = [p["utterance"] for p in speaks if p.get("utterance")]
     distinct_utterances = len(set(utterances))
@@ -302,11 +310,16 @@ def action_space_adequacy(
         # no stance, so it widens the action space beyond vote-broadcasting; a run
         # exercising it is visible here even though it never moves the stance tally.
         "n_consider": n_consider,
+        # REBUT usage (R27): a rebut is a SPEAK framed as pushback — it does state a
+        # position (so it counts as stated), but tracking it separately shows how much
+        # of the discourse is active disagreement vs plain endorsement.
+        "n_rebut": n_rebut,
         "consider_rate": (n_consider / n_actions) if n_actions else 0.0,
+        "rebut_rate": (n_rebut / n_actions) if n_actions else 0.0,
         "abstain_rate": (n_abstain / n_actions) if n_actions else 0.0,
         "distinct_stances_used": len(stances_used),
         "distinct_utterances": distinct_utterances,
-        "utterance_uniqueness": (distinct_utterances / n_speak) if n_speak else 0.0,
+        "utterance_uniqueness": (distinct_utterances / n_stated) if n_stated else 0.0,
     }
     if stances is not None:
         out["stance_coverage"] = (len(stances_used) / len(stances)) if stances else 0.0
@@ -321,10 +334,11 @@ def _adequacy_flags(m: dict[str, Any]) -> list[str]:
     is a reason a low homogeneity reading might be an artifact of the action space
     rather than genuine consensus."""
     flags = []
-    if m["n_actions"] > 0 and m["n_speak"] == 0 and m.get("n_consider", 0) == 0:
+    n_stated = m["n_speak"] + m.get("n_rebut", 0)  # SPEAK + REBUT both state a position
+    if m["n_actions"] > 0 and n_stated == 0 and m.get("n_consider", 0) == 0:
         flags.append("all_abstain")  # nothing but abstentions — the space collapsed
-    if m["n_speak"] > 0 and m["distinct_stances_used"] <= 1:
+    if n_stated > 0 and m["distinct_stances_used"] <= 1:
         flags.append("single_stance")  # positions collapsed to one option
-    if m["n_speak"] >= 2 and m["utterance_uniqueness"] < 0.5:
+    if n_stated >= 2 and m["utterance_uniqueness"] < 0.5:
         flags.append("low_utterance_variety")  # agents repeating the same wording
     return flags

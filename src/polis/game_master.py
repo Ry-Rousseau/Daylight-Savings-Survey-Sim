@@ -44,6 +44,8 @@ class GameMaster:
             return self._resolve_speak(action, actor_label, neighbors, now)
         if action.action_type is ActionType.SHARE_CONSIDERATION:
             return self._resolve_consideration(action, actor_label, neighbors, now)
+        if action.action_type is ActionType.REBUT:
+            return self._resolve_rebut(action, actor_label, neighbors, now)
         raise ValueError(f"No resolution logic for action type {action.action_type!r} (R24)")
 
     def _resolve_abstain(self) -> list[Effect]:
@@ -89,3 +91,26 @@ class GameMaster:
             )
             for listener in neighbors
         ]
+
+    def _resolve_rebut(
+        self, action: Action, actor_label: str, neighbors: Sequence[str], now: float
+    ) -> list[Effect]:
+        # A rebut is a SPEAK framed as active *pushback* against the prevailing view:
+        # it reaches listeners as a "pushed back" memory and, since it still states a
+        # position, emits a WorldUpdate for that stance (unlike a stanceless
+        # consideration). This gives a minority an explicit way to resist rather than
+        # only quietly hold or flip (R11 faction persistence). Malformed -> no-op.
+        if not action.is_valid_rebut():
+            return []
+        effects: list[Effect] = [
+            MemoryWrite(
+                target_agent_id=listener,
+                text=f"{actor_label} pushed back: {action.utterance}",
+                kind=KIND_HEARD,
+                importance=HEARD_IMPORTANCE,
+                created_at=now,
+            )
+            for listener in neighbors
+        ]
+        effects.append(WorldUpdate(stance=action.stance))
+        return effects

@@ -20,20 +20,21 @@ from typing import Any
 
 from pydantic import BaseModel
 
-ACTION_SPACE_VERSION = 2
+ACTION_SPACE_VERSION = 3
 
 
 class ActionType(str, Enum):
     SPEAK = "speak"
     ABSTAIN = "abstain"
     SHARE_CONSIDERATION = "share_consideration"
+    REBUT = "rebut"
 
 
 class Action(BaseModel):
-    """One agent's chosen action for a tick. ``stance``/``utterance`` are set only
-    for SPEAK, ``consideration`` only for SHARE_CONSIDERATION; all are optional in
-    the schema (OpenRouter soft-enforces) and the Game Master validates them — a
-    malformed SPEAK or SHARE_CONSIDERATION resolves as a no-op."""
+    """One agent's chosen action for a tick. ``stance``/``utterance`` are set for
+    SPEAK and REBUT, ``consideration`` only for SHARE_CONSIDERATION; all are optional
+    in the schema (OpenRouter soft-enforces) and the Game Master validates them — a
+    malformed SPEAK / REBUT / SHARE_CONSIDERATION resolves as a no-op."""
 
     action_type: ActionType
     stance: str | None = None
@@ -52,6 +53,10 @@ class Action(BaseModel):
     def consider(cls, consideration: str) -> "Action":
         return cls(action_type=ActionType.SHARE_CONSIDERATION, consideration=consideration)
 
+    @classmethod
+    def rebut(cls, stance: str, utterance: str) -> "Action":
+        return cls(action_type=ActionType.REBUT, stance=stance, utterance=utterance)
+
     def is_valid_speak(self) -> bool:
         return (
             self.action_type is ActionType.SPEAK
@@ -65,6 +70,15 @@ class Action(BaseModel):
         return (
             self.action_type is ActionType.SHARE_CONSIDERATION
             and bool(self.consideration)
+        )
+
+    def is_valid_rebut(self) -> bool:
+        # A rebut states a position (stance) framed as active pushback against what
+        # was heard; like a SPEAK it needs both a stance and the counter-argument text.
+        return (
+            self.action_type is ActionType.REBUT
+            and bool(self.stance)
+            and bool(self.utterance)
         )
 
 

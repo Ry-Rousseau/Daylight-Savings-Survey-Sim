@@ -88,6 +88,11 @@ def _consider(tick, agent_id, consideration):
             "payload": {"action_type": "share_consideration", "consideration": consideration}}
 
 
+def _rebut(tick, agent_id, stance, utterance):
+    return {"event_type": EVENT_ACTION, "tick": tick, "agent_id": agent_id,
+            "payload": {"action_type": "rebut", "stance": stance, "utterance": utterance}}
+
+
 class _TableEmbedder:
     """Maps a text to a fixed vector via a lookup table; handles str or list like the
     real EmbeddingModel (single -> (d,), list -> (n, d))."""
@@ -119,6 +124,23 @@ def test_consideration_contributes_no_stance_or_utterance():
     run = FakeRun([_speak_u(0, "a1", "X", "later light"), _consider(0, "a2", "my evenings matter")], ticks=1)
     assert stance_distribution(run) == {"X": 1}
     assert latest_utterances(run) == {"a1": "later light"}
+
+
+def test_rebut_counts_as_an_expressed_stance():
+    # A REBUT states a position (framed as pushback), so unlike a consideration it
+    # DOES count in the stance and utterance reads (ADR 0018).
+    run = FakeRun([_speak_u(0, "a1", "X", "u1"), _rebut(0, "a2", "Y", "that ignores night workers")], ticks=1)
+    assert stance_distribution(run) == {"X": 1, "Y": 1}
+    assert latest_utterances(run) == {"a1": "u1", "a2": "that ignores night workers"}
+
+
+def test_adequacy_reports_rebut_usage():
+    run = FakeRun([_speak_u(0, "a1", "X", "u1"), _rebut(0, "a2", "Y", "u2"), _rebut(1, "a3", "Z", "u3")], ticks=2)
+    m = action_space_adequacy(run, stances=["X", "Y", "Z"])
+    assert m["n_rebut"] == 2 and m["n_speak"] == 1
+    assert m["rebut_rate"] == pytest.approx(2 / 3)
+    assert m["distinct_stances_used"] == 3      # rebut stances count toward coverage
+    assert "single_stance" not in m["flags"]
 
 
 def test_trajectory_has_one_row_per_tick():

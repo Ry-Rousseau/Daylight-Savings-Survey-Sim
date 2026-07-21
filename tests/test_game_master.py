@@ -81,8 +81,34 @@ def test_consider_helper_and_validity():
 
 
 def test_action_space_version_bumped_and_schema_permits_consideration():
-    assert ACTION_SPACE_VERSION == 2
+    assert ACTION_SPACE_VERSION == 3
     schema = action_json_schema([STANCE])
     assert "share_consideration" in schema["properties"]["action_type"]["enum"]
     assert schema["properties"]["consideration"] == {"type": "string"}
     assert schema["required"] == ["action_type"]  # consideration GM-validated, not required
+
+
+# --- REBUT: active pushback that still states a position (ADR 0018, R23/R24/R11) --
+
+def test_rebut_writes_pushback_and_emits_world_update():
+    # A rebut reaches neighbours as a "pushed back" memory AND emits a WorldUpdate
+    # (it still states a position — unlike a stanceless consideration).
+    action = Action.rebut(STANCE, "Earlier sunrises ignore everyone who works evenings.")
+    effects = GM.resolve(action, actor_label="a bartender", neighbors=["b", "c"], now=3.0)
+    writes = [e for e in effects if isinstance(e, MemoryWrite)]
+    assert {w.target_agent_id for w in writes} == {"b", "c"}
+    assert all(w.kind == KIND_HEARD and "a bartender pushed back:" in w.text for w in writes)
+    updates = [e for e in effects if isinstance(e, WorldUpdate)]
+    assert len(updates) == 1 and updates[0].stance == STANCE
+
+
+def test_malformed_rebut_degrades_to_noop():
+    assert GM.resolve(Action(action_type=ActionType.REBUT), actor_label="x", neighbors=["b"], now=0.0) == []
+
+
+def test_rebut_helper_and_validity():
+    a = Action.rebut(STANCE, "no")
+    assert a.action_type is ActionType.REBUT and a.stance == STANCE
+    assert a.is_valid_rebut() and not a.is_valid_speak() and not a.is_valid_consideration()
+    assert not Action(action_type=ActionType.REBUT, stance=STANCE).is_valid_rebut()  # needs utterance
+    assert "rebut" in action_json_schema([STANCE])["properties"]["action_type"]["enum"]

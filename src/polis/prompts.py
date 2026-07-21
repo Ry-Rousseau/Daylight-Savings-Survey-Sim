@@ -78,6 +78,9 @@ def action_user(topic: str, stances: Sequence[str], *, memories: Sequence[str] =
         '- To share a personal consideration or stake without taking a side, set "action_type" '
         'to "share_consideration" and put a first-person reason (one or two sentences) in '
         '"consideration" — what this means for your life, not which option you back.\n'
+        '- To push back against something you have heard, set "action_type" to "rebut", choose '
+        'the stance you are defending, and write a short "utterance" that argues against the '
+        'view you disagree with.\n'
         '- To stay quiet this turn, set "action_type" to "abstain". Say nothing if you have '
         "nothing you feel like adding — staying quiet is a fine choice.\n"
         "Available stances:\n" + "\n".join(f"- {s}" for s in stances)
