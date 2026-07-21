@@ -79,21 +79,30 @@ class Agent:
         stances: Sequence[str],
         world_view: WorldView,
         now: float = 0.0,
+        discourse_mode: str = "broadcast",
     ) -> ActionDecision:
-        """Decide this tick's action (SPEAK a stance, SHARE_CONSIDERATION a reason
-        without a stance, or ABSTAIN), returning the action plus its retrieval
-        provenance (R29).
+        """Decide this tick's action (SPEAK a stance, REBUT a heard view,
+        SHARE_CONSIDERATION a reason without a stance, or ABSTAIN), returning the
+        action plus its retrieval provenance (R29).
 
         Mirrors ``answer`` — retrieve → inject → constrained decode — but emits an
         action from the closed vocabulary (R23) rather than a survey choice.
         ``world_view`` is the tier-2 read seam; P2 agents condition only on their
         own memory (the shared tally is not yet a live consensus pressure).
 
+        ``discourse_mode`` gates which actions are offered: ``broadcast`` (all) or
+        ``deliberate`` (only SHARE_CONSIDERATION/ABSTAIN — no stance is broadcast, so
+        the per-turn vote-contagion is removed and stance is read only at survey time).
+
         A committed agent (R11) short-circuits: it SPEAKs its fixed stance with no
         model call and no retrieval, since its position is immovable by design.
         """
         if self.committed_stance is not None:
             return self._committed_decision()
+        if discourse_mode == "deliberate":
+            allowed = [ActionType.SHARE_CONSIDERATION.value, ActionType.ABSTAIN.value]
+        else:
+            allowed = [t.value for t in ActionType]
         query_emb = self.embedder.encode(topic)
         scored = self.memory.retrieve_scored(query_emb, now, self.retrieval)
         provenance = RetrievalProvenance(
@@ -106,12 +115,14 @@ class Agent:
                 for r, (rec, imp, rel, tot) in scored
             ],
         )
-        user = prompts.action_user(topic, stances, memories=[r.text for r, _ in scored])
+        user = prompts.action_user(
+            topic, stances, memories=[r.text for r, _ in scored], mode=discourse_mode
+        )
         raw = self.client.decide(
             system=self.persona.system_prompt(),
             user=user,
-            schema=action_json_schema(list(stances)),
-            valid_types={t.value for t in ActionType},
+            schema=action_json_schema(list(stances), allowed),
+            valid_types=set(allowed),
             temperature=self.persona.temperature,
         )
         action = Action(

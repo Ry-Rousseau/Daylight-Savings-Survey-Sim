@@ -68,11 +68,17 @@ class DynamicsConfig:
     # (every neighbour); a cap subsamples them so consensus pressure is tunable
     # independently of the graph's density.
     exchange_volume: int | None = None
+    # Discourse mode: ``broadcast`` (agents state a stance each tick — the vote-
+    # contagion that drives convergence) or ``deliberate`` (agents only exchange
+    # considerations, stance read at survey time). Recorded in the run config (R17).
+    discourse_mode: str = "broadcast"
     seed: int | None = None
 
     def __post_init__(self):
         if self.update_scheme not in ("simultaneous", "sequential"):
             raise ValueError(f"unknown update_scheme {self.update_scheme!r}")
+        if self.discourse_mode not in ("broadcast", "deliberate"):
+            raise ValueError(f"unknown discourse_mode {self.discourse_mode!r}")
         if self.exchange_volume is not None and self.exchange_volume < 0:
             raise ValueError(f"exchange_volume must be >= 0, got {self.exchange_volume}")
 
@@ -302,6 +308,7 @@ class Simulation:
                 stances=self.dynamics.stances,
                 world_view=world_view,
                 now=float(tick),
+                discourse_mode=self.dynamics.discourse_mode,
             )
 
         return decide
@@ -513,6 +520,7 @@ class Simulation:
             "ticks": ticks,
             "action_space_version": ACTION_SPACE_VERSION,
             "update_scheme": self.dynamics.update_scheme,
+            "discourse_mode": self.dynamics.discourse_mode,
             "topic": self.dynamics.topic,
             "stances": list(self.dynamics.stances),
             # Topology is a versioned run parameter (R4/R17): a structured descriptor

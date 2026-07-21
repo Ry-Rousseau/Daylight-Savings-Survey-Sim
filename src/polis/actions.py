@@ -82,17 +82,20 @@ class Action(BaseModel):
         )
 
 
-def action_json_schema(stances: list[str]) -> dict[str, Any]:
+def action_json_schema(stances: list[str], action_types: list[str] | None = None) -> dict[str, Any]:
     """json_schema for constrained action decoding (R20/R23).
 
     ``stances`` is the closed set of DST positions a SPEAK may express, so the
     stance vocabulary is not hardcoded. ``action_type`` is required; stance,
     utterance, and consideration are optional here and enforced by the Game Master.
+    ``action_types`` restricts which action types are offered (default: all) — the
+    ``deliberate`` discourse mode passes a subset so agents cannot broadcast a stance.
     """
+    types = action_types if action_types is not None else [t.value for t in ActionType]
     return {
         "type": "object",
         "properties": {
-            "action_type": {"type": "string", "enum": [t.value for t in ActionType]},
+            "action_type": {"type": "string", "enum": types},
             "stance": {"type": "string", "enum": list(stances)},
             "utterance": {"type": "string"},
             "consideration": {"type": "string"},

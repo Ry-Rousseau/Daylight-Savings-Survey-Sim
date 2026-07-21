@@ -115,6 +115,18 @@ def test_abstain_writes_nothing():
     assert run.events(event_type=EVENT_MEMORY_WRITE) == []
 
 
+def test_deliberate_mode_exchanges_considerations_without_moving_the_tally():
+    # In deliberate mode agents share considerations (reasons, no stance): they reach
+    # neighbours' memory but the stance tally never moves — the per-turn vote-contagion
+    # is removed (ADR 0018 / Part B). The mode is recorded in the run config (R17).
+    pop = Population([_agent("a1", {"action_type": "share_consideration", "consideration": "my evenings matter"}),
+                     _agent("a2", {"action_type": "share_consideration", "consideration": "I drive at dawn"})])
+    run = Simulation(pop, dynamics=DynamicsConfig(discourse_mode="deliberate")).run(1)
+    assert "shared:" in pop.by_id["a1"].memory.records[0].text  # heard the other's reason
+    assert pop.world.stance_tally == {}                          # no vote broadcast
+    assert run.config["discourse_mode"] == "deliberate"
+
+
 def _a2_provenance_hits(scheme: str) -> int:
     pop = _two_speakers()
     run = Simulation(pop, dynamics=DynamicsConfig(update_scheme=scheme)).run(1)

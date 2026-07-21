@@ -64,15 +64,35 @@ def survey_user(text: str, options: Iterable[str], *, memories: Sequence[str] = 
     return memory_block(memories) + body
 
 
-def action_user(topic: str, stances: Sequence[str], *, memories: Sequence[str] = ()) -> str:
+def action_user(
+    topic: str, stances: Sequence[str], *, memories: Sequence[str] = (), mode: str = "broadcast"
+) -> str:
     """The per-tick action decision, prefixed with any retrieved memories.
 
     Abstaining is offered as a first-class choice (R25): forcing everyone to
     speak every tick is itself a homogenizing pressure, so the prompt makes
     staying quiet a legitimate option rather than a failure.
+
+    ``mode`` (R28-adjacent discourse knob):
+    - ``broadcast`` (default): agents may state a stance (SPEAK/REBUT) each turn —
+      the vote-broadcasting mode whose contagion drives convergence.
+    - ``deliberate``: agents only *share considerations* (reasons/stakes, no stance)
+      or abstain; their position is never announced during the run and is asked
+      separately at survey time. Tests whether reason-exchange, stripped of the
+      per-turn vote signal, still homogenizes the eventual vote.
     """
-    body = (
-        f"You are talking with your neighbors about {topic}. Decide what you do this turn.\n"
+    intro = f"You are talking with your neighbors about {topic}. Decide what you do this turn.\n"
+    if mode == "deliberate":
+        body = intro + (
+            '- To add to the discussion, set "action_type" to "share_consideration" and put a '
+            'first-person reason or stake (one or two sentences) in "consideration" — what this '
+            'means for your life. Do NOT announce which option you back; just share your '
+            "perspective.\n"
+            '- To stay quiet this turn, set "action_type" to "abstain" — a fine choice if you '
+            "have nothing to add.\n"
+        )
+        return memory_block(memories) + body
+    body = intro + (
         '- To speak up, set "action_type" to "speak", choose the stance that matches your '
         'view, and write a short, natural "utterance" (one or two sentences) in your own voice.\n'
         '- To share a personal consideration or stake without taking a side, set "action_type" '
