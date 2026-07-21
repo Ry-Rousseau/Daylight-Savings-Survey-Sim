@@ -6,7 +6,7 @@ A surveyable **silicon sample of United States** — ~100 census-seeded LLM pers
 - **How we work:** `docs/conventions.md` (house style) · `docs/ARCHITECTURE.md` (the R-number architecture rules) · `CLAUDE.md` (routing).
 - **Where we are:** `docs/status.md`.
 
-## Phase map
+## Phase map   
 
 Built as a **walking skeleton, thickened one axis of complexity at a time** — every phase boundary is a runnable checkpoint isolating exactly one new unknown. Full source of truth (spike questions, layers touched, rules activated): `docs/PHASE_PLAN.md`.
 
@@ -23,6 +23,8 @@ Built as a **walking skeleton, thickened one axis of complexity at a time** — 
 | **8 — Interactive GUI** *(optional/stretch)* | Thin sliders-and-run front-end (Streamlit/Gradio) over the existing config fields + live divergence plot; UI calls `src/polis`, adds no engine logic | Non-technical user runs a sim from sliders; every knob maps to a logged run-config field |
 
 Phases are re-planned deliberately via ADRs in `docs/adr/`, never by drift.
+
+Simulations were still in dev, whereas the persona pipeline was finished on project end.
 
 ## Quickstart (dev)
 
