@@ -46,3 +46,37 @@ DST_QUESTION_PLAIN = SurveyQuestion(
     text="What should the United States do about daylight saving time?",
     options=DST_OPTIONS_PLAIN,
 )
+
+# --- YouGov calibration questions (reference/survey_validation) -----------------
+# Verbatim wording from the YouGov "Daylight Saving Time" survey (1000 U.S. adults,
+# March 6-9 2023), so the silicon sample is asked exactly what real respondents were
+# — the calibration target. Real toplines are recorded here as the ground truth to
+# score against. Q4 is de-conditionalised (the original was asked only of those who
+# said "eliminate" in Q2, prefaced "You indicated…"); we drop that preface so it can be
+# asked of everyone as a standalone item.
+
+YOUGOV_Q2_ELIMINATE = SurveyQuestion(
+    text=("Would you like to see the changing of the clocks eliminated, so people no "
+          "longer change their clocks twice per year?"),
+    options=["Yes, I would", "No, I would not", "Not sure"],
+)
+# YouGov topline: Yes 62% · No 21% · Not sure 17%
+YOUGOV_Q2_TOPLINE = {"Yes, I would": 0.62, "No, I would not": 0.21, "Not sure": 0.17}
+
+YOUGOV_Q4_PERMANENT = SurveyQuestion(
+    text="Which time would you like to make permanent?",
+    options=[
+        "Permanent Daylight Saving Time (later sunrises and sunsets)",
+        "Permanent Standard Time (earlier sunrises and sunsets)",
+        "No preference",
+        "Not sure",
+    ],
+)
+# YouGov topline (asked of eliminators): Permanent DST 50% · Permanent Standard 31% ·
+# No preference 12% · Not sure 7%.
+YOUGOV_Q4_TOPLINE = {
+    "Permanent Daylight Saving Time (later sunrises and sunsets)": 0.50,
+    "Permanent Standard Time (earlier sunrises and sunsets)": 0.31,
+    "No preference": 0.12,
+    "Not sure": 0.07,
+}

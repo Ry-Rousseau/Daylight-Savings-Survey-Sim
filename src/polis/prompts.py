@@ -14,6 +14,7 @@ def persona_system(
     description: str,
     values: Sequence[str] = (),
     dispositions: Sequence[str] = (),
+    location: str = "New York City",
 ) -> str:
     """System prompt anchoring the agent to its persona (R7).
 
@@ -23,9 +24,13 @@ def persona_system(
     content is stated as load-bearing, not decorative. With **no** values or
     dispositions the string is byte-identical to the P0–P4 thin prompt, so the empty
     persona survives unchanged as the R16 null-model baseline.
+
+    ``location`` defaults to ``"New York City"`` so the P0–P5 personas are unchanged;
+    the P6 census pipeline (ADR 0015 USA pivot) passes each persona's real US locale
+    (e.g. a state) so the population isn't silently all-NYC.
     """
     base = (
-        f"You are {description} You live in New York City. "
+        f"You are {description} You live in {location}. "
         "Answer the survey as this person would, in their own voice and interests."
     )
     if not values and not dispositions:
@@ -75,6 +80,73 @@ def action_user(topic: str, stances: Sequence[str], *, memories: Sequence[str] =
         "Available stances:\n" + "\n".join(f"- {s}" for s in stances)
     )
     return memory_block(memories) + body
+
+
+# --- P6 persona-seeding pipeline (Stage 2, ADR 0016) --------------------------
+#
+# Two seed-time LLM steps that turn a census row + real donor-matched disposition
+# items into an enactable persona. The disposition items are *fixed inputs* borrowed
+# from a real survey respondent (model-free); the LLM only elaborates them, never
+# invents them. The reflection sees only the measures (no demographics — withholding
+# beats instructing-to-ignore); the backstory additionally gets demographics, which the
+# narrative legitimately needs.
+
+BACKSTORY_SYSTEM = (
+    "You write short, grounded first-person character sketches for a social "
+    "simulation. You are given fixed facts about a real-ish person and must stay "
+    "strictly consistent with them — never contradict a fact, never invent a new "
+    "strong trait beyond what is given."
+)
+
+
+def backstory_user(demographics: str, location: str, disposition_lines: Sequence[str]) -> str:
+    """The backstory step: elaborate the fixed demographic + disposition inputs into
+    a short first-person narrative that *enacts* the trait measures (an LLM can act a
+    story more consistently than a table of scores). Demographics belong here (unlike
+    the reflection step) — the narrative legitimately needs them. No survey-topic
+    avoidance instruction: nothing in the inputs relates to daylight saving, so naming
+    it would only prime the concept it aims to suppress."""
+    traits = "\n".join(f"- {line}" for line in disposition_lines) or "- (no extra measures)"
+    return (
+        f"Fixed facts about this person:\n- lives in {location}\n- {demographics}\n\n"
+        f"Fixed personality / disposition measures (from a matched survey respondent):\n{traits}\n\n"
+        "Write a 4-5 sentence first-person backstory for this person that is fully "
+        "consistent with every fact and measure above and lets the measures show "
+        "through in how they live — their everyday life, in their own natural voice."
+    )
+
+
+REFLECTION_SYSTEM = (
+    "You are a group facilitator with training in personality psychology and "
+    "behavioral economics. Observing a person's measured traits, values, and "
+    "attitudes, you describe how they participate in a group discussion — their "
+    "temperament, how they hold and voice a view, and their risk posture. You reason "
+    "only from the measures provided. You reply with strict JSON only."
+)
+
+
+def reflection_user(disposition_lines: Sequence[str]) -> str:
+    """The reflection step (Variant A, ADR 0016): synthesize the always-on R7 anchor
+    **from the real disposition measures alone**. Demographics are deliberately *not*
+    shown here — the reflection's job is to translate fixed trait/attitude measures into
+    behavioral implications, and it doesn't need demographics for that. Withholding them
+    is a stronger safeguard than instructing the model to "ignore stereotype": the tokens
+    can't bias the forward pass if they were never in the prompt. (The backstory step,
+    which legitimately needs demographics, keeps them.) Returns JSON with ``values`` and
+    ``dispositions`` — the shape ``persona_system`` composes."""
+    traits = "\n".join(f"- {line}" for line in disposition_lines) or "- (no measures provided)"
+    return (
+        f"Measured traits, values, and attitudes:\n{traits}\n\n"
+        "From these measures alone, describe how this person shows up in a group "
+        "discussion. Reply with strict JSON of the form:\n"
+        '{"values": ["..."], "dispositions": ["..."]}\n'
+        "- values: 1-2 short phrases naming what this person cares about / weighs "
+        "most (e.g. \"steady, concrete security over novelty\").\n"
+        "- dispositions: 1-2 short phrases naming their temperament and how they hold "
+        "a view — including risk posture (e.g. \"outgoing but change-averse; anchors "
+        "to what has worked before\").\n"
+        "JSON only, no prose."
+    )
 
 
 def poignancy(text: str) -> str:

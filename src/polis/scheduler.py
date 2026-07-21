@@ -105,8 +105,11 @@ def run_with_retry(fn: Callable[[], R], config: SchedulerConfig) -> tuple[R | No
 class Scheduler:
     """Runs per-agent-per-tick units concurrently, bounded and retried (R5)."""
 
-    def __init__(self, config: SchedulerConfig | None = None):
+    def __init__(self, config: SchedulerConfig | None = None, *, on_progress=None):
         self.config = config or SchedulerConfig()
+        # Optional no-arg callback fired once as each unit completes (progress/UI hook).
+        # Called on the gathering thread, after the result is stored; keep it cheap.
+        self.on_progress = on_progress
 
     def map(
         self, units: Sequence[tuple[K, Callable[[], R]]]
@@ -131,6 +134,8 @@ class Scheduler:
                 i = index_of[fut]
                 result, timing = fut.result()
                 results[i] = (units[i][0], result, timing)
+                if self.on_progress is not None:
+                    self.on_progress()
         return results  # type: ignore[return-value]  # every slot filled above
 
 

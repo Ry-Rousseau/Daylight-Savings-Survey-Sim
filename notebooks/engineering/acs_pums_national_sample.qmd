@@ -1,0 +1,297 @@
+---
+title: "ACS PUMS National Sample (n=100)"
+format: html
+params:
+  year: 2024
+  survey: "acs1"
+  n: 100
+  seed: 42
+  min_age: 18
+---
+
+## Aim
+
+Draw a nationally-representative, person-level sample of `n` US residents from the most
+recent 1-year ACS PUMS extract (all 50 states + DC), weighted by `PWGTP` so the sample
+preserves joint distributions across demographic variables rather than hitting quotas
+manually. Output feeds the seed-persona step of the `polis` pipeline (`src/`), which
+reads the resulting CSV — this notebook does not touch `src/`. Reusable/rerunnable: every
+knob lives in the config cell below, and the pull/recode/sample/summarize steps are each
+plain functions you can call again with different arguments (different year, N, or seed)
+without re-editing the notebook body. When Quarto is available, the same knobs are exposed
+as render params — `quarto render acs_pums_national_sample.qmd -P year:2023 -P n:50`.
+
+## Imports
+
+```{r}
+#| label: imports
+suppressPackageStartupMessages({
+  library(tidycensus)
+  library(dplyr)
+  library(purrr)
+  library(tidyr)
+  library(stringr)
+  library(readr)
+})
+```
+
+## Config — edit and re-run downward
+
+```{r}
+#| label: config
+CENSUS_YEAR   <- params$year
+CENSUS_SURVEY <- params$survey      # "acs1" (1-year) — smallest geography, most current
+SAMPLE_N      <- params$n
+SEED          <- params$seed        # fixed seed -> exact same 100 people every rerun
+MIN_AGE       <- params$min_age     # voting-age population only (project_brief.md)
+TEST_STATE    <- "DC"               # small state for the pipeline smoke-test, §2
+
+# ACS PUMS variables: demographics + occupation/industry + family circumstances.
+# PUMA/STATE/SERIALNO/SPORDER/PWGTP are returned by get_pums() automatically.
+VARIABLES <- c(
+  "PUMA", "SEX", "AGEP", "RAC1P", "HISP", "SCHL", "MAR",
+  "RELSHIPP", "PAOC", "NPF", "FER", "OCCP", "NAICSP", "PWGTP"
+)
+# PUMA is a geographic ID (labels only make sense scoped within a state, not as a flat
+# national lookup); AGEP/NPF/PWGTP are already-numeric — skip the dictionary label pass.
+LABEL_VARS <- setdiff(VARIABLES, c("PUMA", "PWGTP", "AGEP", "NPF"))
+
+ENV_PATH <- "../../.env"
+OUT_PATH <- "../../data/acs_pums_sample_n100.csv"
+
+# Standard 4-region Census Bureau state assignment (50 states + DC).
+REGION_LOOKUP <- tribble(
+  ~state, ~region,
+  "CT", "Northeast", "ME", "Northeast", "MA", "Northeast", "NH", "Northeast",
+  "RI", "Northeast", "VT", "Northeast", "NJ", "Northeast", "NY", "Northeast", "PA", "Northeast",
+  "IL", "Midwest", "IN", "Midwest", "MI", "Midwest", "OH", "Midwest", "WI", "Midwest",
+  "IA", "Midwest", "KS", "Midwest", "MN", "Midwest", "MO", "Midwest", "NE", "Midwest",
+  "ND", "Midwest", "SD", "Midwest",
+  "DE", "South", "FL", "South", "GA", "South", "MD", "South", "NC", "South", "SC", "South",
+  "VA", "South", "DC", "South", "WV", "South", "AL", "South", "KY", "South", "MS", "South",
+  "TN", "South", "AR", "South", "LA", "South", "OK", "South", "TX", "South",
+  "AZ", "West", "CO", "West", "ID", "West", "MT", "West", "NV", "West", "NM", "West",
+  "UT", "West", "WY", "West", "AK", "West", "CA", "West", "HI", "West", "OR", "West", "WA", "West"
+)
+```
+
+## Reusable functions
+
+```{r}
+#| label: functions
+
+#' Read CENSUS_API from the project .env without ever printing it.
+load_census_key <- function(env_path) {
+  lines <- readLines(env_path, warn = FALSE)
+  line <- lines[grepl("^CENSUS_API=", lines)]
+  stopifnot("CENSUS_API not found in .env" = length(line) >= 1)
+  trimws(gsub("[\"']", "", sub("^CENSUS_API=", "", line[1])))
+}
+
+#' Pull ACS PUMS person records. `states` can be a single code, a vector, or "all".
+#' Filters to MIN_AGE+ server-side (variables_filter) to keep the national download small.
+pull_pums <- function(states, variables, year, survey, min_age, key, show_call = FALSE) {
+  get_pums(
+    variables = variables,
+    state = states,
+    survey = survey,
+    year = year,
+    variables_filter = list(AGEP = min_age:99),
+    recode = FALSE,   # recode=TRUE only covers 2017-2022; we want the current vintage
+    key = key,
+    show_call = show_call
+  )
+}
+
+#' Generic recoder: joins raw PUMS codes against tidycensus's bundled data dictionary
+#' (`pums_variables`) so any categorical variable gets a `<VAR>_label` column, for any
+#' year/survey the dictionary covers — no hand-typed lookup tables per variable.
+#'
+#' OCCP/NAICSP quirk: the dictionary documents "not applicable" as blank-padding
+#' (e.g. "bbbb"), but the live API actually flags it with a trailing "N" (e.g. "000N",
+#' "N") for these two fields specifically — confirmed empirically (every other
+#' recoded variable in the national pull had zero unmapped codes; only OCCP/NAICSP
+#' did, both entirely on this one sentinel). Fall back to the dictionary's own N/A
+#' label for that variable whenever a join miss matches the `^0*N$` pattern.
+recode_from_dictionary <- function(df, vars, year, survey) {
+  dict <- tidycensus::pums_variables %>%
+    filter(survey == !!survey, year == !!year, var_code %in% vars, data_type == "chr") %>%
+    distinct(var_code, val_min, val_label)
+
+  for (v in vars) {
+    sub <- dict %>% filter(var_code == v)
+    if (nrow(sub) == 0) next  # not a labeled categorical in this vintage — leave as-is
+    lookup <- setNames(sub$val_label, sub$val_min)
+    labels <- unname(lookup[df[[v]]])
+
+    na_flag_rows <- is.na(labels) & grepl("^0*N$", df[[v]])
+    if (any(na_flag_rows)) {
+      na_label <- sub$val_label[grepl("^b+$", sub$val_min)]
+      if (length(na_label) == 1) labels[na_flag_rows] <- na_label
+    }
+    df[[paste0(v, "_label")]] <- labels
+  }
+  df
+}
+
+#' Standard OMB race/ethnicity collapsing: Hispanic origin takes precedence over race,
+#' matching how ACS national summary tables report race/ethnicity.
+derive_race_ethnicity <- function(df) {
+  df %>% mutate(
+    race_ethnicity = case_when(
+      HISP != "01" ~ "Hispanic or Latino (any race)",
+      RAC1P == "1" ~ "White alone",
+      RAC1P == "2" ~ "Black or African American alone",
+      RAC1P %in% c("3", "4", "5") ~ "American Indian or Alaska Native alone",
+      RAC1P == "6" ~ "Asian alone",
+      RAC1P == "7" ~ "Native Hawaiian or Other Pacific Islander alone",
+      RAC1P == "8" ~ "Some other race alone",
+      RAC1P == "9" ~ "Two or more races",
+      TRUE ~ NA_character_
+    )
+  )
+}
+
+#' State abbreviation/name + Census region from the STATE FIPS code get_pums() returns.
+derive_region <- function(df) {
+  state_tbl <- tidycensus::fips_codes %>% distinct(state, state_code, state_name)
+  df %>%
+    left_join(state_tbl, by = c("STATE" = "state_code")) %>%
+    left_join(REGION_LOOKUP, by = "state")
+}
+
+#' Weighted probability sample (not a manual quota system) — preserves joint
+#' distributions across variables the way a quota-cell design cannot.
+draw_weighted_sample <- function(df, n, seed, weight_col = "PWGTP") {
+  set.seed(seed)
+  df %>% slice_sample(n = n, weight_by = .data[[weight_col]], replace = FALSE)
+}
+
+#' Sample marginal % vs PWGTP-weighted population marginal % (the national ACS total
+#' estimate), per group_var — the sanity check for how close n=100 landed.
+summarize_marginals <- function(sample_df, population_df, group_vars, weight_col = "PWGTP") {
+  map_dfr(group_vars, function(g) {
+    pop <- population_df %>%
+      group_by(.data[[g]]) %>%
+      summarise(weighted_n = sum(.data[[weight_col]]), .groups = "drop") %>%
+      mutate(population_pct = 100 * weighted_n / sum(weighted_n)) %>%
+      select(-weighted_n)
+    samp <- sample_df %>%
+      count(.data[[g]], name = "sample_n") %>%
+      mutate(sample_pct = 100 * sample_n / sum(sample_n)) %>%
+      select(-sample_n)
+    full_join(pop, samp, by = g) %>%
+      mutate(sample_pct = replace_na(sample_pct, 0), variable = g, category = as.character(.data[[g]])) %>%
+      select(variable, category, population_pct, sample_pct)
+  })
+}
+
+#' Orchestrator — the single rerun entry point. test_mode pulls one small state with the
+#' full variable set (the pipeline smoke-test); otherwise pulls every state + DC.
+run_pipeline <- function(states, year, survey, min_age, key, test_mode = FALSE) {
+  raw <- pull_pums(states, VARIABLES, year, survey, min_age, key)
+  recoded <- raw %>%
+    recode_from_dictionary(LABEL_VARS, year, survey) %>%
+    derive_race_ethnicity() %>%
+    derive_region()
+  list(raw = raw, recoded = recoded, test_mode = test_mode)
+}
+```
+
+## 1. Load the Census API key
+
+```{r}
+#| label: load-key
+key <- load_census_key(ENV_PATH)
+cat("Census API key loaded, length:", nchar(key), "\n")  # never print the key itself
+```
+
+## 2. Smoke test — one small state, full variable set
+
+Confirms the pull → recode → derive pipeline works end to end before spending the time
+on all 50 states + DC.
+
+```{r}
+#| label: smoke-test
+test_result <- run_pipeline(TEST_STATE, CENSUS_YEAR, CENSUS_SURVEY, MIN_AGE, key, test_mode = TRUE)
+cat("test rows:", nrow(test_result$recoded), "\n")
+test_result$recoded %>%
+  select(STATE, state, region, SEX_label, race_ethnicity, SCHL_label, OCCP_label) %>%
+  head(5) %>%
+  print()
+stopifnot(nrow(test_result$recoded) > 0)
+cat("SMOKE TEST PASSED\n")
+```
+
+## 3. Full national pull
+
+```{r}
+#| label: full-pull
+t0 <- Sys.time()
+national <- run_pipeline("all", CENSUS_YEAR, CENSUS_SURVEY, MIN_AGE, key, test_mode = FALSE)
+cat("elapsed:", round(difftime(Sys.time(), t0, units = "secs"), 1), "sec\n")
+cat("national rows:", nrow(national$recoded), "\n")
+cat("distinct states+DC:", n_distinct(national$recoded$STATE), "\n")
+cat("weighted total (", MIN_AGE, "+ population estimate):",
+    format(sum(national$recoded$PWGTP), big.mark = ","), "\n")
+cat("unmapped region joins:", sum(is.na(national$recoded$region)), "rows\n")
+```
+
+## 4. Weighted sample of n
+
+Weighted by `PWGTP` (the number of people in the population each record represents) —
+probability-proportional-to-size sampling, not a manual quota system, so joint
+distributions across sex/race/age/geography are preserved rather than forced.
+
+```{r}
+#| label: weighted-sample
+sample_n <- draw_weighted_sample(national$recoded, SAMPLE_N, SEED)
+cat("sample rows:", nrow(sample_n), "\n")
+```
+
+## 5. Clean output
+
+```{r}
+#| label: clean-output
+clean <- sample_n %>%
+  transmute(
+    person_id = paste0(SERIALNO, "_", SPORDER),
+    state_abbr = state,
+    state_name = state_name,
+    region = region,
+    puma = PUMA,
+    sex = SEX_label,
+    age = AGEP,
+    race_ethnicity = race_ethnicity,
+    hispanic_origin = HISP_label,
+    education = SCHL_label,
+    occupation = OCCP_label,
+    industry = NAICSP_label,
+    marital_status = MAR_label,
+    household_relationship = RELSHIPP_label,
+    presence_of_children = PAOC_label,
+    family_size = NPF,
+    gave_birth_past_year = FER_label,
+    person_weight = PWGTP
+  )
+head(clean, 5)
+write_csv(clean, OUT_PATH)
+cat("wrote", nrow(clean), "rows to", OUT_PATH, "\n")
+```
+
+## 6. Sanity check — sample marginals vs national weighted marginals
+
+`population_pct` is the PWGTP-weighted national total from this same pull (the ACS
+estimate of the true population marginal); `sample_pct` is the unweighted share within
+the drawn n=100. Close alignment here is the evidence that weighted sampling, not a
+quota system, is doing its job.
+
+```{r}
+#| label: marginal-summary
+summary_tbl <- summarize_marginals(
+  sample_n %>% mutate(sex = SEX_label),
+  national$recoded %>% mutate(sex = SEX_label),
+  group_vars = c("sex", "race_ethnicity", "region")
+)
+print(summary_tbl, n = 30)
+```

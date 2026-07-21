@@ -16,9 +16,13 @@ __pycache__/
 # Notebooks
 .ipynb_checkpoints/
 
-# OS
+# OS / editor
 .DS_Store
 Thumbs.db
+.vscode/
+
+# sandbox scratch (leading-underscore temp files); runner scripts stay tracked
+sandbox/_*
 
 # Regenerable build data (see conventions.md); dir kept via .gitkeep.
 # output/figures/ stays tracked — figures have stable names and render on GitHub.

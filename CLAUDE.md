@@ -24,6 +24,6 @@
 - Python **3.11** via the project virtualenv `.venv` (pinned in `.python-version`). Run with `.venv/Scripts/python.exe` or activate `.venv`; don't use the bare `py`/`python` (that resolves to a different 3.12 / the Windows Store stub).
 
 ## Working rules (from conventions.md)
-- **Commits are the user's.** Never stage or commit; surface diffs and let the user drive. Branch per unit; never commit to `main`/`master`.
+- **Commits are the user's.** Never stage or commit without explicit approval; surface diffs and let the user drive. Working directly on `main` is fine (the user's chosen workflow) — no per-unit branch required — but the commit itself is always the user's call.
 - Source-first: a notebook that needs a capability means adding it to `src/` with a test, then calling it. Version via git tags, not `_V2` filenames.
 - Keep sessions scoped; end a state-changing session by updating `status.md` and writing the handoff.

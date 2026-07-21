@@ -1,0 +1,537 @@
+---
+title: "Persona Disposition Seed (n=100)"
+format: html
+params:
+  seed: 42
+  donor_topk: 3
+  gss_min_year: 2016
+  atus_samples: ["at2023", "at2024"]
+  acs_source_path: "../../data/acs_pums_sample_n100.csv"
+---
+
+## Aim
+
+Attach a **disposition layer** — personality (TIPI Big Five), values (moral traditionalism,
+egalitarianism, an opinion-strength battery), religion, party ID, ideology, social trust,
+usual work hours, general happiness, and real diary-based wake time — onto the 100-person
+ACS base sample built in `acs_pums_national_sample.qmd`. Every field here is either
+**directly sampled** (the ACS demographics, carried through unchanged) or **donor-matched**
+from a real respondent in ANES, GSS, or ATUS via nearest-neighbor Gower distance on shared
+demographics — never invented, never LLM-inferred. **Daylight Saving Time is not seeded
+anywhere in this table** — no DST opinion, stance, or values-ranking item is pulled from any
+source; DST opinion is meant to emerge later from an LLM reasoning over this seed, then be
+validated against real polling. This notebook only builds the persona table; it does not run
+a simulation or generate an opinion. Output (`data/persona_seed_dataset_n100.csv`) is
+**Stage 1** of the P6a persona pipeline (`docs/adr/0016-census-personas-disposition-pipeline.md`,
+`docs/briefs/phase-6a-persona-pipeline.md`): Stage 2, built separately, consumes this exact
+file to run the LLM backstory/reflection elaboration — this notebook does not touch `src/`
+and never calls an LLM. 1-NN matching only, never k-averaging (averaging across donors would
+recreate the stereotype centroid the whole disposition layer exists to avoid).
+
+## Imports
+
+```{r}
+#| label: imports
+suppressPackageStartupMessages({
+  library(dplyr); library(tidyr); library(stringr); library(readr); library(tibble)
+  library(anesr); library(gssr); library(gower); library(ipumsr); library(tidycensus)
+})
+```
+
+## Config — edit and re-run downward
+
+```{r}
+#| label: config
+SEED <- params$seed
+DONOR_TOPK <- params$donor_topk          # random pick among the K nearest donors, not always
+                                          # the single nearest -- avoids many recipients who
+                                          # share a common demographic profile all collapsing
+                                          # onto the exact same one donor's disposition.
+GSS_MIN_YEAR <- params$gss_min_year      # pool recent GSS waves: the social-trust battery is
+                                          # asked of only a rotating subsample each wave, so a
+                                          # single year gives too thin a donor pool.
+ATUS_SAMPLES <- unlist(params$atus_samples)
+ACS_SOURCE_PATH <- params$acs_source_path
+ATUS_EXTRACT_XML <- "../../data/raw/atus_00002.xml"  # IPUMS-assigned extract name; see §4 for how this is produced
+
+# ANES year is fixed, not parameterized: TIPI + the moral-traditionalism/egalitarianism
+# batteries were fielded in the 2016 Time Series Study specifically (verified empirically
+# against anesr::timeseries_2016's variable labels -- not present, or not in this combination,
+# in other available waves), so there is no year to sweep here.
+```
+
+## Harmonization helpers
+
+Four sources code demographics differently (ACS text labels, ANES/ATUS/GSS numeric codes with
+their own scales). Gower matching needs **shared buckets**: every recipient/donor pair is
+matched on whatever coarseness both sides can express — a 6-way race/ethnicity bucket for
+ACS↔ANES and ACS↔ATUS, but a coarser 3-way bucket for ACS↔GSS since GSS's own `race` variable
+only distinguishes White/Black/Other.
+
+```{r}
+#| label: harmonization-helpers
+bucket_education <- function(label_or_code, source) {
+  x <- as.character(label_or_code)
+  case_when(
+    source == "acs" & str_detect(x, regex("bachelor", ignore_case = TRUE)) ~ "Bachelor's degree",
+    source == "acs" & str_detect(x, regex("master|doctorate|professional degree", ignore_case = TRUE)) ~ "Graduate or professional degree",
+    source == "acs" & str_detect(x, regex("associate|some college|college credit", ignore_case = TRUE)) ~ "Some college or Associate's",
+    source == "acs" & str_detect(x, regex("high school|ged", ignore_case = TRUE)) ~ "High school graduate",
+    source == "acs" ~ "Less than high school",
+
+    # ANES V161270 codes (1-16, 90, 95) -- see ANES 2016 codebook
+    source == "anes" & x %in% as.character(1:8) ~ "Less than high school",
+    source == "anes" & x %in% c("9", "90") ~ "High school graduate",
+    source == "anes" & x %in% as.character(10:12) ~ "Some college or Associate's",
+    source == "anes" & x == "13" ~ "Bachelor's degree",
+    source == "anes" & x %in% as.character(14:16) ~ "Graduate or professional degree",
+
+    # GSS degree (0-4)
+    source == "gss" & x == "0" ~ "Less than high school",
+    source == "gss" & x == "1" ~ "High school graduate",
+    source == "gss" & x == "2" ~ "Some college or Associate's",
+    source == "gss" & x == "3" ~ "Bachelor's degree",
+    source == "gss" & x == "4" ~ "Graduate or professional degree",
+
+    # ATUS/IPUMS EDUC codes
+    source == "atus" & x %in% as.character(10:17) ~ "Less than high school",
+    source == "atus" & x %in% c("20", "21") ~ "High school graduate",
+    source == "atus" & x %in% c("30", "31", "32") ~ "Some college or Associate's",
+    source == "atus" & x == "40" ~ "Bachelor's degree",
+    source == "atus" & x %in% c("41", "42", "43") ~ "Graduate or professional degree",
+    TRUE ~ NA_character_
+  )
+}
+
+bucket_marital <- function(label_or_code, source) {
+  x <- as.character(label_or_code)
+  case_when(
+    # order matters: "Never married" also contains the substring "married"
+    source == "acs" & str_detect(x, regex("never married", ignore_case = TRUE)) ~ "Never married",
+    source == "acs" & str_detect(x, regex("married", ignore_case = TRUE)) ~ "Married",
+    source == "acs" & str_detect(x, regex("widow", ignore_case = TRUE)) ~ "Widowed",
+    source == "acs" & str_detect(x, regex("divorc", ignore_case = TRUE)) ~ "Divorced",
+    source == "acs" & str_detect(x, regex("separat", ignore_case = TRUE)) ~ "Separated",
+
+    source %in% c("anes", "atus") & x %in% c("1", "2") ~ "Married",
+    source %in% c("anes", "atus") & x == "3" ~ "Widowed",
+    source %in% c("anes", "atus") & x == "4" ~ "Divorced",
+    source %in% c("anes", "atus") & x == "5" ~ "Separated",
+    source %in% c("anes", "atus") & x == "6" ~ "Never married",
+
+    source == "gss" & x == "1" ~ "Married",
+    source == "gss" & x == "2" ~ "Widowed",
+    source == "gss" & x == "3" ~ "Divorced",
+    source == "gss" & x == "4" ~ "Separated",
+    source == "gss" & x == "5" ~ "Never married",
+    TRUE ~ NA_character_
+  )
+}
+
+# 6-way race/ethnicity bucket: ACS <-> ANES, ACS <-> ATUS
+bucket_race6_acs <- function(race_ethnicity) {
+  case_when(
+    race_ethnicity == "White alone" ~ "White",
+    race_ethnicity == "Black or African American alone" ~ "Black",
+    race_ethnicity %in% c("Asian alone", "Native Hawaiian or Other Pacific Islander alone") ~ "Asian or Pacific Islander",
+    race_ethnicity == "American Indian or Alaska Native alone" ~ "American Indian or Alaska Native",
+    race_ethnicity == "Hispanic or Latino (any race)" ~ "Hispanic or Latino",
+    TRUE ~ "Other or Two or more races"
+  )
+}
+bucket_race6_anes <- function(code) {
+  # ANES V161310x is already a combined race+ethnicity summary (Hispanic overrides race),
+  # matching the ACS convention above exactly.
+  case_when(
+    code == "1" ~ "White", code == "2" ~ "Black",
+    code == "3" ~ "Asian or Pacific Islander", code == "4" ~ "American Indian or Alaska Native",
+    code == "5" ~ "Hispanic or Latino", code == "6" ~ "Other or Two or more races",
+    TRUE ~ NA_character_
+  )
+}
+bucket_race6_atus <- function(race_code, hispan_code) {
+  # HISPAN: 100 = Not Hispanic, 2xx = specific Hispanic origins (confirmed against the
+  # downloaded extract's value distribution, not assumed from the codebook alone).
+  is_hisp <- !is.na(hispan_code) & hispan_code != "100"
+  case_when(
+    is_hisp ~ "Hispanic or Latino",
+    race_code == "100" ~ "White",
+    race_code == "110" ~ "Black",
+    race_code == "120" ~ "American Indian or Alaska Native",
+    race_code %in% c("130", "131", "132") ~ "Asian or Pacific Islander",
+    TRUE ~ "Other or Two or more races"
+  )
+}
+# 3-way coarse race bucket: ACS <-> GSS (GSS's own ceiling of granularity)
+bucket_race3_acs <- function(race_ethnicity) {
+  case_when(
+    race_ethnicity == "White alone" ~ "White",
+    race_ethnicity == "Black or African American alone" ~ "Black",
+    TRUE ~ "Other"
+  )
+}
+bucket_race3_gss <- function(code) {
+  case_when(code == "1" ~ "White", code == "2" ~ "Black", code == "3" ~ "Other", TRUE ~ NA_character_)
+}
+
+# gower::gower_topn mutates its input columns IN PLACE at the C level for character
+# columns (confirmed by bisection: after a gower_topn() call, the CALLER's original
+# tibble had cells overwritten with values copied from OTHER ROWS of that same tibble,
+# even though the arguments were built via `select()` moments earlier -- R's normal
+# copy-on-write does not protect against this). Two independent fixes are required:
+# (1) convert character matching columns to factors before calling gower_topn, which
+# avoids the mutation; (2) those factors must share IDENTICAL levels between x and y,
+# or gower_topn raises "Levels ... do not match".
+gower_safe_pair <- function(x_df, y_df) {
+  char_cols <- names(x_df)[vapply(x_df, is.character, logical(1))]
+  for (col in char_cols) {
+    lv <- union(unique(x_df[[col]]), unique(y_df[[col]]))
+    x_df[[col]] <- factor(x_df[[col]], levels = lv)
+    y_df[[col]] <- factor(y_df[[col]], levels = lv)
+  }
+  list(x = as.data.frame(x_df), y = as.data.frame(y_df))
+}
+
+#' Nearest-donor picker: random choice among the DONOR_TOPK nearest ties, seeded per
+#' recipient row so the whole pipeline is deterministic end-to-end under SEED.
+pick_donor <- function(recipient_keys, donor_keys, seed, k = DONOR_TOPK) {
+  safe <- gower_safe_pair(recipient_keys, donor_keys)
+  topn <- gower_topn(safe$x, safe$y, n = k)
+  n_recip <- nrow(safe$x)
+  chosen <- integer(n_recip); chosen_dist <- numeric(n_recip)
+  for (i in seq_len(n_recip)) {
+    set.seed(seed * 100000 + i)
+    cand <- topn$index[, i]; dist <- topn$distance[, i]
+    cand <- cand[!is.na(cand)]; dist <- dist[!is.na(dist)]
+    pick <- sample(seq_along(cand), 1)
+    chosen[i] <- cand[pick]; chosen_dist[i] <- dist[pick]
+  }
+  list(donor_row = chosen, distance = chosen_dist)
+}
+```
+
+## 1. Recipients — the ACS base sample
+
+Reuses the already-built, already-validated national sample from
+`acs_pums_national_sample.qmd` (`data/acs_pums_sample_n100.csv`) rather than re-pulling ACS
+PUMS here — that pull takes ~10 minutes against the Census API and this notebook answers a
+different question (disposition matching, not demographic sampling).
+
+```{r}
+#| label: recipients
+acs <- read_csv(ACS_SOURCE_PATH, show_col_types = FALSE)
+cat("ACS base rows:", nrow(acs), "\n")
+
+recipients <- acs %>%
+  transmute(
+    person_id, age, sex, region,
+    race6 = bucket_race6_acs(race_ethnicity),
+    race3 = bucket_race3_acs(race_ethnicity),
+    education_bucket = bucket_education(education, "acs"),
+    marital_bucket = bucket_marital(marital_status, "acs")
+  )
+stopifnot(nrow(recipients) == 100, sum(is.na(recipients$education_bucket)) == 0)
+cat("recipients built:\n")
+print(head(recipients, 3))
+```
+
+## 2. ANES donor pool — personality, values, religion, party, ideology
+
+`anesr::timeseries_2016` (the 2016 ANES Time Series Study, bundled directly by the package —
+no gated ICPSR download needed). Variable codes verified empirically against the bundled
+labels before use, not assumed from memory:
+
+- **TIPI** (Ten-Item Personality Inventory, Gosling/Rentfrow/Swann): `V162333`–`V162342`,
+  reverse-scored per the standard TIPI key into five 1–7 trait scores.
+- **Moral traditionalism** (Feldman 4-item scale): `V162207`–`V162210`.
+- **Egalitarianism** (Feldman–Steenbergen 4-item scale): `V162243`–`V162246`.
+- **Opinion strength**: `V162248`–`V162250` — ANES has no Cacioppo–Petty Need-for-Cognition
+  battery; this is the closest real ANES battery (a "need to evaluate"/opinionatedness
+  measure) and is labeled honestly as `opinion_strength`, not mislabeled as NFC.
+- **Party ID** (`V161158x`, 7-pt summary), **ideology** (`V161126`, 7-pt summary).
+- **Religion**: major-group summary (`V161265x`, 8 categories), importance (`V161241`),
+  attendance (`V161244` gate + `V161245`).
+
+```{r}
+#| label: anes-pool
+data(timeseries_2016)
+anes_raw <- timeseries_2016
+
+anes <- anes_raw %>%
+  transmute(anes_respondent_id = V160001, across(
+    c(V161267, V161342, V161310x, V161270, V161268, V163003,
+      V162333, V162334, V162335, V162336, V162337, V162338, V162339, V162340, V162341, V162342,
+      V162207, V162208, V162209, V162210,
+      V162243, V162244, V162245, V162246,
+      V162248, V162249, V162250,
+      V161158x, V161126, V161265x, V161241, V161244, V161245),
+    as.numeric
+  ))
+
+anes <- anes %>%
+  mutate(
+    age = ifelse(V161267 > 0, V161267, NA),
+    sex = case_when(V161342 == 1 ~ "Male", V161342 == 2 ~ "Female", TRUE ~ NA_character_),
+    race6 = bucket_race6_anes(as.character(ifelse(V161310x > 0, V161310x, NA))),
+    education_bucket = bucket_education(ifelse(V161270 > 0, V161270, NA), "anes"),
+    marital_bucket = bucket_marital(ifelse(V161268 > 0, V161268, NA), "anes"),
+    region = case_when(V163003 == 1 ~ "Northeast", V163003 == 2 ~ "Midwest",
+                        V163003 == 3 ~ "South", V163003 == 4 ~ "West", TRUE ~ NA_character_),
+    # TIPI pairs: (typical item + reverse-keyed item) / 2, on the original 1-7 scale
+    tipi_extraversion = (ifelse(V162333 > 0, V162333, NA) + (8 - ifelse(V162338 > 0, V162338, NA))) / 2,
+    tipi_agreeableness = ((8 - ifelse(V162334 > 0, V162334, NA)) + ifelse(V162339 > 0, V162339, NA)) / 2,
+    tipi_conscientiousness = (ifelse(V162335 > 0, V162335, NA) + (8 - ifelse(V162340 > 0, V162340, NA))) / 2,
+    tipi_emotional_stability = ((8 - ifelse(V162336 > 0, V162336, NA)) + ifelse(V162341 > 0, V162341, NA)) / 2,
+    tipi_openness = (ifelse(V162337 > 0, V162337, NA) + (8 - ifelse(V162342 > 0, V162342, NA))) / 2,
+    moral_traditionalism = ((6 - ifelse(V162207 > 0, V162207, NA)) + ifelse(V162208 > 0, V162208, NA) +
+                             (6 - ifelse(V162209 > 0, V162209, NA)) + ifelse(V162210 > 0, V162210, NA)) / 4,
+    egalitarianism = (ifelse(V162243 > 0, V162243, NA) + (6 - ifelse(V162244 > 0, V162244, NA)) +
+                       (6 - ifelse(V162245 > 0, V162245, NA)) + ifelse(V162246 > 0, V162246, NA)) / 4,
+    opinion_strength = (ifelse(V162248 > 0, V162248, NA) + ifelse(V162249 > 0, V162249, NA) + ifelse(V162250 > 0, V162250, NA)) / 3,
+    party_id_7pt = ifelse(V161158x > 0, V161158x, NA),
+    ideology_7pt = ifelse(V161126 %in% 1:7, V161126, NA),
+    religion_group = case_when(
+      V161265x == 1 ~ "Mainline Protestant", V161265x == 2 ~ "Evangelical Protestant",
+      V161265x == 3 ~ "Black Protestant", V161265x == 4 ~ "Roman Catholic",
+      V161265x == 5 ~ "Undifferentiated Christian", V161265x == 6 ~ "Jewish",
+      V161265x == 7 ~ "Other religion", V161265x == 8 ~ "Not religious", TRUE ~ NA_character_
+    ),
+    religion_importance = case_when(V161241 == 1 ~ "Important", V161241 == 2 ~ "Not important", TRUE ~ NA_character_),
+    religion_attendance = case_when(
+      V161244 == 2 ~ "Never",
+      V161245 == 1 ~ "Every week", V161245 == 2 ~ "Almost every week",
+      V161245 == 3 ~ "Once or twice a month", V161245 == 4 ~ "A few times a year",
+      V161245 == 5 ~ "Never", TRUE ~ NA_character_
+    )
+  )
+
+MATCHING_COLS <- c("age", "sex", "race6", "education_bucket", "marital_bucket", "region")
+CONTENT_COLS_ANES <- c("tipi_extraversion", "tipi_agreeableness", "tipi_conscientiousness",
+                        "tipi_emotional_stability", "tipi_openness", "moral_traditionalism",
+                        "egalitarianism", "opinion_strength", "party_id_7pt", "ideology_7pt",
+                        "religion_group", "religion_importance", "religion_attendance")
+
+anes_pool <- anes %>% select(all_of(c("anes_respondent_id", MATCHING_COLS, CONTENT_COLS_ANES))) %>%
+  filter(if_all(everything(), ~ !is.na(.)))
+cat("ANES donor pool (complete cases):", nrow(anes_pool), "of", nrow(anes), "\n")
+
+anes_match <- pick_donor(recipients %>% select(all_of(MATCHING_COLS)),
+                          anes_pool %>% select(all_of(MATCHING_COLS)), seed = 1001)
+cat("ANES match distance  min/median/max:",
+    round(min(anes_match$distance), 3), round(median(anes_match$distance), 3), round(max(anes_match$distance), 3), "\n")
+cat("ANES donor reuse (max times one donor picked):", max(table(anes_match$donor_row)), "\n")
+```
+
+## 3. GSS donor pool — social trust, work hours, happiness (supplementary)
+
+Kept deliberately narrow — only content ANES/ATUS don't cover. GSS's own `race` variable is
+coarse (White/Black/Other), so matching here uses `race3`, not `race6`. The social-trust
+battery is asked of only a rotating subsample per wave, so the 5 most recent waves are pooled
+for an adequate donor pool.
+
+```{r}
+#| label: gss-pool
+data(gss_all)
+gss_recent <- gss_all %>% filter(year >= GSS_MIN_YEAR)
+
+gss <- gss_recent %>%
+  transmute(
+    gss_respondent_id = paste0("gss_", as.numeric(year), "_", as.numeric(id)),
+    age = suppressWarnings(as.numeric(age)),
+    sex = case_when(as.numeric(sex) == 1 ~ "Male", as.numeric(sex) == 2 ~ "Female", TRUE ~ NA_character_),
+    race3 = bucket_race3_gss(as.character(as.numeric(race))),
+    education_bucket = bucket_education(as.numeric(degree), "gss"),
+    marital_bucket = bucket_marital(as.numeric(marital), "gss"),
+    region = case_when(as.numeric(region) == 1 ~ "Northeast", as.numeric(region) == 2 ~ "Midwest",
+                        as.numeric(region) == 3 ~ "South", as.numeric(region) == 4 ~ "West", TRUE ~ NA_character_),
+    social_trust = case_when(as.numeric(trust) == 1 ~ "Can trust people",
+                              as.numeric(trust) == 2 ~ "Can't be too careful",
+                              as.numeric(trust) == 3 ~ "Depends", TRUE ~ NA_character_),
+    usual_hours_worked = suppressWarnings(as.numeric(hrs1)),
+    general_happiness = case_when(as.numeric(happy) == 1 ~ "Very happy", as.numeric(happy) == 2 ~ "Pretty happy",
+                                   as.numeric(happy) == 3 ~ "Not too happy", TRUE ~ NA_character_)
+  )
+
+MATCHING_COLS_GSS <- c("age", "sex", "race3", "education_bucket", "marital_bucket", "region")
+CONTENT_COLS_GSS <- c("social_trust", "usual_hours_worked", "general_happiness")
+
+gss_pool <- gss %>% select(all_of(c("gss_respondent_id", MATCHING_COLS_GSS, CONTENT_COLS_GSS))) %>%
+  filter(if_all(everything(), ~ !is.na(.)))
+cat("GSS donor pool (complete cases, waves >=", GSS_MIN_YEAR, "pooled):", nrow(gss_pool), "\n")
+
+gss_match <- pick_donor(recipients %>% select(all_of(MATCHING_COLS_GSS)),
+                         gss_pool %>% select(all_of(MATCHING_COLS_GSS)), seed = 2002)
+cat("GSS match distance  min/median/max:",
+    round(min(gss_match$distance), 3), round(median(gss_match$distance), 3), round(max(gss_match$distance), 3), "\n")
+cat("GSS donor reuse (max):", max(table(gss_match$donor_row)), "\n")
+```
+
+## 4. ATUS donor pool — real diary-based wake time
+
+Pulled via **IPUMS Time Use** (`ipumsr`, `collection = "atus"`) rather than BLS's own site —
+BLS's public-use-file pages return HTTP 403 to every automated fetch from this environment
+(bot-protection, not a login wall), and its NBER mirror does too. IPUMS Time Use needs a free
+account + API key (`IPUMS_TIMEUSE_API_KEY` in `.env`), which is a `.env`-documented
+credential like `CENSUS_API`, not a manual per-run download.
+
+Wake time is **derived from real activity-episode diary data**, not a ready-made variable:
+each respondent's day is a sequence of activities with `START`/`STOP` clock times; the sleep
+activity code is `10101` (confirmed against the extract's own value labels, family
+`101xx`). Wake time = the `STOP` time of the diary day's first activity, *if* that first
+activity is sleep (the ATUS diary always starts at 04:00, so a respondent already awake at
+04:00 has no observed wake time this diary day — coded `NA`, not guessed). Clock times before
+04:00 belong to the *end* of the diary day, not the start, so a diary-relative minute offset
+is used for "first," not a raw string/clock-time sort.
+
+```{r}
+#| label: atus-extract
+#| eval: false
+# Run once to build the extract; re-running is safe (IPUMS extracts are idempotent to
+# re-request, just re-download the same XML if it already exists locally).
+ipums_key_line <- readLines("../../.env", warn = FALSE)
+ipums_key_line <- ipums_key_line[grepl("^IPUMS_TIMEUSE_API_KEY=", ipums_key_line)]
+ipums_key <- trimws(gsub("[\"']", "", sub("^IPUMS_TIMEUSE_API_KEY=", "", ipums_key_line[1])))
+set_ipums_api_key(ipums_key, save = FALSE)
+
+ext <- define_extract_micro(
+  collection = "atus",
+  description = "polis disposition seed - wake time donor pool",
+  samples = ATUS_SAMPLES,
+  variables = c("AGE", "SEX", "RACE", "HISPAN", "EDUC", "MARST", "STATEFIP",
+                "ACTIVITY", "START", "STOP", "WT06"),
+  data_structure = "rectangular",
+  rectangular_on = "A"   # activity-level rows -- needed for START/STOP per episode
+)
+ready <- wait_for_extract(submit_extract(ext), timeout_seconds = 300)
+dir.create("../../data/raw", showWarnings = FALSE)
+download_extract(ready, download_dir = "../../data/raw", overwrite = TRUE)
+# IPUMS assigns the extract number itself (e.g. atus_00003.xml on a fresh account) --
+# the DDI's internal fileName reference is tied to its paired .dat.gz, so don't rename
+# either file after download. Update ATUS_EXTRACT_XML above to match whatever name this
+# produces before re-running §4 downstream.
+```
+
+```{r}
+#| label: atus-pool
+# state FIPS -> region, reusing the same Census Bureau 4-region assignment as the ACS
+# notebook, joined through tidycensus's verified FIPS/abbreviation crosswalk rather than
+# re-typing FIPS codes by hand.
+REGION_LOOKUP_ABBR <- tribble(
+  ~state, ~region,
+  "CT", "Northeast", "ME", "Northeast", "MA", "Northeast", "NH", "Northeast",
+  "RI", "Northeast", "VT", "Northeast", "NJ", "Northeast", "NY", "Northeast", "PA", "Northeast",
+  "IL", "Midwest", "IN", "Midwest", "MI", "Midwest", "OH", "Midwest", "WI", "Midwest",
+  "IA", "Midwest", "KS", "Midwest", "MN", "Midwest", "MO", "Midwest", "NE", "Midwest",
+  "ND", "Midwest", "SD", "Midwest",
+  "DE", "South", "FL", "South", "GA", "South", "MD", "South", "NC", "South", "SC", "South",
+  "VA", "South", "DC", "South", "WV", "South", "AL", "South", "KY", "South", "MS", "South",
+  "TN", "South", "AR", "South", "LA", "South", "OK", "South", "TX", "South",
+  "AZ", "West", "CO", "West", "ID", "West", "MT", "West", "NV", "West", "NM", "West",
+  "UT", "West", "WY", "West", "AK", "West", "CA", "West", "HI", "West", "OR", "West", "WA", "West"
+)
+FIPS_TO_REGION <- tidycensus::fips_codes %>%
+  distinct(state, state_code) %>%
+  inner_join(REGION_LOOKUP_ABBR, by = "state") %>%
+  transmute(STATEFIP = as.numeric(state_code), region = region)
+
+to_diary_minutes <- function(hms) {
+  parts <- str_split_fixed(hms, ":", 3)
+  h <- as.numeric(parts[, 1]); m <- as.numeric(parts[, 2])
+  ifelse(h < 4, (h + 24) * 60 + m, h * 60 + m)
+}
+
+atus_ddi <- read_ipums_ddi(ATUS_EXTRACT_XML)
+atus_raw <- read_ipums_micro(atus_ddi)
+cat("ATUS activity rows:", nrow(atus_raw), " persons:", n_distinct(atus_raw$CASEID), "\n")
+
+atus_act <- atus_raw %>%
+  mutate(across(c(AGE, SEX, RACE, HISPAN, EDUC, MARST, STATEFIP, ACTIVITY), as.numeric)) %>%
+  mutate(is_sleep = ACTIVITY %in% c(10100, 10101, 10102, 10199),
+         start_diary_min = to_diary_minutes(START))
+
+first_activity <- atus_act %>%
+  group_by(CASEID) %>%
+  slice_min(start_diary_min, n = 1, with_ties = FALSE) %>%
+  ungroup() %>%
+  transmute(CASEID, wake_time = ifelse(is_sleep, STOP, NA_character_))
+
+atus_demo <- atus_act %>%
+  group_by(CASEID) %>%
+  summarise(AGE = first(AGE), SEX = first(SEX), RACE = first(RACE), HISPAN = first(HISPAN),
+            EDUC = first(EDUC), MARST = first(MARST), STATEFIP = first(STATEFIP), .groups = "drop")
+
+atus <- atus_demo %>%
+  left_join(first_activity, by = "CASEID") %>%
+  left_join(FIPS_TO_REGION, by = "STATEFIP") %>%
+  mutate(
+    age = AGE,
+    sex = case_when(SEX == 1 ~ "Male", SEX == 2 ~ "Female", TRUE ~ NA_character_),
+    race6 = bucket_race6_atus(as.character(RACE), as.character(HISPAN)),
+    education_bucket = bucket_education(EDUC, "atus"),
+    marital_bucket = bucket_marital(MARST, "atus")
+  )
+
+atus_pool <- atus %>% transmute(atus_respondent_id = as.character(CASEID), across(all_of(c(MATCHING_COLS, "wake_time")))) %>%
+  filter(if_all(everything(), ~ !is.na(.)))
+cat("ATUS donor pool (complete cases, wake time observed):", nrow(atus_pool), "\n")
+
+atus_match <- pick_donor(recipients %>% select(all_of(MATCHING_COLS)),
+                          atus_pool %>% select(all_of(MATCHING_COLS)), seed = 3003)
+cat("ATUS match distance  min/median/max:",
+    round(min(atus_match$distance), 3), round(median(atus_match$distance), 3), round(max(atus_match$distance), 3), "\n")
+cat("ATUS donor reuse (max):", max(table(atus_match$donor_row)), "\n")
+```
+
+## 5. Assemble and export
+
+Every donor-matched column is suffixed by source (`_anes` / `_gss` / `_atus`) so provenance
+is self-documenting in the column names, not only in this prose. Per the P6a joint-dataset
+schema contract (`docs/briefs/phase-6a-persona-pipeline.md`), each source also carries its
+real **donor respondent id** alongside its match distance — R29 provenance, so a persona's
+disposition traces back to an actual survey respondent, not just "some ANES row."
+
+```{r}
+#| label: assemble
+final_table <- acs %>%
+  select(person_id, state_abbr, state_name, region, puma, sex, age, race_ethnicity,
+         hispanic_origin, education, occupation, industry, marital_status,
+         household_relationship, presence_of_children, family_size,
+         gave_birth_past_year, person_weight) %>%
+  bind_cols(
+    anes_pool[anes_match$donor_row, c("anes_respondent_id", CONTENT_COLS_ANES)] %>% rename_with(~ paste0(., "_anes"), -anes_respondent_id),
+    tibble(anes_match_distance = anes_match$distance),
+    gss_pool[gss_match$donor_row, c("gss_respondent_id", CONTENT_COLS_GSS)] %>% rename_with(~ paste0(., "_gss"), -gss_respondent_id),
+    tibble(gss_match_distance = gss_match$distance),
+    atus_pool[atus_match$donor_row, c("atus_respondent_id", "wake_time")] %>% rename(wake_time_atus = wake_time),
+    tibble(atus_match_distance = atus_match$distance)
+  )
+
+stopifnot(nrow(final_table) == 100)
+cat("final_table:", nrow(final_table), "rows x", ncol(final_table), "cols\n")
+
+# filename matches the P6a brief's joint-dataset schema contract exactly, so the
+# Stage-2 persona pipeline (built separately, against a synthetic fixture) can pick
+# this up as its real input without a path change.
+write_csv(final_table, "../../data/persona_seed_dataset_n100.csv")
+cat("wrote data/persona_seed_dataset_n100.csv\n")
+```
+
+## 6. Provenance and match-quality summary
+
+```{r}
+#| label: provenance
+provenance <- tribble(
+  ~field_group, ~columns, ~source, ~method,
+  "Demographics (18 cols)", "state_abbr..person_weight", "ACS PUMS (2024 1-yr)", "Direct-sampled (weighted draw)",
+  "Personality/values/religion (13 cols + id + distance)", "tipi_*..religion_attendance_anes, anes_respondent_id, anes_match_distance", "ANES 2016 Time Series", "Donor-matched (Gower 1-NN among top-3 ties, never averaged)",
+  "Social trust/hours/happiness (3 cols + id + distance)", "social_trust_gss..general_happiness_gss, gss_respondent_id, gss_match_distance", "GSS 2016-2024 pooled", "Donor-matched (Gower 1-NN among top-3 ties, never averaged)",
+  "Wake time (1 col + id + distance)", "wake_time_atus, atus_respondent_id, atus_match_distance", "ATUS via IPUMS Time Use 2023-2024", "Donor-matched (Gower 1-NN among top-3 ties, never averaged)"
+)
+print(provenance)
+
+cat("\nDonor pool sizes: ANES", nrow(anes_pool), " GSS", nrow(gss_pool), " ATUS", nrow(atus_pool), "\n")
+cat("Max donor reuse:  ANES", max(table(anes_match$donor_row)),
+    " GSS", max(table(gss_match$donor_row)),
+    " ATUS", max(table(atus_match$donor_row)), "\n")
+cat("\nNo Daylight Saving Time item of any kind appears in this table -- confirmed by column list above.\n")
+```

@@ -1,0 +1,166 @@
+---
+title: "Phase 6b — Full population at scale (N=100, 1-arm baseline)"
+format: html
+params:
+  seed: 42
+  ticks: 5
+  corpus_path: "../../data/personas_corpus_n100.json"
+  topology_k: 4
+  topology_p: 0.1
+  max_concurrency: 16
+  cluster_threshold: 0.15
+  run: false        # live-spend guard: flip to true (or via the runner) to execute
+---
+
+## Aim
+
+The first scale run of the real population: **100 census-seeded, disposition-anchored
+Americans** (the P6a corpus) talking about daylight saving time over their small-world
+neighbourhood for `ticks` ticks, then surveyed. One arm — the *pure* population: **no
+external feed, no pre-polarised actors** (the ADR-0010 feed and the seed-time conviction
+injection are the deliberate *next* step, held out so this baseline is interpretable).
+
+This satisfies the Phase-6 DoD (a full 100-agent run completes with clean logs; R5/R6/R17
+re-validated at scale) and reads the P5 validation instrument at N=100: does a
+disposition-rich population hold its voice diversity over the run, or homogenise? The
+**R27 action-space gate is read first** — a convergence number is only trusted once the
+SPEAK/ABSTAIN space is shown to be genuinely exercised.
+
+```{python}
+import pandas as pd
+from plotnine import *  # noqa: F403
+
+from polis import metrics
+from polis.embeddings import EmbeddingModel
+from polis.llm import LLMClient, LLMConfig
+from polis.questions import DST_OPTIONS, DST_QUESTION
+from polis.runlog import RunLog
+from polis.scheduler import SchedulerConfig
+from polis.simulation import DynamicsConfig, Population, Simulation
+from polis.topology import SmallWorld
+
+P = {
+    "seed": 42, "ticks": 5, "corpus_path": "../../data/personas_corpus_n100.json",
+    "topology_k": 4, "topology_p": 0.1, "max_concurrency": 16, "cluster_threshold": 0.15,
+    "run": False,
+}
+SUPPORT = len(DST_OPTIONS)  # 4 — entropy normaliser (R14)
+```
+
+## Build the population from the corpus (no seed-time LLM cost)
+
+`Population.from_corpus` loads the cached, content-hashed persona artifact and seeds each
+agent's private memory at t=0 — no generation happens here. The agent *decides* run on the
+baseline `qwen/qwen3-32b`; the corpus's larger seed-time models are already baked in.
+
+```{python}
+embedder = EmbeddingModel()                 # local BGE — seeds memories + embeds utterances
+client = LLMClient(LLMConfig(model="qwen/qwen3-32b", reasoning=False))
+population = Population.from_corpus(P["corpus_path"], client=client, embedder=embedder)
+print("agents:", len(population.agents), "| corpus hash:", population.corpus_meta.get("content_hash", "")[:16])
+population.agents[0].persona.system_prompt()[:200]
+```
+
+## Configure the simulation (small-world, R4/R10; R28 simultaneous)
+
+`SmallWorld(k=4, p=0.1)`: each agent hears ~4 ring neighbours plus a few long-range
+rewires — high clustering, short paths. Chosen because full connectivity collapses to
+unanimity by tick 1 (P4), while small-world preserves distinct communities (R10). The run
+log is file-backed so the trajectory is durable (R15/R17).
+
+```{python}
+topology = SmallWorld(k=P["topology_k"], p=P["topology_p"], seed=P["seed"])
+dynamics = DynamicsConfig(update_scheme="simultaneous", seed=P["seed"])
+sim = Simulation(
+    population,
+    topology=topology,
+    dynamics=dynamics,
+    logger=RunLog.open("../../data/phase6_scale.sqlite"),
+    scheduler_config=SchedulerConfig(max_concurrency=P["max_concurrency"]),
+)
+sim._build_config(P["ticks"])["topology"]  # the versioned topology descriptor (R17)
+```
+
+## Run (live) — the one expensive cell
+
+```{python}
+if P["run"]:
+    run = sim.run(P["ticks"])
+    print("run_id:", run.run_id, "| config_hash:", run.config_hash[:16])
+    print("throughput:", {k: run.throughput[k] for k in ("n_calls", "wall_s", "decides_per_s", "latency_p95_s", "failures")})
+else:
+    run = None
+    print("run=False — flip params.run to execute the live N=100 run.")
+```
+
+## §1 — R27 action-space adequacy (read FIRST)
+
+Before any convergence number: is SPEAK/ABSTAIN actually being exercised? A degenerate
+action space (all-abstain, single-stance, repeated wording) caps observable divergence in
+a way the baseline can't catch (R27). No flags → the divergence numbers are real.
+
+```{python}
+if run is not None:
+    adq = metrics.action_space_adequacy(run, stances=list(DST_OPTIONS), embedder=embedder,
+                                        threshold=P["cluster_threshold"])
+    print({k: adq[k] for k in ("n_actions", "abstain_rate", "distinct_stances_used",
+                               "stance_coverage", "utterance_uniqueness")})
+    print("FLAGS:", adq["flags"] or "none — action space genuinely exercised")
+```
+
+## §2 — Divergence trajectory (both axes, per tick, R15)
+
+Categorical (dominant-share / entropy over the 4 DST stances) beside continuous
+(pairwise dispersion / cluster-count over utterance embeddings). The categorical axis
+answers *what they conclude*; the embedding axis answers *whether their voices stay
+distinct* — the two can disagree (the P5 finding).
+
+```{python}
+if run is not None:
+    traj = pd.DataFrame(metrics.divergence_trajectory(run, embedder, support=SUPPORT,
+                                                       threshold=P["cluster_threshold"]))
+    display(traj[["tick", "n", "dominant_share", "entropy", "n_utterances",
+                  "pairwise_dispersion", "cluster_count"]])
+    traj.to_csv("../../data/phase6_scale_trajectory.csv", index=False)
+```
+
+```{python}
+if run is not None:
+    long = traj.melt(id_vars="tick",
+                     value_vars=["dominant_share", "entropy", "pairwise_dispersion", "cluster_count"],
+                     var_name="metric", value_name="value")
+    print(
+        ggplot(long, aes("tick", "value"))
+        + geom_line() + geom_point()
+        + facet_wrap("metric", scales="free_y")
+        + labs(title="Divergence trajectory — N=100 full-corpus population",
+               x="tick", y="")
+        + theme_minimal()
+    )
+```
+
+## §3 — Endpoint survey (R18) + summary
+
+A separately-invoked survey of the live population (not folded into the tick loop, R18).
+`return_skipped` surfaces any agents dropped after retries, so the coverage is auditable.
+
+```{python}
+if run is not None:
+    summary = metrics.divergence_summary(run, embedder, support=SUPPORT, threshold=P["cluster_threshold"])
+    print("endpoint divergence:", summary)
+
+    answers, skipped = population.survey(DST_QUESTION, return_skipped=True)
+    print(f"\nsurvey coverage: {len(answers)}/{len(population.agents)} (skipped: {skipped or 'none'})")
+    dist = pd.Series([a["choice"] for a in answers]).value_counts()
+    display(dist)
+    dist.to_csv("../../data/phase6_scale_survey.csv")
+```
+
+## Verdict
+
+*(Filled after the live run.)* Read in order: R27 gate clean? → does the categorical
+axis converge (dominant-share → ?) → does the embedding axis hold voice diversity
+(cluster-count / dispersion trajectory)? The disposition-rich population's voice-diversity
+trajectory is the headline; the survey distribution is the population's DST estimate (to be
+calibrated against a US poll at P7). Baseline for the *next* unit: turn on the ADR-0010
+feed + seed-time conviction injection and measure the delta against this run.

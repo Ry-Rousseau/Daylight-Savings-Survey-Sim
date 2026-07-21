@@ -107,11 +107,57 @@ class Population:
         self.by_id = {a.persona.id: a for a in self.agents}
         self.roster = tuple(self.by_id)
         self.world = world or WorldState(roster=self.roster)
+        # Set when built from a persona corpus (from_corpus); versioned into the run
+        # config (R17) so a run's divergence is traceable to the exact persona set.
+        self.corpus_meta: dict[str, Any] | None = None
 
-    def survey(self, question: SurveyQuestion) -> list[dict]:
+    @classmethod
+    def from_corpus(
+        cls,
+        corpus: Any,
+        *,
+        client,
+        embedder=None,
+        retrieval=None,
+        world: WorldState | None = None,
+    ) -> "Population":
+        """Build a population from a persona corpus (P6a, ADR 0016): a JSON artifact
+        path, an artifact dict, or a list of ``SeededPersona``. Each persona's t=0 seed
+        memories are embedded into its own private store (R2); the corpus's content
+        hash + generation provenance are stashed on ``corpus_meta`` for R17.
+
+        No seed-time LLM calls happen here — the corpus was generated once by the
+        Stage-2 pipeline and cached — so building a population is free and deterministic.
+        """
+        from .embeddings import EmbeddingModel
+        from .memory_seeds import build_store
+        from .persona_pipeline import corpus_from_dict, load_corpus
+
+        if isinstance(corpus, str):
+            corpus = load_corpus(corpus)
+        if isinstance(corpus, dict):
+            meta = dict(corpus.get("meta", {}))
+            seeded = corpus_from_dict(corpus)
+        else:
+            meta = {}
+            seeded = list(corpus)
+        embedder = embedder or EmbeddingModel()
+        agents = [
+            Agent(sp.persona, client, embedder=embedder,
+                  memory=build_store(embedder, list(sp.memories)), retrieval=retrieval)
+            for sp in seeded
+        ]
+        pop = cls(agents, world=world)
+        pop.corpus_meta = meta
+        return pop
+
+    def survey(self, question: SurveyQuestion, *, return_skipped: bool = False):
         """Survey the live population via the LangGraph fan-out (R18/R22). With no
-        ticks run this is the R16 null-model baseline."""
-        return run_survey(self.agents, question)
+        ticks run this is the R16 null-model baseline. ``return_skipped=True`` also
+        returns the ids of agents skipped after exhausting retries (``(answers,
+        skipped)``), so a large survey's coverage is auditable rather than a silently
+        short list."""
+        return run_survey(self.agents, question, return_skipped=return_skipped)
 
 
 @dataclass
@@ -164,13 +210,18 @@ class Simulation:
         # config (R17) so throughput is traceable to its knobs.
         self.scheduler = scheduler or Scheduler(scheduler_config)
 
-    def run(self, ticks: int) -> Run:
+    def run(self, ticks: int, *, on_tick=None) -> Run:
+        """Run the tick loop. ``on_tick`` is an optional progress callback fired after
+        each tick with ``(tick_index, cumulative_decides, elapsed_s)`` — a UI/logging
+        hook (the per-decide granularity is the scheduler's ``on_progress``)."""
         config = self._build_config(ticks)
         run_id = self.log.log_run(config)
         records: list[_CallRecord] = []
         wall_start = time.perf_counter()
         for t in range(ticks):
             self._tick(run_id, t, records)
+            if on_tick is not None:
+                on_tick(t, len(records), time.perf_counter() - wall_start)
         wall_s = time.perf_counter() - wall_start
         return Run(
             run_id=run_id,
@@ -488,6 +539,9 @@ class Simulation:
                 "executor": cfg.executor,
             },
             "retrieval": asdict(agents[0].retrieval),
+            # When the population came from a seeded corpus (P6a), cite its version +
+            # content hash (R17) so the run is traceable to the exact persona artifact.
+            "persona_corpus": getattr(self.population, "corpus_meta", None),
             # Persona content is versioned (R17): a thick-vs-thin run's divergence must
             # be traceable to the value/disposition anchors (R7), not just the id.
             "personas": [

@@ -52,3 +52,33 @@ def test_flaky_agent_is_skipped_not_fatal(monkeypatch):
 
     assert {r["agent_id"] for r in results} == {"nurse", "retiree"}  # owner skipped
     assert len(results) == 2
+
+
+def test_skipped_agents_are_reported(monkeypatch, caplog):
+    # A skipped agent must be *visible*, not a silently short list: run_survey logs the
+    # skip and, on request, returns the skipped ids so an N=100 run can reconcile
+    # coverage (how many of N actually answered).
+    import logging
+
+    monkeypatch.setattr("polis.llm.time.sleep", lambda *_: None)
+    q = SurveyQuestion(text="DST?", options=["A", "B"])
+    agents = [StubAgent("nurse", "A"), FlakyAgent("owner"), StubAgent("retiree", "A")]
+
+    with caplog.at_level(logging.WARNING, logger="polis.graph"):
+        answers, skipped = run_survey(agents, q, return_skipped=True)
+
+    assert [r["agent_id"] for r in answers] == ["nurse", "retiree"]
+    assert skipped == ["owner"]
+    assert any("skipped" in rec.message and "owner" in rec.getMessage() for rec in caplog.records)
+
+
+def test_no_skips_reports_empty(monkeypatch):
+    # The clean path still returns the plain list by default, and an empty skipped list
+    # when asked — so callers can't misread "no skips" as "feature unavailable".
+    q = SurveyQuestion(text="DST?", options=["A", "B"])
+    agents = [StubAgent("nurse", "A"), StubAgent("owner", "B")]
+
+    answers, skipped = run_survey(agents, q, return_skipped=True)
+
+    assert len(answers) == 2
+    assert skipped == []

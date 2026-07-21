@@ -23,9 +23,14 @@ class Persona:
     # Value/disposition anchors (R7). Tuples so the frozen dataclass stays hashable.
     values: tuple[str, ...] = ()
     dispositions: tuple[str, ...] = ()
+    # Where the person lives. Defaults to NYC so P0–P5 personas are byte-identical;
+    # the P6 census pipeline sets each persona's real US locale (ADR 0015 USA pivot).
+    location: str = "New York City"
 
     def system_prompt(self) -> str:
-        return prompts.persona_system(self.description, self.values, self.dispositions)
+        return prompts.persona_system(
+            self.description, self.values, self.dispositions, self.location
+        )
 
 
 # Phase 0 walking-skeleton cast: three deliberately different New Yorkers.

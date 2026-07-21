@@ -1,0 +1,128 @@
+---
+title: "Persona Pipeline — Stage 2 (n=100)"
+format: html
+params:
+  seed: 42
+  dataset_path: "../../data/persona_seed_dataset_n100.csv"
+  output_path: "../../data/personas_corpus_n100.json"
+  dry_run_n: 3
+  run_full: false
+  backstory_model: "qwen/qwen3-235b-a22b"
+  reflection_model: "qwen/qwen3.7-max"
+---
+
+## Aim
+
+Turn the 100-person joint census+disposition dataset
+(`persona_seed_dataset_n100.csv`, built by `persona_disposition_seed.qmd`) into a
+**versioned persona corpus** the simulation loads — Stage 2 of the seeding pipeline
+(ADR 0016). This notebook only *orchestrates* `src/polis/persona_pipeline.py`; it holds
+no persona logic of its own.
+
+The bias discipline is in the source: the disposition items are **real** (donor-matched
+in Stage 1, never LLM-inferred); the two seed-time LLM steps only *elaborate* fixed
+inputs. **Stage-differentiated models (R6):** the **backstory** runs on the large
+`qwen/qwen3-235b-a22b` (warm, creative — it must turn a bundle of real trait measures
+into one coherent, consistent narrative), the **reflection→anchor** on
+`qwen/qwen3.7-max` (cool, the harder synthesis into clean JSON). Generation
+is one-shot and cached to a content-hashed artifact (R17), so simulations pay no
+seed-time LLM cost and stay reproducible against the pinned corpus.
+
+```{python}
+import json
+import pandas as pd
+
+from polis.llm import LLMClient, LLMConfig
+from polis.persona_pipeline import build_corpus, corpus_to_dict, save_corpus
+
+P = {
+    "seed": 42,
+    "dataset_path": "../../data/persona_seed_dataset_n100.csv",
+    "output_path": "../../data/personas_corpus_n100.json",
+    "dry_run_n": 3,
+    "run_full": False,          # flip to True (or set the param) for the full 100
+    "backstory_model": "qwen/qwen3-235b-a22b",
+    "reflection_model": "qwen/qwen3.7-max",
+}
+```
+
+## Load the joint dataset
+
+```{python}
+df = pd.read_csv(P["dataset_path"])
+print(df.shape)
+assert not any(c for c in df.columns if "dst" in c.lower() or "daylight" in c.lower()), \
+    "joint dataset must carry no DST content"
+df[["person_id", "state_name", "age", "sex", "occupation"]].head()
+```
+
+## Stage clients (R6: one model per stage)
+
+Both stages run Qwen with reasoning disabled (`reasoning=False`) — the backstory is
+free-form prose and the reflection a short JSON object, neither needs thinking-mode
+token burn, and disabling it keeps the JSON from being truncated. Runtime persona
+temperature (R1) is set on each `Persona` later; the temperatures here are the
+*seed-time* backstory (0.9, warm) / reflection (0.3, cool) defaults inside `build_persona`.
+
+```{python}
+backstory_client = LLMClient(LLMConfig(model=P["backstory_model"], reasoning=False, max_tokens=768))
+reflection_client = LLMClient(LLMConfig(model=P["reflection_model"], reasoning=False, max_tokens=1024))
+```
+
+## Dry run — a few personas, inspect quality + JSON parsing + cost
+
+```{python}
+sample = df.head(P["dry_run_n"])
+dry = build_corpus(sample, backstory_client=backstory_client, reflection_client=reflection_client, seed=P["seed"])
+
+for sp in dry:
+    print("=" * 80)
+    print(sp.persona.id, "|", sp.persona.location)
+    print("desc:", sp.persona.description)
+    print("values:", sp.persona.values)
+    print("dispositions:", sp.persona.dispositions)
+    for m in sp.memories:
+        print("  mem:", m.text)
+    g = sp.provenance["generation"]
+    print("gen: backstory", g["backstory"]["model"], "| reflection", g["reflection"]["model"])
+```
+
+Check that the anchor (values/dispositions) actually populated from the reflection —
+an empty anchor means the reflection JSON failed to parse and needs a prompt/model look.
+
+```{python}
+empty = [sp.persona.id for sp in dry if not sp.persona.values and not sp.persona.dispositions]
+print("empty-anchor personas:", empty or "none")
+```
+
+## Full run — generate + cache the corpus (guarded)
+
+Flip `run_full` to `True` once the dry run looks right. This makes ~100 × 2 LLM calls
+(one-shot), then writes the content-hashed artifact to `output_path`.
+
+```{python}
+if P["run_full"]:
+    corpus = build_corpus(df, backstory_client=backstory_client, reflection_client=reflection_client, seed=P["seed"])
+    artifact = save_corpus(
+        corpus, P["output_path"],
+        meta={"seed": P["seed"], "dataset": P["dataset_path"],
+              "backstory_model": P["backstory_model"], "reflection_model": P["reflection_model"]},
+    )
+    print("wrote", P["output_path"])
+    print("n:", artifact["meta"]["n"], "| content_hash:", artifact["meta"]["content_hash"])
+    empty = sum(1 for p in artifact["personas"] if not p["persona"]["values"] and not p["persona"]["dispositions"])
+    print("empty-anchor count:", empty)
+else:
+    print("run_full is False — dry run only; flip to True to generate the full corpus.")
+```
+
+## Notes
+
+- The corpus is R17-versioned (content hash + generation meta). A run's config cites it
+  via `Population.from_corpus` → `corpus_meta`, so divergence is traceable to the exact
+  persona set + the models that wrote it.
+- Party ID / ideology are present in the dataset but **excluded from persona content by
+  default** (ADR 0016): DST is non-partisan, and injecting political identity risks
+  re-stereotyping the voice. Flip the selection in `persona_pipeline.py` for an ablation.
+- Cross-donor coherence: work-hours statements are suppressed for not-working ACS
+  records (the multi-donor conditional-independence caveat).

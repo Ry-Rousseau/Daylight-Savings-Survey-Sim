@@ -26,7 +26,24 @@ from .game_master import GameMaster
 from .graph import build_survey_graph, run_survey
 from .llm import LLMClient, LLMConfig, LLMError
 from .memory import MemoryRecord, MemoryStore, RetrievalConfig
+from .opinion_seeds import (
+    OpinionPlan,
+    apply_opinion_plan,
+    assign_stances,
+    load_opinion_corpus,
+    render_opinion,
+)
 from .persona import SEED_PERSONAS, Persona
+from .persona_pipeline import (
+    SeededPersona,
+    build_corpus,
+    build_persona,
+    describe_demographics,
+    load_corpus,
+    measure_contradictions,
+    sanitize_row,
+    save_corpus,
+)
 from .personas_nyc import NULL_PERSONA, NYC_CAST, THICK_PERSONAS, PersonaSeed, null_cast
 from .questions import DST_QUESTION
 from .runlog import RunLog
@@ -48,6 +65,11 @@ __all__ = [
     "EmbeddingModel",
     "NULL_PERSONA",
     "NYC_CAST",
+    "OpinionPlan",
+    "apply_opinion_plan",
+    "assign_stances",
+    "load_opinion_corpus",
+    "render_opinion",
     "PersonaSeed",
     "THICK_PERSONAS",
     "capture_baseline",
@@ -76,6 +98,14 @@ __all__ = [
     "SEED_PERSONAS",
     "Scheduler",
     "SchedulerConfig",
+    "SeededPersona",
+    "build_corpus",
+    "build_persona",
+    "describe_demographics",
+    "load_corpus",
+    "measure_contradictions",
+    "sanitize_row",
+    "save_corpus",
     "Simulation",
     "SurveyAnswer",
     "SurveyQuestion",

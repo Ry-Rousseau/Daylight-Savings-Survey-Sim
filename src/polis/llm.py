@@ -30,6 +30,55 @@ class LLMError(RuntimeError):
     """Raised when the endpoint fails to return a usable, in-vocabulary answer."""
 
 
+def match_option(choice: str | None, options: list[str]) -> str | None:
+    """Map a model's returned ``choice`` to the canonical option, tolerating soft
+    json_schema enforcement (some providers return a shortened label, e.g. "Adopt
+    permanent standard time" for the annotated option). Exact match wins; else a unique
+    prefix/containment match; else ``None`` (ambiguous or unmatched)."""
+    c = (choice or "").strip().lower()
+    if not c:
+        return None
+    for o in options:
+        if o.lower() == c:
+            return o
+    pref = [o for o in options if o.lower().startswith(c) or c.startswith(o.lower())]
+    if len(pref) == 1:
+        return pref[0]
+    contains = [o for o in options if c in o.lower() or o.lower() in c]
+    if len(contains) == 1:
+        return contains[0]
+    return None
+
+
+def extract_choice(data: dict, options: list[str]) -> str | None:
+    """Pull the canonical option out of a structured answer, tolerant to providers that
+    ignore the schema's *property names* (some return ``{"response": …}`` or
+    ``{"answer": …}`` instead of ``{"choice": …}``). Tries likely keys first, then scans
+    all string values; each candidate goes through :func:`match_option`."""
+    if not isinstance(data, dict):
+        return None
+    for k in ("choice", "answer", "response", "option", "selection", "stance"):
+        if k in data:
+            m = match_option(str(data[k]), options)
+            if m:
+                return m
+    for v in data.values():  # last resort: any value that names an option
+        if isinstance(v, str):
+            m = match_option(v, options)
+            if m:
+                return m
+    return None
+
+
+def extract_reason(data: dict) -> str:
+    if not isinstance(data, dict):
+        return ""
+    for k in ("reason", "comment", "explanation", "rationale", "justification"):
+        if isinstance(data.get(k), str):
+            return data[k]
+    return ""
+
+
 def retry_on_llm_error(fn, *, attempts: int = 3, backoff: float = 0.5):
     """Call ``fn`` (a structured LLM call), retrying on :class:`LLMError` with linear
     backoff. Returns ``fn()``'s result, or ``None`` if it never succeeds within
@@ -103,12 +152,16 @@ class LLMClient:
         verbose/reasoning model gets enough room not to truncate its JSON."""
         last = None
         tokens = self.config.structured_max_tokens if max_tokens is None else max_tokens
+        # Some providers (e.g. DashScope's Qwen3-235B) reject response_format unless the
+        # word "json" appears in the messages. Append a short, accurate instruction so the
+        # structured path is model/provider-neutral (OpenRouter routes differ per model).
+        user_json = user if "json" in user.lower() else user + "\n\nReturn only a JSON object matching the required schema."
         for _ in range(retries + 1):
             resp = self._client.chat.completions.create(
                 model=self.config.model,
                 messages=[
                     {"role": "system", "content": system},
-                    {"role": "user", "content": user},
+                    {"role": "user", "content": user_json},
                 ],
                 response_format={
                     "type": "json_schema",
@@ -145,12 +198,12 @@ class LLMClient:
         }
         data, resp = self._structured_call(
             system=system, user=user, schema=schema, schema_name="survey_answer",
-            validate=lambda d: d.get("choice") in options,
+            validate=lambda d: extract_choice(d, options) is not None,
             temperature=temperature, max_tokens=max_tokens, retries=retries,
         )
         return {
-            "choice": data["choice"],
-            "reason": data.get("reason", ""),
+            "choice": extract_choice(data, options),  # canonical option (soft-enforcement + key-name tolerant)
+            "reason": extract_reason(data),
             "model": self.config.model,  # pinned & logged (R6)
             "usage": resp.usage.model_dump() if resp.usage else None,
         }

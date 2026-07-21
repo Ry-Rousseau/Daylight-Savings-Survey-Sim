@@ -6,6 +6,7 @@ uses a separate custom loop, per R22 — one framework does not do both.
 """
 from __future__ import annotations
 
+import logging
 import operator
 from typing import Annotated, Any, TypedDict
 
@@ -19,11 +20,17 @@ except ImportError:  # pragma: no cover
 from .llm import retry_on_llm_error
 from .survey import SurveyQuestion
 
+logger = logging.getLogger(__name__)
+
 
 class _SurveyState(TypedDict, total=False):
     question: SurveyQuestion
     agents: list[Any]
     answers: Annotated[list[dict], operator.add]
+    # Ids of agents skipped after exhausting retries — gathered alongside the answers
+    # so a degraded survey is *visible* rather than a silently short answer list (R5/R6
+    # accounting at N=100: losing k agents must not read as a clean N−k result).
+    skipped: Annotated[list[str], operator.add]
     agent: Any  # per-branch payload key set by the fan-out
 
 
@@ -40,7 +47,7 @@ def _ask(state: _SurveyState):
     agent = state["agent"]
     ans = retry_on_llm_error(lambda: agent.answer(state["question"]))
     if ans is None:
-        return {"answers": []}
+        return {"answers": [], "skipped": [agent.persona.id]}
     return {"answers": [{"agent_id": agent.persona.id, "choice": ans.choice, "reason": ans.reason}]}
 
 
@@ -52,12 +59,26 @@ def build_survey_graph():
     return g.compile()
 
 
-def run_survey(agents, question: SurveyQuestion) -> list[dict]:
+def run_survey(agents, question: SurveyQuestion, *, return_skipped: bool = False):
     """Fan ``question`` out to ``agents`` and gather answers.
 
-    Returns a list of ``{agent_id, choice, reason}`` dicts, sorted by agent id
-    for stable output.
+    Returns a list of ``{agent_id, choice, reason}`` dicts, sorted by agent id for
+    stable output. Agents whose endpoint keeps returning a schema-invalid response are
+    retried then *skipped* (like an abstain); skipped ids are **always logged** so a
+    degraded survey is visible. Pass ``return_skipped=True`` to also get the skipped-id
+    list back — ``(answers, skipped)`` — when a caller needs the count programmatically
+    (e.g. an N=100 run reconciling how many agents actually answered).
     """
+    agents = list(agents)
     graph = build_survey_graph()
-    out = graph.invoke({"question": question, "agents": list(agents), "answers": []})
-    return sorted(out["answers"], key=lambda d: d["agent_id"])
+    out = graph.invoke(
+        {"question": question, "agents": agents, "answers": [], "skipped": []}
+    )
+    answers = sorted(out["answers"], key=lambda d: d["agent_id"])
+    skipped = sorted(out.get("skipped", []))
+    if skipped:
+        logger.warning(
+            "run_survey skipped %d/%d agent(s) after retries: %s",
+            len(skipped), len(agents), skipped,
+        )
+    return (answers, skipped) if return_skipped else answers
