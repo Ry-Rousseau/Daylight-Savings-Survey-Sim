@@ -1,6 +1,6 @@
-# polis
+# Persona simulator + generator pipeline - seeding from real data
 
-A surveyable **silicon sample of New York City** — ~100 census-seeded LLM personas, polled with single-select survey questions on **daylight saving time**, to estimate what the real NYC population thinks. The engineering focus is treating opinion **convergence** (loss of realistic diversity) as a layered, cross-cutting risk — decided at each layer boundary, not patched at the end.
+A surveyable **silicon sample of United States** — ~100 census-seeded LLM personas, polled with single-select survey questions on **daylight saving time**, to estimate what the real NYC population thinks. The engineering focus is treating opinion **convergence** (loss of realistic diversity) as a layered, cross-cutting risk — decided at each layer boundary, not patched at the end.
 
 - **The object:** `src/polis/` — a source-first opinion-simulation engine. See `docs/design/polis-object.md`.
 - **How we work:** `docs/conventions.md` (house style) · `docs/ARCHITECTURE.md` (the R-number architecture rules) · `CLAUDE.md` (routing).
