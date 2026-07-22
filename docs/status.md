@@ -1,9 +1,21 @@
 # Status
 
-**Phase:** Phase 6 — Scale to full population (N→100) — **scoped, build held for review.** Brief + ADRs written (0015 NYC→USA pivot, 0016 census personas / demographics-only estimator), no `src/` code yet. Phase 5 ✅ complete (DoD met); all of 5A/5B/5C green on branch `phase-5a-persona-depth` (uncommitted, stacked). Phases 0–4 ✅ merged to `main`.
-**Updated:** 2026-07-20
+**Phase:** Phase 6 — Scale to N=100 ✅ **DoD met** (100-agent runs, clean logs, R5/R6/R17). The phase's *real* question — **can a census-seeded silicon sample produce a realistic opinion?** — is **partially resolved**. **Read `docs/checkpoints/phase-6.md` first** (esp. its "central challenge: getting a realistic result" section — the struggle is the pickup point). Phases 0–5 ✅. All P6 work committed to `main` (`14b5f2f`…`d279775`).
+**Updated:** 2026-07-22
 
-## Now — Phase 6 (scoped; ADRs proposed, build starting on the unblocked parts)
+## Session handoff — the realism struggle (READ THE CHECKPOINT)
+The intellectual spine of this session was **getting a realistic result**, summarized here; full narrative in `docs/checkpoints/phase-6.md`.
+
+- **The collapse → the prior → the fix.** The first 100-agent run (Qwen) collapsed to 100% permanent standard time at **tick 0** (before interaction) — the model flattened a genuinely diverse population onto a prior. YouGov calibration revealed *why*: LLMs express the **expert consensus** (standard time), not the **public preference** (DST), wherever the two diverge — robust to model size AND reasoning. **Swapping to Claude Sonnet-5 broke it** (45% DST ≈ real 50%, holds ~83 voice clusters). So the individual-level collapse was a **model artifact**; the residual vote-convergence under interaction is **genuine R10 dynamics**. This is the headline result.
+- **Still-open realism problems (the pickup points):**
+  1. **Demographic gradient is mis-calibrated (deepest open thread).** Even Sonnet's aggregate is ~right (37–45% DST) but no demographic strongly predicts stance (all Cramér's V <0.2) and the **age gradient is inverted** vs YouGov (ours: young→DST; real: flat/older→DST). Expected lifestyle predictors (chronotype/employment) are absent.
+  2. **In-flight, uncommitted:** `sandbox/build_comparison.py` (our-vs-YouGov by age/sex/region; YouGov crosstab transcribed inside) — **run + verify + commit it**; the inverted age gradient is the finding.
+  3. **Opinion seeding too weak to steer** — the attractor-flip failed because the X corpus is news-heavy/mislabeled; needs a cleaned pool or **committed** seeding.
+  4. **Owed:** a model-swap ADR (Qwen→Sonnet, amends 0005); **adopt Sonnet as the decide/survey baseline** in config/docs.
+- **Live vs half-done:** 176 tests green; full figure set + report in `output/figures/` + `phase6_report.qmd`. The comparison figure is the only half-done piece.
+- **Known gotchas (see checkpoint):** `build_figures.py` has mojibake dashes (committed PNGs are fine; re-running regenerates garbled subtitles — fix first); per-option calibration is a hand-entered CSV (`phase6_calibration_full.csv`); worktree subagents branch from the last commit (commit before spawning); `data/`+`reference/` gitignored.
+
+## Prior — Phase 6 scoping (historical, superseded by the checkpoint)
 Phase 6 is split into two units (one unknown per gate): **P6a** = the persona-realism seeding pipeline (Layer 2); **P6b** = the N=100 scale/infra run consuming P6a's corpus (Layer 1). Decisions taken at P6 start:
 
 - **Population pivots NYC → USA** (ADR 0015, *proposed*). National DST polling exists; NYC has no calibratable figure. Persona wiring built **geography-neutral**; enacting doc updates (`CLAUDE.md`/`PHASE_PLAN.md`/README) held until the ADR is accepted. Validation vs a US DST poll **deferred to P7** (R21).
