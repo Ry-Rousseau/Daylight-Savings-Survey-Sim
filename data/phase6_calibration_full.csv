@@ -1,0 +1,36 @@
+model,question,option,pct
+YouGov,Q2_eliminate,Yes eliminate,62
+YouGov,Q2_eliminate,No,21
+YouGov,Q2_eliminate,Not sure,17
+32b,Q2_eliminate,Yes eliminate,97
+32b,Q2_eliminate,No,3
+32b,Q2_eliminate,Not sure,0
+qwenmax,Q2_eliminate,Yes eliminate,73
+qwenmax,Q2_eliminate,No,24
+qwenmax,Q2_eliminate,Not sure,3
+qwenmax_reason,Q2_eliminate,Yes eliminate,68
+qwenmax_reason,Q2_eliminate,No,21
+qwenmax_reason,Q2_eliminate,Not sure,11
+sonnet,Q2_eliminate,Yes eliminate,88
+sonnet,Q2_eliminate,No,10
+sonnet,Q2_eliminate,Not sure,2
+YouGov,Q4_permanent,Permanent DST,50
+YouGov,Q4_permanent,Permanent Standard,31
+YouGov,Q4_permanent,No preference,12
+YouGov,Q4_permanent,Not sure,7
+32b,Q4_permanent,Permanent DST,12
+32b,Q4_permanent,Permanent Standard,83
+32b,Q4_permanent,No preference,5
+32b,Q4_permanent,Not sure,0
+qwenmax,Q4_permanent,Permanent DST,0
+qwenmax,Q4_permanent,Permanent Standard,99
+qwenmax,Q4_permanent,No preference,1
+qwenmax,Q4_permanent,Not sure,0
+qwenmax_reason,Q4_permanent,Permanent DST,5
+qwenmax_reason,Q4_permanent,Permanent Standard,94
+qwenmax_reason,Q4_permanent,No preference,1
+qwenmax_reason,Q4_permanent,Not sure,0
+sonnet,Q4_permanent,Permanent DST,45
+sonnet,Q4_permanent,Permanent Standard,53
+sonnet,Q4_permanent,No preference,2
+sonnet,Q4_permanent,Not sure,0

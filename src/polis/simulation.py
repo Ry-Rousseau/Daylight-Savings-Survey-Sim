@@ -72,6 +72,11 @@ class DynamicsConfig:
     # contagion that drives convergence) or ``deliberate`` (agents only exchange
     # considerations, stance read at survey time). Recorded in the run config (R17).
     discourse_mode: str = "broadcast"
+    # Prompt-level persistence (anti-sycophancy): when True the per-tick decision prompt
+    # tells each agent to hold its considered view unless it hears a genuinely new
+    # argument, countering the social-proof flipping seen in the P6 runs. Off by default
+    # (byte-identical prompt), recorded in the run config (R17) so its effect is traceable.
+    persistence: bool = False
     seed: int | None = None
 
     def __post_init__(self):
@@ -309,6 +314,7 @@ class Simulation:
                 world_view=world_view,
                 now=float(tick),
                 discourse_mode=self.dynamics.discourse_mode,
+                persistence=self.dynamics.persistence,
             )
 
         return decide
@@ -521,6 +527,7 @@ class Simulation:
             "action_space_version": ACTION_SPACE_VERSION,
             "update_scheme": self.dynamics.update_scheme,
             "discourse_mode": self.dynamics.discourse_mode,
+            "persistence": self.dynamics.persistence,
             "topic": self.dynamics.topic,
             "stances": list(self.dynamics.stances),
             # Topology is a versioned run parameter (R4/R17): a structured descriptor

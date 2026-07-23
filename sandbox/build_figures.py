@@ -1,4 +1,4 @@
-"""Build the Phase-6 result figures (plotnine -> output/figures/). Reads the saved
+﻿"""Build the Phase-6 result figures (plotnine -> output/figures/). Reads the saved
 experiment CSVs; each figure is guarded so a missing file just prints a note."""
 import pandas as pd
 from plotnine import (
@@ -58,7 +58,7 @@ def fig_calibration_q4():
         + geom_col(position=position_dodge(width=0.8), width=0.72)
         + vz.fill_stance(name="Response", limits=opt_order)
         + labs(title="YouGov calibration: which time to make permanent?",
-               subtitle="Real Americans favor permanent DST 50–31; every Qwen model inverts it to standard.\n"
+               subtitle="Real Americans favor permanent DST 50â€“31; every Qwen model inverts it to standard.\n"
                         "Sonnet-5 recovers the real split. (individual queries, n=100)",
                x="", y="% of responses")
         + vz.theme_polis()
@@ -91,7 +91,6 @@ def fig_convergence():
         + facet_wrap("metric", scales="free_y")
         + scale_color_manual(values=cols, name="Decide model")
         + labs(title="With a good model the vote converges but the voice survives",
-               subtitle="100 agents × 5 ticks, small-world. Qwen collapses on both axes; Sonnet holds ~83 voice clusters.",
                x="tick", y="")
         + vz.theme_polis() + theme(legend_position="top")
     )
@@ -114,7 +113,7 @@ def fig_deliberation():
         + geom_col(width=0.6)
         + vz.fill_stance(name="Endpoint vote")
         + labs(title="Removing vote-broadcasting reduces convergence",
-               subtitle="Endpoint survey after 5 ticks. Broadcast → 98% standard; deliberate (reasons only) →\n"
+               subtitle="Endpoint survey after 5 ticks. Broadcast â†’ 98% standard; deliberate (reasons only) â†’\n"
                         "86%, with the 'keep switching' minority surviving (12 vs 1).",
                x="discourse mode", y="agents")
         + vz.theme_polis()
@@ -141,7 +140,7 @@ def fig_topology():
         + scale_color_manual(values={"Small-world": "#0072B2", "Ring lattice": "#009E73"}, name="Topology")
         + scale_y_continuous(limits=[0.6, 1.0])
         + labs(title="Topology alone doesn't stop the collapse",
-               subtitle="Sonnet, dominant vote share over ticks. Sparse ring ≈ small-world — the standard-time\n"
+               subtitle="Sonnet, dominant vote share over ticks. Sparse ring â‰ˆ small-world â€” the standard-time\n"
                         "lean is uniform, so every neighborhood converges the same way.",
                x="tick", y="dominant vote share")
         + vz.theme_polis() + theme(legend_position="top")
@@ -165,7 +164,7 @@ def fig_opinion():
         + coord_flip()
         + scale_y_continuous(limits=[0, 1.05], expand=(0, 0))
         + labs(title="Only committed minorities preserve a vote split",
-               subtitle="Endpoint dominant share by opinion-seeding condition (lower = more pluralism).",
+               subtitle="Endpoint dominant share by seeding condition (lower = more split).",
                x="", y="endpoint dominant share")
         + vz.theme_polis()
     )
@@ -182,3 +181,4 @@ if __name__ == "__main__":
         except Exception as e:  # noqa: BLE001 - one bad figure shouldn't abort the rest
             print(f"  [error] {fn.__name__}: {e!r}")
     print("done.")
+

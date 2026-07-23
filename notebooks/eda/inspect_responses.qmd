@@ -1,0 +1,181 @@
+---
+title: "Inspecting canonical responses — where the answers live and how to query them"
+format: html
+jupyter: python3
+---
+
+The project produces answers at two layers and this notebook is the hands-on surface for
+both. **Layer 1** is the individual survey: each of the 100 census-seeded personas answered
+once, in isolation, with no interaction — a silicon opinion *poll* (`data/phase6_persona_stances.csv`).
+**Layer 2** is the simulation: the same personas talking over a network across ticks, whose
+canonical record is the SQLite run log (`data/*.sqlite`), read here into tidy DataFrames via
+`polis.responses`. Layer 1 answers "what does the sample think?"; Layer 2 answers "what happens
+to that when they influence each other?" — convergence lives only in Layer 2.
+
+```{python}
+import json
+import pandas as pd
+from plotnine import (
+    ggplot, aes, geom_line, geom_point, geom_col, labs, ylim, scale_x_continuous,
+)
+
+from polis.persona_pipeline import load_corpus
+from polis.responses import (
+    open_run, actions_frame, retrieval_frame, stance_pivot, flips,
+)
+from polis.runlog import RunLog
+from polis.viz_theme import theme_polis, INK
+```
+
+```{python}
+# --- CONFIG (edit and re-run downward) ----------------------------------------
+CORPUS   = "data/personas_corpus_n100.json"          # the 100 personas
+STANCES  = "data/phase6_persona_stances.csv"         # Layer-1: one answer per persona
+RUN_LOG  = "data/phase6_scale_sonnet.sqlite"         # Layer-2: a simulation run
+RUN_ID   = None                                       # None -> most recent run in the file
+
+# Map the long option strings (and Layer-1 short codes) to compact labels for display.
+def short_stance(s):
+    if not isinstance(s, str):
+        return s
+    t = s.lower()
+    if "permanent standard" in t or t == "standard":
+        return "Permanent Standard"
+    if "permanent daylight" in t or t == "dst":
+        return "Permanent DST"
+    if "keep switching" in t:
+        return "Keep switching"
+    if "no pref" in t:
+        return "No preference"
+    if "not sure" in t:
+        return "Not sure"
+    return s
+```
+
+## 1. The personas (the input population)
+
+`load_corpus` returns the 100 `SeededPersona` objects; here they are as a flat frame you
+can query — the factual description, the R7 anchor (values / dispositions) that is always in
+the system prompt, and the home state. This is *who* is answering.
+
+```{python}
+corpus = load_corpus(CORPUS)          # {"meta": ..., "personas": [...]} — the cached corpus JSON
+personas = pd.DataFrame([
+    {
+        "id": rec["persona"]["id"],
+        "description": rec["persona"]["description"],
+        "state": rec["persona"].get("location"),
+        "values": " | ".join(rec["persona"].get("values", [])),
+        "dispositions": " | ".join(rec["persona"].get("dispositions", [])),
+        "n_memories": len(rec.get("memories", [])),
+    }
+    for rec in corpus["personas"]
+])
+print(f"{len(personas)} personas loaded")
+personas.head()
+```
+
+## 2. Layer 1 — the individual survey (the silicon poll)
+
+`phase6_persona_stances.csv` is each persona's YouGov-Q4 answer joined to its demographics,
+with **no interaction** — the cross-sectional estimate you compare against real polling. Note
+it stores only the *choice*, not the reason (§5 fixes that). This is the number to foreground
+as "does a census-seeded sample estimate opinion?": ~37% permanent DST vs YouGov's ~50%.
+
+```{python}
+survey = pd.read_csv(STANCES)
+survey["stance_short"] = survey["stance"].map(short_stance)
+dist = survey["stance_short"].value_counts(normalize=True).round(3)
+print("Layer-1 distribution (share):")
+print(dist.to_string())
+survey[["person_id", "age", "sex", "region", "stance_short"]].head()
+```
+
+A crosstab is one line — e.g. stance by age band, the open "inverted age gradient" thread:
+
+```{python}
+survey["age_band"] = pd.cut(survey["age"], [17, 34, 49, 64, 200],
+                            labels=["18-34", "35-49", "50-64", "65+"])
+pd.crosstab(survey["age_band"], survey["stance_short"], normalize="index").round(2)
+```
+
+## 3. Layer 2 — the simulation run log (the canonical response store)
+
+`open_run` binds a `.sqlite` to one run (defaulting to the most recent). `actions_frame`
+flattens every `action` event into one row per agent-per-tick: the stance taken and the
+**utterance** — the response voice that Layer 1 throws away.
+
+```{python}
+run = open_run(RUN_LOG, RUN_ID)
+print("runs in this file:", RunLog.open(RUN_LOG).list_runs())
+acts = actions_frame(run)
+acts["stance_short"] = acts["stance"].map(short_stance)
+print(f"{len(acts)} actions over ticks {sorted(acts['tick'].unique())}")
+acts.head()
+```
+
+`stance_pivot` gives the agent x tick stance table (forward-filled), and its per-tick tally is
+the convergence trajectory — here the vote sliding toward permanent standard tick over tick.
+
+```{python}
+pivot = stance_pivot(acts)
+traj = (
+    pivot.apply(lambda col: col.map(short_stance).value_counts())
+    .fillna(0).astype(int).T.rename_axis("tick").reset_index()
+    .melt(id_vars="tick", var_name="stance", value_name="n")
+)
+(
+    ggplot(traj, aes("tick", "n", color="stance"))
+    + geom_line(size=1) + geom_point(size=2)
+    + labs(title="Layer-2 stance trajectory — vote converges under interaction",
+           x="tick", y="agents", color="stance")
+    + scale_x_continuous(breaks=sorted(traj["tick"].unique()))
+    + theme_polis()
+)
+```
+
+## 4. Who flips, and what they had just heard (the over-influence diagnostic)
+
+`flips` returns one row per stance change. This is the direct evidence for "personas don't
+stick to their guns": the dominant flow is *toward* the standard-time prior, tick after tick.
+
+```{python}
+fl = flips(acts)
+fl["from_short"] = fl["from_stance"].map(short_stance)
+fl["to_short"] = fl["to_stance"].map(short_stance)
+print(f"{len(fl)} flips total")
+fl.groupby(["from_short", "to_short"]).size().sort_values(ascending=False)
+```
+
+`retrieval_frame` is the R29 provenance: the memories each agent pulled in to decide, scored.
+Joining a flip to what that agent had just retrieved shows *what changed its mind* — the seed
+for asking "is this sycophancy (heard-opinion driven) or a genuine new argument?".
+
+```{python}
+prov = retrieval_frame(run)
+if len(fl):
+    ex = fl.iloc[0]
+    print(f"agent {ex['agent_id']} flipped at tick {ex['tick']}: "
+          f"{ex['from_short']} -> {ex['to_short']}")
+    print("\nwhat it said when it flipped:")
+    utt = acts[(acts.agent_id == ex["agent_id"]) & (acts.tick == ex["tick"])]["utterance"]
+    print(" ", utt.iloc[0] if len(utt) else "(none)")
+    print("\nwhat it had retrieved that tick (kind / total / text):")
+    hits = prov[(prov.agent_id == ex["agent_id"]) & (prov.tick == ex["tick"])]
+    for _, h in hits.iterrows():
+        print(f"  [{h['kind']:>6}] {h['total']:.2f}  {str(h['text'])[:90]}")
+```
+
+## 5. Recipe — querying from any notebook
+
+The three lines you need anywhere:
+
+```python
+from polis.responses import open_run, actions_frame, retrieval_frame, flips
+run  = open_run("data/<some_run>.sqlite")   # binds the newest run in the file
+acts = actions_frame(run)                    # per agent-per-tick: stance + utterance
+```
+
+Layer 1 (the poll) is just `pd.read_csv("data/phase6_persona_stances.csv")`. Its missing
+reason text is a one-line fix in the survey runner (`sandbox/run_persona_stances.py` now keeps
+`choice` **and** `reason`) — re-run it (~100 Sonnet calls) to capture the "why" per persona.

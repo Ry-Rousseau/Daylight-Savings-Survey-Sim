@@ -1,0 +1,56 @@
+puma,state_fips,borough,community_district,neighborhood_name
+4103,36,Manhattan,3,Lower East Side & Chinatown
+4104,36,Manhattan,4,Chelsea & Hell's Kitchen
+4107,36,Manhattan,7,Upper West Side
+4108,36,Manhattan,8,Upper East Side & Roosevelt Island
+4109,36,Manhattan,9,Morningside Heights & Hamilton Heights
+4110,36,Manhattan,10,Harlem
+4111,36,Manhattan,11,East Harlem
+4112,36,Manhattan,12,Washington Heights & Inwood
+4121,36,Manhattan,1&2,Financial District & Greenwich Village
+4165,36,Manhattan,5&6,"Midtown, East Midtown, & Flatiron"
+4204,36,Bronx,4,Highbridge & Concourse
+4205,36,Bronx,5,Morris Heights & Mount Hope
+4207,36,Bronx,7,"Fordham, Bedford Park, & Norwood"
+4208,36,Bronx,8,"Riverdale, Kingsbridge, & Marble Hill"
+4209,36,Bronx,9,Soundview & Parkchester
+4210,36,Bronx,10,Co-op City & Throgs Neck
+4211,36,Bronx,11,Pelham Parkway & Morris Park
+4212,36,Bronx,12,"Wakefield, Williamsbridge, & Eastchester"
+4221,36,Bronx,1&2,"Melrose, Mott Haven, Longwood, & Hunts Point"
+4263,36,Bronx,3&6,"Morrisania, Tremont, Belmont, & West Farms"
+4301,36,Brooklyn,1,Williamsburg & Greenpoint
+4302,36,Brooklyn,2,Downtown Brooklyn & Fort Greene
+4303,36,Brooklyn,3,Bedford-Stuyvesant
+4304,36,Brooklyn,4,Bushwick
+4305,36,Brooklyn,5,East New York & Cypress Hills
+4306,36,Brooklyn,6,Park Slope & Carroll Gardens
+4307,36,Brooklyn,7,Sunset Park & Windsor Terrace
+4308,36,Brooklyn,8,Crown Heights (North)
+4309,36,Brooklyn,9,Crown Heights (South)
+4310,36,Brooklyn,10,Bay Ridge & Dyker Heights
+4311,36,Brooklyn,11,Bensonhurst & Bath Beach
+4312,36,Brooklyn,12,Borough Park & Kensington
+4313,36,Brooklyn,13,Coney Island & Brighton Beach
+4314,36,Brooklyn,14,Flatbush & Midwood
+4315,36,Brooklyn,15,Sheepshead Bay & Gravesend (East)
+4316,36,Brooklyn,16,Ocean Hill & Brownsville
+4317,36,Brooklyn,17,East Flatbush
+4318,36,Brooklyn,18,Canarsie & Flatlands
+4401,36,Queens,1,Astoria & Queensbridge
+4402,36,Queens,2,"Long Island City, Sunnyside, & Woodside"
+4403,36,Queens,3,Jackson Heights & East Elmhurst
+4404,36,Queens,4,Elmhurst & Corona
+4405,36,Queens,5,"Ridgewood, Maspeth, & Middle Village"
+4406,36,Queens,6,Forest Hills & Rego Park
+4407,36,Queens,7,"Flushing, Murray Hill, & Whitestone"
+4408,36,Queens,8,"Fresh Meadows, Hillcrest, & Briarwood"
+4409,36,Queens,9,"Kew Gardens, Richmond Hill, & Woodhaven"
+4410,36,Queens,10,South Ozone Park & Howard Beach
+4411,36,Queens,11,"Auburndale, Bayside, & Douglaston"
+4412,36,Queens,12,"Jamaica, St. Albans, & Hollis"
+4413,36,Queens,13,"Queens Village, Bellerose, & Rosedale"
+4414,36,Queens,14,The Rockaways
+4501,36,Staten Island,1,North Shore
+4502,36,Staten Island,2,Mid-Island
+4503,36,Staten Island,3,South Shore

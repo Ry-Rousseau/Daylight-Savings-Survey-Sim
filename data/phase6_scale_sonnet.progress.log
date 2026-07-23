@@ -1,0 +1,43 @@
+[00:16:52] loading corpus + embedding seed memories (100 agents)…
+[00:17:01] population ready: 100 agents | corpus f3a1042b4c7f
+[00:17:01] START run: 100 agents × 5 ticks, small_world(k=4,p=0.1), anthropic/claude-sonnet-5
+[00:17:10]   …25 decides completed
+[00:17:17]   …50 decides completed
+[00:17:23]   …75 decides completed
+[00:17:30]   …100 decides completed
+[00:17:34] tick 1/5 complete | 100 decides total | 33s elapsed
+[00:17:44]   …125 decides completed
+[00:17:51]   …150 decides completed
+[00:17:57]   …175 decides completed
+[00:18:05]   …200 decides completed
+[00:18:10] tick 2/5 complete | 200 decides total | 69s elapsed
+[00:18:18]   …225 decides completed
+[00:18:25]   …250 decides completed
+[00:18:31]   …275 decides completed
+[00:18:39]   …300 decides completed
+[00:18:44] tick 3/5 complete | 300 decides total | 103s elapsed
+[00:18:52]   …325 decides completed
+[00:18:59]   …350 decides completed
+[00:19:06]   …375 decides completed
+[00:19:15]   …400 decides completed
+[00:19:20] tick 4/5 complete | 400 decides total | 139s elapsed
+[00:19:28]   …425 decides completed
+[00:19:36]   …450 decides completed
+[00:19:42]   …475 decides completed
+[00:19:49]   …500 decides completed
+[00:19:53] tick 5/5 complete | 500 decides total | 172s elapsed
+[00:19:53] RUN DONE in 172s | 500 decides | 2.90 decides/s | p95 6.4s | retries 0 | failures 0
+[00:19:53] computing metrics…
+[00:19:54] R27 gate: abstain_rate 0.00 | stances_used 4/4 | utterance_uniqueness 1.00 | flags none
+[00:19:54]   tick 0: dom_share 0.66 | entropy 0.55 | dispersion 0.326 | clusters 52 (n=100)
+[00:19:54]   tick 1: dom_share 0.79 | entropy 0.44 | dispersion 0.326 | clusters 86 (n=100)
+[00:19:54]   tick 2: dom_share 0.85 | entropy 0.39 | dispersion 0.320 | clusters 83 (n=100)
+[00:19:54]   tick 3: dom_share 0.88 | entropy 0.26 | dispersion 0.320 | clusters 83 (n=100)
+[00:19:54]   tick 4: dom_share 0.92 | entropy 0.20 | dispersion 0.322 | clusters 83 (n=100)
+[00:19:54] ENDPOINT: dom_share 0.92 | dispersion 0.322 | clusters 83/100
+[00:19:54] running endpoint survey (100 agents)…
+[00:20:19] survey: 100/100 answered (skipped none)
+[00:20:19]    93  Adopt permanent standard time (clocks stay on winter time al
+[00:20:19]     6  Keep switching the clocks twice a year
+[00:20:19]     1  Adopt permanent daylight saving time (clocks stay on summer 
+[00:20:19] DONE — wrote phase6_scale_sonnet_trajectory.csv, phase6_scale_sonnet_survey.csv, phase6_scale_sonnet.sqlite

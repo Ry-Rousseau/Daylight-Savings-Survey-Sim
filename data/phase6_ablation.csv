@@ -1,0 +1,4 @@
+condition,model,n_answered,n_skipped,distinct_stances,dom_share,top_stance,top_count,secs,opt0,opt1,opt2,opt3
+A_32b_control,qwen/qwen3-32b,100,0,3,0.81,Adopt permanent standard time (clo,81,42,4,81,15,0
+B_qwenmax_noreason,qwen/qwen3.7-max,100,0,3,0.63,Adopt permanent standard time (clo,63,28,1,63,36,0
+C_qwenmax_reason,qwen/qwen3.7-max,100,0,3,0.64,Keep switching the clocks twice a ,64,217,4,32,64,0

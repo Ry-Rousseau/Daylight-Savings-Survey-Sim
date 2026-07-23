@@ -1,0 +1,22 @@
+[01:46:58] loading corpus + embedder…
+[01:47:07] [broadcast] running 100 agents x 5 ticks…
+[01:47:58] [broadcast] tick 1/5 | 100 decides | 51s
+[01:48:43] [broadcast] tick 2/5 | 200 decides | 96s
+[01:49:25] [broadcast] tick 3/5 | 300 decides | 138s
+[01:50:12] [broadcast] tick 4/5 | 400 decides | 185s
+[01:50:49] [broadcast] tick 5/5 | 500 decides | 222s
+[01:50:49] [broadcast] action usage: speak 461 | consider 17 | rebut 22 | abstain 0
+[01:51:18] [broadcast] endpoint survey (100/100): DST 1 | STD 98 | SWITCH 1 | NOPREF 0  -> dom_share 0.98
+[01:51:20] [deliberate] running 100 agents x 5 ticks…
+[01:52:14] [deliberate] tick 1/5 | 100 decides | 54s
+[01:52:58] [deliberate] tick 2/5 | 200 decides | 98s
+[01:53:48] [deliberate] tick 3/5 | 300 decides | 148s
+[01:54:32] [deliberate] tick 4/5 | 400 decides | 192s
+[01:55:26] [deliberate] tick 5/5 | 500 decides | 245s
+[01:55:26] [deliberate] action usage: speak 0 | consider 500 | rebut 0 | abstain 0
+[01:55:52] [deliberate] endpoint survey (100/100): DST 2 | STD 86 | SWITCH 12 | NOPREF 0  -> dom_share 0.86
+[01:55:52] ======================================================================
+[01:55:52] A/B RESULT (endpoint survey; lower dom_share = less converged):
+[01:55:52]   broadcast   dom_share 0.98 | DST   1 STD  98 SWITCH   1 NOPREF   0
+[01:55:52]   deliberate  dom_share 0.86 | DST   2 STD  86 SWITCH  12 NOPREF   0
+[01:55:52] wrote data/phase6_deliberation.csv

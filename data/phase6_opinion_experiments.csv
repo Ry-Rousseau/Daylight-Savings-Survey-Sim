@@ -1,0 +1,7 @@
+experiment,scheme,phrasing,n_seeded,n_committed,end_dom_share,end_entropy,end_dispersion,end_clusters,distinct_stances_end,abstain_rate,top_stance,top_count,secs
+baseline,none,seen,0,0,1.0,0.0,0.114,1,1,0.002,Adopt permanent standard time (clo,100,172
+polar25_seen,two_camp,seen,50,0,1.0,0.0,0.131,2,1,0.002,Adopt permanent standard time (clo,100,177
+polar50_seen,two_camp,seen,100,0,0.99,0.04,0.131,3,2,0.004,Adopt permanent standard time (clo,99,170
+polar25_conviction,two_camp,conviction,50,0,0.91,0.218,0.146,2,2,0.0,Adopt permanent standard time (clo,91,193
+polar25_committed,two_camp,seen,50,50,0.56,0.495,0.165,3,2,0.002,Adopt permanent standard time (clo,56,123
+random50_seen,random,seen,50,0,0.97,0.097,0.127,1,2,0.002,Adopt permanent standard time (clo,97,174

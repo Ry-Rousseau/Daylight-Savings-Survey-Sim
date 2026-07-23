@@ -1,0 +1,16 @@
+[00:50:34] loading corpus + opinion corpus + embedder…
+[00:50:45] seeded 40/100 agents with DST conviction (phrasing=conviction)
+[00:50:45] START: 100 agents x 3 ticks, stochastic_block(1, p_in=0.5 ~= 50% connected), anthropic/claude-sonnet-5
+[00:52:04] tick 1/3 complete | 100 decides | 79s
+[00:53:37] tick 2/3 complete | 200 decides | 172s
+[00:54:56] tick 3/3 complete | 300 decides | 251s
+[00:54:56] RUN DONE 251s | 300 decides | 0 failures
+[00:54:56] computing metrics…
+[00:54:56] R27: abstain 0.00 | stances_used 3/4 | flags none
+[00:54:56] --- per-tick stance breakdown (watch DST snowball) ---
+[00:54:56]   tick 0: DST  14 | STD  67 | SWITCH  19 | NOPREF   0   -> winner STD (67/100)
+[00:54:56]   tick 1: DST  10 | STD  78 | SWITCH  12 | NOPREF   0   -> winner STD (78/100)
+[00:54:56]   tick 2: DST  13 | STD  72 | SWITCH  15 | NOPREF   0   -> winner STD (72/100)
+[00:54:56] endpoint survey…
+[00:55:22] survey 100/100 (skipped none): DST 10 | STD 84 | SWITCH 6 | NOPREF 0
+[00:55:22] DONE

@@ -80,6 +80,7 @@ class Agent:
         world_view: WorldView,
         now: float = 0.0,
         discourse_mode: str = "broadcast",
+        persistence: bool = False,
     ) -> ActionDecision:
         """Decide this tick's action (SPEAK a stance, REBUT a heard view,
         SHARE_CONSIDERATION a reason without a stance, or ABSTAIN), returning the
@@ -93,6 +94,8 @@ class Agent:
         ``discourse_mode`` gates which actions are offered: ``broadcast`` (all) or
         ``deliberate`` (only SHARE_CONSIDERATION/ABSTAIN — no stance is broadcast, so
         the per-turn vote-contagion is removed and stance is read only at survey time).
+        ``persistence`` adds the anti-sycophancy clause to the prompt (hold your view
+        absent a genuinely new argument) — the counter to the social-proof flipping.
 
         A committed agent (R11) short-circuits: it SPEAKs its fixed stance with no
         model call and no retrieval, since its position is immovable by design.
@@ -116,7 +119,8 @@ class Agent:
             ],
         )
         user = prompts.action_user(
-            topic, stances, memories=[r.text for r, _ in scored], mode=discourse_mode
+            topic, stances, memories=[r.text for r, _ in scored],
+            mode=discourse_mode, persistence=persistence,
         )
         raw = self.client.decide(
             system=self.persona.system_prompt(),

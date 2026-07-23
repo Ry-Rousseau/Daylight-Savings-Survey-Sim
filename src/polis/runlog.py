@@ -141,6 +141,27 @@ class RunLog:
             for r in rows
         ]
 
+    def list_runs(self) -> list[dict[str, Any]]:
+        """Enumerate the runs in this log, newest first, each with its event count.
+
+        The write path returns a run_id, but an offline analyst opening a ``.sqlite``
+        by hand has no way to know it — this is the discovery entry point for the
+        inspection layer (``responses`` reads a specific run's events)."""
+        rows = self._conn.execute(
+            "SELECT r.run_id, r.config_hash, r.started_at, "
+            "       (SELECT COUNT(*) FROM events e WHERE e.run_id = r.run_id) AS n_events "
+            "FROM runs r ORDER BY r.started_at DESC"
+        ).fetchall()
+        return [
+            {
+                "run_id": r["run_id"],
+                "config_hash": r["config_hash"],
+                "started_at": r["started_at"],
+                "n_events": r["n_events"],
+            }
+            for r in rows
+        ]
+
     def get_run(self, run_id: str) -> dict[str, Any] | None:
         """Return the run's config record, or None if unknown."""
         r = self._conn.execute(

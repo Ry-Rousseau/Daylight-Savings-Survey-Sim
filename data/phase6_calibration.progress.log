@@ -1,0 +1,14 @@
+[00:12:07] loading corpus + embedder…
+[00:12:54] [claude_sonnet5 · Q2_eliminate] n=100 | TVD vs YouGov = 0.26 | 37s
+[00:12:54]     model   88%  vs  YouGov   62%   Yes, I would
+[00:12:54]     model   10%  vs  YouGov   21%   No, I would not
+[00:12:54]     model    2%  vs  YouGov   17%   Not sure
+[00:13:38] [claude_sonnet5 · Q4_permanent] n=100 | TVD vs YouGov = 0.22 | 44s
+[00:13:38]     model   45%  vs  YouGov   50%   Permanent Daylight Saving Time (later sunrises and s
+[00:13:38]     model   53%  vs  YouGov   31%   Permanent Standard Time (earlier sunrises and sunset
+[00:13:38]     model    2%  vs  YouGov   12%   No preference
+[00:13:38]     model    0%  vs  YouGov    7%   Not sure
+[00:13:38] ========================================================================
+[00:13:38] CALIBRATION SUMMARY (total-variation distance from YouGov; lower = better):
+[00:13:38]   claude_sonnet5    Q2 TVD 0.260  |  Q4 TVD 0.220
+[00:13:38] wrote data/phase6_calibration.csv

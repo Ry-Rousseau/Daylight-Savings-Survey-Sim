@@ -1,0 +1,6 @@
+tick,n,dominant_stance,dominant_share,distinct,entropy,pairwise_dispersion,cluster_count,n_utterances
+0,99,"Adopt permanent standard time (clocks stay on winter time all year: earlier sunrises, earlier sunsets)",0.7171717171717171,3,0.4991058972551381,0.17535099149125688,3,99
+1,100,"Adopt permanent standard time (clocks stay on winter time all year: earlier sunrises, earlier sunsets)",0.56,3,0.5292217944502822,0.16572314022739199,6,100
+2,100,"Adopt permanent standard time (clocks stay on winter time all year: earlier sunrises, earlier sunsets)",0.62,2,0.4790210111131499,0.16169001419153786,2,100
+3,100,"Adopt permanent standard time (clocks stay on winter time all year: earlier sunrises, earlier sunsets)",0.61,2,0.48239977425254366,0.16119173368001305,3,100
+4,100,"Adopt permanent standard time (clocks stay on winter time all year: earlier sunrises, earlier sunsets)",0.56,2,0.49479376061102776,0.16541680851472523,3,100

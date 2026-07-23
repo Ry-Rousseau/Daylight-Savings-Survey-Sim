@@ -1,0 +1,11 @@
+arm,tick,n,dominant_stance,dominant_share,distinct,entropy,pairwise_dispersion,cluster_count,n_utterances
+thick,0,12,"Adopt permanent standard time (clocks stay on winter time all year: earlier sunrises, earlier sunsets)",0.5833333333333334,2,0.48993437832557635,0.27738026414330774,8,12
+thick,1,12,"Adopt permanent standard time (clocks stay on winter time all year: earlier sunrises, earlier sunsets)",0.6666666666666666,2,0.4591479170272447,0.25752950514474837,11,12
+thick,2,12,"Adopt permanent standard time (clocks stay on winter time all year: earlier sunrises, earlier sunsets)",0.6666666666666666,2,0.4591479170272447,0.2504977495342613,9,12
+thick,3,12,"Adopt permanent standard time (clocks stay on winter time all year: earlier sunrises, earlier sunsets)",0.8333333333333334,2,0.32501121082417705,0.2544461668968127,8,12
+thick,4,12,"Adopt permanent standard time (clocks stay on winter time all year: earlier sunrises, earlier sunsets)",1.0,1,0.0,0.20449358642653107,8,12
+null,0,12,"Adopt permanent standard time (clocks stay on winter time all year: earlier sunrises, earlier sunsets)",0.8333333333333334,2,0.32501121082417705,0.22419428124981755,5,12
+null,1,12,"Adopt permanent standard time (clocks stay on winter time all year: earlier sunrises, earlier sunsets)",0.8333333333333334,2,0.32501121082417705,0.19392462580889935,3,12
+null,2,12,"Adopt permanent standard time (clocks stay on winter time all year: earlier sunrises, earlier sunsets)",1.0,1,0.0,0.17590666762487187,2,12
+null,3,12,"Adopt permanent standard time (clocks stay on winter time all year: earlier sunrises, earlier sunsets)",1.0,1,0.0,0.15428310372144127,3,12
+null,4,12,"Adopt permanent standard time (clocks stay on winter time all year: earlier sunrises, earlier sunsets)",1.0,1,0.0,0.12086434003144034,1,12

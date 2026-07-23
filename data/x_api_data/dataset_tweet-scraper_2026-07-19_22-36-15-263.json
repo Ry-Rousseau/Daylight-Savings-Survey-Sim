@@ -1,0 +1,6386 @@
+[{
+  "type": "tweet",
+  "id": "2078967633622307144",
+  "url": "https://x.com/FOX56News/status/2078967633622307144",
+  "twitterUrl": "https://twitter.com/FOX56News/status/2078967633622307144",
+  "text": "We could soon be observing year-round daylight saving time – again. https://t.co/srD183F7nf",
+  "fullText": "We could soon be observing year-round daylight saving time – again. https://t.co/srD183F7nf",
+  "source": "SocialNewsDesk",
+  "retweetCount": 0,
+  "replyCount": 0,
+  "likeCount": 0,
+  "quoteCount": 0,
+  "viewCount": 34,
+  "createdAt": "Sun Jul 19 22:18:03 +0000 2026",
+  "lang": "en",
+  "bookmarkCount": 0,
+  "isReply": false,
+  "conversationId": "2078967633622307144",
+  "possiblySensitive": false,
+  "author": {
+    "type": "user",
+    "userName": "FOX56News",
+    "url": "https://x.com/FOX56News",
+    "twitterUrl": "https://twitter.com/FOX56News",
+    "id": "1480251158",
+    "name": "FOX 56 News (WDKY)",
+    "isVerified": false,
+    "isBlueVerified": false,
+    "profilePicture": "https://pbs.twimg.com/profile_images/1477149484161413122/hgSr8Y5T_normal.png",
+    "coverPicture": "https://pbs.twimg.com/profile_banners/1480251158/1690562602",
+    "description": "Central Kentucky news, weather, and sports. Our home, your news. 💬 Submit tips: https://t.co/ETNVjAdTnT",
+    "location": "Lexington, KY",
+    "followers": 5956,
+    "following": 645,
+    "protected": false,
+    "status": "",
+    "canDm": false,
+    "canMediaTag": true,
+    "createdAt": "Mon Jun 03 17:36:57 +0000 2013",
+    "entities": {
+      "description": {
+        "urls": [
+          {
+            "display_url": "FOX56News.com/tip",
+            "expanded_url": "http://FOX56News.com/tip",
+            "indices": [
+              80,
+              103
+            ],
+            "url": "https://t.co/ETNVjAdTnT"
+          }
+        ]
+      },
+      "url": {
+        "urls": [
+          {
+            "display_url": "FOX56News.com",
+            "expanded_url": "http://FOX56News.com",
+            "indices": [
+              0,
+              23
+            ],
+            "url": "https://t.co/nRdTM4SfmU"
+          }
+        ]
+      }
+    },
+    "fastFollowersCount": 0,
+    "favouritesCount": 2203,
+    "hasCustomTimelines": true,
+    "isTranslator": false,
+    "mediaCount": 3078,
+    "statusesCount": 79474,
+    "affiliatesHighlightedLabel": {},
+    "possiblySensitive": false,
+    "professional": {
+      "category": [
+        {
+          "icon_name": "IconBriefcaseStroke",
+          "id": 580,
+          "name": "Media & News Company"
+        }
+      ],
+      "professional_type": "Business",
+      "rest_id": "1470419734348894216"
+    }
+  },
+  "extendedEntities": {},
+  "card": {
+    "legacy": {
+      "binding_values": [
+        {
+          "key": "photo_image_full_size_large",
+          "value": {
+            "image_value": {
+              "height": 262,
+              "url": "https://pbs.twimg.com/card_img/2078967637610999809/ZNwkYQzg?format=jpg&name=600x314",
+              "width": 500
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "thumbnail_image",
+          "value": {
+            "image_value": {
+              "height": 150,
+              "url": "https://pbs.twimg.com/card_img/2078967637610999809/ZNwkYQzg?format=jpg&name=280x150",
+              "width": 187
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "description",
+          "value": {
+            "string_value": "We could soon be observing year-round daylight saving time – again.",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "domain",
+          "value": {
+            "string_value": "fox56news.com",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "thumbnail_image_large",
+          "value": {
+            "image_value": {
+              "height": 320,
+              "url": "https://pbs.twimg.com/card_img/2078967637610999809/ZNwkYQzg?format=jpg&name=800x320_1",
+              "width": 398
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "summary_photo_image_small",
+          "value": {
+            "image_value": {
+              "height": 202,
+              "url": "https://pbs.twimg.com/card_img/2078967637610999809/ZNwkYQzg?format=jpg&name=386x202",
+              "width": 386
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "thumbnail_image_original",
+          "value": {
+            "image_value": {
+              "height": 402,
+              "url": "https://pbs.twimg.com/card_img/2078967637610999809/ZNwkYQzg?format=jpg&name=orig",
+              "width": 500
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "photo_image_full_size_small",
+          "value": {
+            "image_value": {
+              "height": 202,
+              "url": "https://pbs.twimg.com/card_img/2078967637610999809/ZNwkYQzg?format=jpg&name=386x202",
+              "width": 386
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "summary_photo_image_large",
+          "value": {
+            "image_value": {
+              "height": 262,
+              "url": "https://pbs.twimg.com/card_img/2078967637610999809/ZNwkYQzg?format=jpg&name=600x314",
+              "width": 500
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "thumbnail_image_small",
+          "value": {
+            "image_value": {
+              "height": 80,
+              "url": "https://pbs.twimg.com/card_img/2078967637610999809/ZNwkYQzg?format=jpg&name=100x100",
+              "width": 100
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "thumbnail_image_x_large",
+          "value": {
+            "image_value": {
+              "height": 402,
+              "url": "https://pbs.twimg.com/card_img/2078967637610999809/ZNwkYQzg?format=png&name=2048x2048_2_exp",
+              "width": 500
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "photo_image_full_size_original",
+          "value": {
+            "image_value": {
+              "height": 402,
+              "url": "https://pbs.twimg.com/card_img/2078967637610999809/ZNwkYQzg?format=jpg&name=orig",
+              "width": 500
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "vanity_url",
+          "value": {
+            "scribe_key": "vanity_url",
+            "string_value": "fox56news.com",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "photo_image_full_size",
+          "value": {
+            "image_value": {
+              "height": 262,
+              "url": "https://pbs.twimg.com/card_img/2078967637610999809/ZNwkYQzg?format=jpg&name=600x314",
+              "width": 500
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "thumbnail_image_color",
+          "value": {
+            "image_color_value": {
+              "palette": [
+                {
+                  "percentage": 72.89,
+                  "rgb": {
+                    "blue": 127,
+                    "green": 127,
+                    "red": 127
+                  }
+                },
+                {
+                  "percentage": 19.25,
+                  "rgb": {
+                    "blue": 30,
+                    "green": 30,
+                    "red": 30
+                  }
+                }
+              ]
+            },
+            "type": "IMAGE_COLOR"
+          }
+        },
+        {
+          "key": "title",
+          "value": {
+            "string_value": "Why permanent daylight saving time has failed in the US before",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "summary_photo_image_color",
+          "value": {
+            "image_color_value": {
+              "palette": [
+                {
+                  "percentage": 72.89,
+                  "rgb": {
+                    "blue": 127,
+                    "green": 127,
+                    "red": 127
+                  }
+                },
+                {
+                  "percentage": 19.25,
+                  "rgb": {
+                    "blue": 30,
+                    "green": 30,
+                    "red": 30
+                  }
+                }
+              ]
+            },
+            "type": "IMAGE_COLOR"
+          }
+        },
+        {
+          "key": "summary_photo_image_x_large",
+          "value": {
+            "image_value": {
+              "height": 402,
+              "url": "https://pbs.twimg.com/card_img/2078967637610999809/ZNwkYQzg?format=png&name=2048x2048_2_exp",
+              "width": 500
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "summary_photo_image",
+          "value": {
+            "image_value": {
+              "height": 262,
+              "url": "https://pbs.twimg.com/card_img/2078967637610999809/ZNwkYQzg?format=jpg&name=600x314",
+              "width": 500
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "photo_image_full_size_color",
+          "value": {
+            "image_color_value": {
+              "palette": [
+                {
+                  "percentage": 72.89,
+                  "rgb": {
+                    "blue": 127,
+                    "green": 127,
+                    "red": 127
+                  }
+                },
+                {
+                  "percentage": 19.25,
+                  "rgb": {
+                    "blue": 30,
+                    "green": 30,
+                    "red": 30
+                  }
+                }
+              ]
+            },
+            "type": "IMAGE_COLOR"
+          }
+        },
+        {
+          "key": "photo_image_full_size_x_large",
+          "value": {
+            "image_value": {
+              "height": 402,
+              "url": "https://pbs.twimg.com/card_img/2078967637610999809/ZNwkYQzg?format=png&name=2048x2048_2_exp",
+              "width": 500
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "card_url",
+          "value": {
+            "scribe_key": "card_url",
+            "string_value": "https://t.co/srD183F7nf",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "summary_photo_image_original",
+          "value": {
+            "image_value": {
+              "height": 402,
+              "url": "https://pbs.twimg.com/card_img/2078967637610999809/ZNwkYQzg?format=jpg&name=orig",
+              "width": 500
+            },
+            "type": "IMAGE"
+          }
+        }
+      ],
+      "card_platform": {
+        "platform": {
+          "audience": {
+            "name": "production"
+          },
+          "device": {
+            "name": "Swift",
+            "version": "12"
+          }
+        }
+      },
+      "name": "summary_large_image",
+      "url": "https://t.co/srD183F7nf",
+      "user_refs_results": []
+    },
+    "rest_id": "https://t.co/srD183F7nf"
+  },
+  "place": {},
+  "entities": {
+    "urls": [
+      {
+        "display_url": "fox56news.com/news/nation-wo…",
+        "expanded_url": "https://fox56news.com/news/nation-world/why-permanent-daylight-saving-time-has-failed-in-the-us-before/",
+        "indices": [
+          68,
+          91
+        ],
+        "url": "https://t.co/srD183F7nf"
+      }
+    ]
+  },
+  "isRetweet": false,
+  "isQuote": false,
+  "media": [],
+  "isConversationControlled": false
+},
+{
+  "type": "tweet",
+  "id": "2078966694199079194",
+  "url": "https://x.com/dsyadallee/status/2078966694199079194",
+  "twitterUrl": "https://twitter.com/dsyadallee/status/2078966694199079194",
+  "text": "@SaveStandard\n @DitchDst\n should  get @realDonaldTrump\n to eliminate all forms of Diabolic Satanic (Daylight Saving) Time in the USA! https://t.co/IEmgNWgIjJ",
+  "fullText": "@SaveStandard\n @DitchDst\n should  get @realDonaldTrump\n to eliminate all forms of Diabolic Satanic (Daylight Saving) Time in the USA! https://t.co/IEmgNWgIjJ",
+  "source": "Twitter Web App",
+  "retweetCount": 0,
+  "replyCount": 0,
+  "likeCount": 0,
+  "quoteCount": 0,
+  "viewCount": 2,
+  "createdAt": "Sun Jul 19 22:14:19 +0000 2026",
+  "lang": "en",
+  "bookmarkCount": 0,
+  "isReply": true,
+  "conversationId": "2078966694199079194",
+  "inReplyToUserId": "1137782054848851968",
+  "inReplyToUsername": "SaveStandard",
+  "possiblySensitive": false,
+  "author": {
+    "type": "user",
+    "userName": "dsyadallee",
+    "url": "https://x.com/dsyadallee",
+    "twitterUrl": "https://twitter.com/dsyadallee",
+    "id": "826179428",
+    "name": "Dave Yadallee",
+    "isVerified": false,
+    "isBlueVerified": false,
+    "profilePicture": "https://pbs.twimg.com/profile_images/2862778714/5a8507485a7bb86bf9bd912b5a425bd1_normal.jpeg",
+    "coverPicture": "",
+    "description": "head of https://t.co/VoA1gGX29A",
+    "location": "Edmonton, Alberta",
+    "followers": 23188,
+    "following": 20329,
+    "protected": false,
+    "status": "",
+    "canDm": true,
+    "canMediaTag": true,
+    "createdAt": "Sun Sep 16 00:13:35 +0000 2012",
+    "entities": {
+      "description": {
+        "urls": [
+          {
+            "display_url": "nk.ca",
+            "expanded_url": "https://www.nk.ca/",
+            "indices": [
+              8,
+              31
+            ],
+            "url": "https://t.co/VoA1gGX29A"
+          }
+        ]
+      },
+      "url": {
+        "urls": [
+          {
+            "display_url": "nk.ca/~doctor",
+            "expanded_url": "https://www.nk.ca/~doctor",
+            "indices": [
+              0,
+              23
+            ],
+            "url": "https://t.co/xKi5FnzJWi"
+          }
+        ]
+      }
+    },
+    "fastFollowersCount": 0,
+    "favouritesCount": 5364,
+    "hasCustomTimelines": false,
+    "isTranslator": false,
+    "mediaCount": 4416,
+    "statusesCount": 52050,
+    "affiliatesHighlightedLabel": {},
+    "possiblySensitive": false,
+    "professional": {
+      "category": [
+        {
+          "icon_name": "IconBriefcaseStroke",
+          "id": 713,
+          "name": "Science & Technology"
+        }
+      ],
+      "professional_type": "Creator",
+      "rest_id": "1605712311838474241"
+    }
+  },
+  "extendedEntities": {
+    "media": [
+      {
+        "allow_download_status": {
+          "allow_download": true
+        },
+        "display_url": "pic.x.com/IEmgNWgIjJ",
+        "expanded_url": "https://x.com/dsyadallee/status/2078966694199079194/photo/1",
+        "ext_media_availability": {
+          "status": "Available"
+        },
+        "features": {
+          "large": {
+            "faces": [
+              {
+                "h": 117,
+                "w": 117,
+                "x": 198,
+                "y": 102
+              },
+              {
+                "h": 133,
+                "w": 133,
+                "x": 390,
+                "y": 197
+              }
+            ]
+          },
+          "medium": {
+            "faces": [
+              {
+                "h": 117,
+                "w": 117,
+                "x": 198,
+                "y": 102
+              },
+              {
+                "h": 133,
+                "w": 133,
+                "x": 390,
+                "y": 197
+              }
+            ]
+          },
+          "orig": {
+            "faces": [
+              {
+                "h": 117,
+                "w": 117,
+                "x": 198,
+                "y": 102
+              },
+              {
+                "h": 133,
+                "w": 133,
+                "x": 390,
+                "y": 197
+              }
+            ]
+          },
+          "small": {
+            "faces": [
+              {
+                "h": 88,
+                "w": 88,
+                "x": 149,
+                "y": 77
+              },
+              {
+                "h": 100,
+                "w": 100,
+                "x": 294,
+                "y": 148
+              }
+            ]
+          }
+        },
+        "id_str": "2078966211933835264",
+        "indices": [
+          134,
+          157
+        ],
+        "media_key": "3_2078966211933835264",
+        "media_results": {
+          "result": {
+            "media_key": "3_2078966211933835264"
+          }
+        },
+        "media_url_https": "https://pbs.twimg.com/media/HNn4wUJbEAA27St.jpg",
+        "original_info": {
+          "focus_rects": [
+            {
+              "h": 504,
+              "w": 900,
+              "x": 0,
+              "y": 40
+            },
+            {
+              "h": 600,
+              "w": 600,
+              "x": 172,
+              "y": 0
+            },
+            {
+              "h": 600,
+              "w": 526,
+              "x": 209,
+              "y": 0
+            },
+            {
+              "h": 600,
+              "w": 300,
+              "x": 322,
+              "y": 0
+            },
+            {
+              "h": 600,
+              "w": 900,
+              "x": 0,
+              "y": 0
+            }
+          ],
+          "height": 600,
+          "width": 900
+        },
+        "sizes": {
+          "large": {
+            "h": 600,
+            "resize": "fit",
+            "w": 900
+          },
+          "medium": {
+            "h": 600,
+            "resize": "fit",
+            "w": 900
+          },
+          "small": {
+            "h": 453,
+            "resize": "fit",
+            "w": 680
+          },
+          "thumb": {
+            "h": 150,
+            "resize": "crop",
+            "w": 150
+          }
+        },
+        "type": "photo",
+        "url": "https://t.co/IEmgNWgIjJ"
+      }
+    ]
+  },
+  "card": {},
+  "place": {},
+  "entities": {
+    "media": [
+      {
+        "allow_download_status": {
+          "allow_download": true
+        },
+        "display_url": "pic.x.com/IEmgNWgIjJ",
+        "expanded_url": "https://x.com/dsyadallee/status/2078966694199079194/photo/1",
+        "ext_media_availability": {
+          "status": "Available"
+        },
+        "features": {
+          "large": {
+            "faces": [
+              {
+                "h": 117,
+                "w": 117,
+                "x": 198,
+                "y": 102
+              },
+              {
+                "h": 133,
+                "w": 133,
+                "x": 390,
+                "y": 197
+              }
+            ]
+          },
+          "medium": {
+            "faces": [
+              {
+                "h": 117,
+                "w": 117,
+                "x": 198,
+                "y": 102
+              },
+              {
+                "h": 133,
+                "w": 133,
+                "x": 390,
+                "y": 197
+              }
+            ]
+          },
+          "orig": {
+            "faces": [
+              {
+                "h": 117,
+                "w": 117,
+                "x": 198,
+                "y": 102
+              },
+              {
+                "h": 133,
+                "w": 133,
+                "x": 390,
+                "y": 197
+              }
+            ]
+          },
+          "small": {
+            "faces": [
+              {
+                "h": 88,
+                "w": 88,
+                "x": 149,
+                "y": 77
+              },
+              {
+                "h": 100,
+                "w": 100,
+                "x": 294,
+                "y": 148
+              }
+            ]
+          }
+        },
+        "id_str": "2078966211933835264",
+        "indices": [
+          134,
+          157
+        ],
+        "media_key": "3_2078966211933835264",
+        "media_results": {
+          "result": {
+            "media_key": "3_2078966211933835264"
+          }
+        },
+        "media_url_https": "https://pbs.twimg.com/media/HNn4wUJbEAA27St.jpg",
+        "original_info": {
+          "focus_rects": [
+            {
+              "h": 504,
+              "w": 900,
+              "x": 0,
+              "y": 40
+            },
+            {
+              "h": 600,
+              "w": 600,
+              "x": 172,
+              "y": 0
+            },
+            {
+              "h": 600,
+              "w": 526,
+              "x": 209,
+              "y": 0
+            },
+            {
+              "h": 600,
+              "w": 300,
+              "x": 322,
+              "y": 0
+            },
+            {
+              "h": 600,
+              "w": 900,
+              "x": 0,
+              "y": 0
+            }
+          ],
+          "height": 600,
+          "width": 900
+        },
+        "sizes": {
+          "large": {
+            "h": 600,
+            "resize": "fit",
+            "w": 900
+          },
+          "medium": {
+            "h": 600,
+            "resize": "fit",
+            "w": 900
+          },
+          "small": {
+            "h": 453,
+            "resize": "fit",
+            "w": 680
+          },
+          "thumb": {
+            "h": 150,
+            "resize": "crop",
+            "w": 150
+          }
+        },
+        "type": "photo",
+        "url": "https://t.co/IEmgNWgIjJ"
+      }
+    ],
+    "user_mentions": [
+      {
+        "id_str": "1137782054848851968",
+        "indices": [
+          0,
+          13
+        ],
+        "name": "Save Standard Time",
+        "screen_name": "SaveStandard"
+      },
+      {
+        "id_str": "1722296806619435008",
+        "indices": [
+          15,
+          24
+        ],
+        "name": "DitchDST",
+        "screen_name": "DitchDst"
+      },
+      {
+        "id_str": "25073877",
+        "indices": [
+          38,
+          54
+        ],
+        "name": "Donald J. Trump",
+        "screen_name": "realDonaldTrump"
+      }
+    ]
+  },
+  "isRetweet": false,
+  "isQuote": false,
+  "media": [
+    "https://pbs.twimg.com/media/HNn4wUJbEAA27St.jpg"
+  ],
+  "isConversationControlled": false
+},
+{
+  "type": "tweet",
+  "id": "2078966115485819071",
+  "url": "https://x.com/yegispnk/status/2078966115485819071",
+  "twitterUrl": "https://twitter.com/yegispnk/status/2078966115485819071",
+  "text": "@SaveStandard\n @DitchDst\n should  get @realDonaldTrump\n to eliminate all forms of Diabolic Satanic (Daylight Saving) Time in the USA! https://t.co/NNCWO0PLRy",
+  "fullText": "@SaveStandard\n @DitchDst\n should  get @realDonaldTrump\n to eliminate all forms of Diabolic Satanic (Daylight Saving) Time in the USA! https://t.co/NNCWO0PLRy",
+  "source": "Twitter Web App",
+  "retweetCount": 0,
+  "replyCount": 0,
+  "likeCount": 0,
+  "quoteCount": 0,
+  "viewCount": 2,
+  "createdAt": "Sun Jul 19 22:12:01 +0000 2026",
+  "lang": "en",
+  "bookmarkCount": 0,
+  "isReply": true,
+  "conversationId": "2078966115485819071",
+  "inReplyToUserId": "1137782054848851968",
+  "inReplyToUsername": "SaveStandard",
+  "possiblySensitive": false,
+  "author": {
+    "type": "user",
+    "userName": "yegispnk",
+    "url": "https://x.com/yegispnk",
+    "twitterUrl": "https://twitter.com/yegispnk",
+    "id": "2255319036",
+    "name": "Dave S Yadallee",
+    "isVerified": false,
+    "isBlueVerified": false,
+    "profilePicture": "https://pbs.twimg.com/profile_images/588423694298419200/qexmBj19_normal.jpg",
+    "coverPicture": "",
+    "description": "Building the Net Empire since 1995",
+    "followers": 10634,
+    "following": 12255,
+    "protected": false,
+    "status": "",
+    "canDm": false,
+    "canMediaTag": true,
+    "createdAt": "Fri Dec 20 17:48:17 +0000 2013",
+    "entities": {
+      "description": {},
+      "url": {
+        "urls": [
+          {
+            "display_url": "page.is/dave-s-yadallee",
+            "expanded_url": "http://page.is/dave-s-yadallee",
+            "indices": [
+              0,
+              23
+            ],
+            "url": "https://t.co/PpOaAUqrI6"
+          }
+        ]
+      }
+    },
+    "fastFollowersCount": 0,
+    "favouritesCount": 12008,
+    "hasCustomTimelines": true,
+    "isTranslator": false,
+    "mediaCount": 5131,
+    "statusesCount": 134179,
+    "affiliatesHighlightedLabel": {},
+    "possiblySensitive": false
+  },
+  "extendedEntities": {
+    "media": [
+      {
+        "allow_download_status": {
+          "allow_download": true
+        },
+        "display_url": "pic.x.com/NNCWO0PLRy",
+        "expanded_url": "https://x.com/yegispnk/status/2078966115485819071/photo/1",
+        "ext_media_availability": {
+          "status": "Available"
+        },
+        "features": {
+          "large": {
+            "faces": [
+              {
+                "h": 117,
+                "w": 117,
+                "x": 198,
+                "y": 102
+              },
+              {
+                "h": 133,
+                "w": 133,
+                "x": 390,
+                "y": 197
+              }
+            ]
+          },
+          "medium": {
+            "faces": [
+              {
+                "h": 117,
+                "w": 117,
+                "x": 198,
+                "y": 102
+              },
+              {
+                "h": 133,
+                "w": 133,
+                "x": 390,
+                "y": 197
+              }
+            ]
+          },
+          "orig": {
+            "faces": [
+              {
+                "h": 117,
+                "w": 117,
+                "x": 198,
+                "y": 102
+              },
+              {
+                "h": 133,
+                "w": 133,
+                "x": 390,
+                "y": 197
+              }
+            ]
+          },
+          "small": {
+            "faces": [
+              {
+                "h": 88,
+                "w": 88,
+                "x": 149,
+                "y": 77
+              },
+              {
+                "h": 100,
+                "w": 100,
+                "x": 294,
+                "y": 148
+              }
+            ]
+          }
+        },
+        "id_str": "2078966094594015232",
+        "indices": [
+          134,
+          157
+        ],
+        "media_key": "3_2078966094594015232",
+        "media_results": {
+          "result": {
+            "media_key": "3_2078966094594015232"
+          }
+        },
+        "media_url_https": "https://pbs.twimg.com/media/HNn4pfBbgAAjsPa.jpg",
+        "original_info": {
+          "focus_rects": [
+            {
+              "h": 504,
+              "w": 900,
+              "x": 0,
+              "y": 40
+            },
+            {
+              "h": 600,
+              "w": 600,
+              "x": 172,
+              "y": 0
+            },
+            {
+              "h": 600,
+              "w": 526,
+              "x": 209,
+              "y": 0
+            },
+            {
+              "h": 600,
+              "w": 300,
+              "x": 322,
+              "y": 0
+            },
+            {
+              "h": 600,
+              "w": 900,
+              "x": 0,
+              "y": 0
+            }
+          ],
+          "height": 600,
+          "width": 900
+        },
+        "sizes": {
+          "large": {
+            "h": 600,
+            "resize": "fit",
+            "w": 900
+          },
+          "medium": {
+            "h": 600,
+            "resize": "fit",
+            "w": 900
+          },
+          "small": {
+            "h": 453,
+            "resize": "fit",
+            "w": 680
+          },
+          "thumb": {
+            "h": 150,
+            "resize": "crop",
+            "w": 150
+          }
+        },
+        "type": "photo",
+        "url": "https://t.co/NNCWO0PLRy"
+      }
+    ]
+  },
+  "card": {},
+  "place": {},
+  "entities": {
+    "media": [
+      {
+        "allow_download_status": {
+          "allow_download": true
+        },
+        "display_url": "pic.x.com/NNCWO0PLRy",
+        "expanded_url": "https://x.com/yegispnk/status/2078966115485819071/photo/1",
+        "ext_media_availability": {
+          "status": "Available"
+        },
+        "features": {
+          "large": {
+            "faces": [
+              {
+                "h": 117,
+                "w": 117,
+                "x": 198,
+                "y": 102
+              },
+              {
+                "h": 133,
+                "w": 133,
+                "x": 390,
+                "y": 197
+              }
+            ]
+          },
+          "medium": {
+            "faces": [
+              {
+                "h": 117,
+                "w": 117,
+                "x": 198,
+                "y": 102
+              },
+              {
+                "h": 133,
+                "w": 133,
+                "x": 390,
+                "y": 197
+              }
+            ]
+          },
+          "orig": {
+            "faces": [
+              {
+                "h": 117,
+                "w": 117,
+                "x": 198,
+                "y": 102
+              },
+              {
+                "h": 133,
+                "w": 133,
+                "x": 390,
+                "y": 197
+              }
+            ]
+          },
+          "small": {
+            "faces": [
+              {
+                "h": 88,
+                "w": 88,
+                "x": 149,
+                "y": 77
+              },
+              {
+                "h": 100,
+                "w": 100,
+                "x": 294,
+                "y": 148
+              }
+            ]
+          }
+        },
+        "id_str": "2078966094594015232",
+        "indices": [
+          134,
+          157
+        ],
+        "media_key": "3_2078966094594015232",
+        "media_results": {
+          "result": {
+            "media_key": "3_2078966094594015232"
+          }
+        },
+        "media_url_https": "https://pbs.twimg.com/media/HNn4pfBbgAAjsPa.jpg",
+        "original_info": {
+          "focus_rects": [
+            {
+              "h": 504,
+              "w": 900,
+              "x": 0,
+              "y": 40
+            },
+            {
+              "h": 600,
+              "w": 600,
+              "x": 172,
+              "y": 0
+            },
+            {
+              "h": 600,
+              "w": 526,
+              "x": 209,
+              "y": 0
+            },
+            {
+              "h": 600,
+              "w": 300,
+              "x": 322,
+              "y": 0
+            },
+            {
+              "h": 600,
+              "w": 900,
+              "x": 0,
+              "y": 0
+            }
+          ],
+          "height": 600,
+          "width": 900
+        },
+        "sizes": {
+          "large": {
+            "h": 600,
+            "resize": "fit",
+            "w": 900
+          },
+          "medium": {
+            "h": 600,
+            "resize": "fit",
+            "w": 900
+          },
+          "small": {
+            "h": 453,
+            "resize": "fit",
+            "w": 680
+          },
+          "thumb": {
+            "h": 150,
+            "resize": "crop",
+            "w": 150
+          }
+        },
+        "type": "photo",
+        "url": "https://t.co/NNCWO0PLRy"
+      }
+    ],
+    "user_mentions": [
+      {
+        "id_str": "1137782054848851968",
+        "indices": [
+          0,
+          13
+        ],
+        "name": "Save Standard Time",
+        "screen_name": "SaveStandard"
+      },
+      {
+        "id_str": "1722296806619435008",
+        "indices": [
+          15,
+          24
+        ],
+        "name": "DitchDST",
+        "screen_name": "DitchDst"
+      },
+      {
+        "id_str": "25073877",
+        "indices": [
+          38,
+          54
+        ],
+        "name": "Donald J. Trump",
+        "screen_name": "realDonaldTrump"
+      }
+    ]
+  },
+  "isRetweet": false,
+  "isQuote": false,
+  "media": [
+    "https://pbs.twimg.com/media/HNn4pfBbgAAjsPa.jpg"
+  ],
+  "isConversationControlled": false
+},
+{
+  "type": "tweet",
+  "id": "2078965613884764572",
+  "url": "https://x.com/dsyadallee/status/2078965613884764572",
+  "twitterUrl": "https://twitter.com/dsyadallee/status/2078965613884764572",
+  "text": "Daylight Saving Time goes against Judeo-Christianity for an hour of time is stolen. Fact is #dst stands for diabolic satanic time and standard time is saintly time  #enddst #christianity #yegchurches #yyzchurches #yycchurches https://t.co/tQkqPX28Ho",
+  "fullText": "Daylight Saving Time goes against Judeo-Christianity for an hour of time is stolen. Fact is #dst stands for diabolic satanic time and standard time is saintly time  #enddst #christianity #yegchurches #yyzchurches #yycchurches https://t.co/tQkqPX28Ho",
+  "source": "Twitter Web App",
+  "retweetCount": 0,
+  "replyCount": 0,
+  "likeCount": 0,
+  "quoteCount": 0,
+  "viewCount": 6,
+  "createdAt": "Sun Jul 19 22:10:02 +0000 2026",
+  "lang": "en",
+  "bookmarkCount": 0,
+  "isReply": false,
+  "conversationId": "2078965613884764572",
+  "possiblySensitive": false,
+  "author": {
+    "type": "user",
+    "userName": "dsyadallee",
+    "url": "https://x.com/dsyadallee",
+    "twitterUrl": "https://twitter.com/dsyadallee",
+    "id": "826179428",
+    "name": "Dave Yadallee",
+    "isVerified": false,
+    "isBlueVerified": false,
+    "profilePicture": "https://pbs.twimg.com/profile_images/2862778714/5a8507485a7bb86bf9bd912b5a425bd1_normal.jpeg",
+    "coverPicture": "",
+    "description": "head of https://t.co/VoA1gGX29A",
+    "location": "Edmonton, Alberta",
+    "followers": 23188,
+    "following": 20329,
+    "protected": false,
+    "status": "",
+    "canDm": true,
+    "canMediaTag": true,
+    "createdAt": "Sun Sep 16 00:13:35 +0000 2012",
+    "entities": {
+      "description": {
+        "urls": [
+          {
+            "display_url": "nk.ca",
+            "expanded_url": "https://www.nk.ca/",
+            "indices": [
+              8,
+              31
+            ],
+            "url": "https://t.co/VoA1gGX29A"
+          }
+        ]
+      },
+      "url": {
+        "urls": [
+          {
+            "display_url": "nk.ca/~doctor",
+            "expanded_url": "https://www.nk.ca/~doctor",
+            "indices": [
+              0,
+              23
+            ],
+            "url": "https://t.co/xKi5FnzJWi"
+          }
+        ]
+      }
+    },
+    "fastFollowersCount": 0,
+    "favouritesCount": 5364,
+    "hasCustomTimelines": false,
+    "isTranslator": false,
+    "mediaCount": 4416,
+    "statusesCount": 52050,
+    "affiliatesHighlightedLabel": {},
+    "possiblySensitive": false,
+    "professional": {
+      "category": [
+        {
+          "icon_name": "IconBriefcaseStroke",
+          "id": 713,
+          "name": "Science & Technology"
+        }
+      ],
+      "professional_type": "Creator",
+      "rest_id": "1605712311838474241"
+    }
+  },
+  "extendedEntities": {
+    "media": [
+      {
+        "allow_download_status": {
+          "allow_download": true
+        },
+        "display_url": "pic.x.com/tQkqPX28Ho",
+        "expanded_url": "https://x.com/dsyadallee/status/2078965613884764572/photo/1",
+        "ext_media_availability": {
+          "status": "Available"
+        },
+        "features": {
+          "large": {
+            "faces": [
+              {
+                "h": 117,
+                "w": 117,
+                "x": 198,
+                "y": 102
+              },
+              {
+                "h": 133,
+                "w": 133,
+                "x": 390,
+                "y": 197
+              }
+            ]
+          },
+          "medium": {
+            "faces": [
+              {
+                "h": 117,
+                "w": 117,
+                "x": 198,
+                "y": 102
+              },
+              {
+                "h": 133,
+                "w": 133,
+                "x": 390,
+                "y": 197
+              }
+            ]
+          },
+          "orig": {
+            "faces": [
+              {
+                "h": 117,
+                "w": 117,
+                "x": 198,
+                "y": 102
+              },
+              {
+                "h": 133,
+                "w": 133,
+                "x": 390,
+                "y": 197
+              }
+            ]
+          },
+          "small": {
+            "faces": [
+              {
+                "h": 88,
+                "w": 88,
+                "x": 149,
+                "y": 77
+              },
+              {
+                "h": 100,
+                "w": 100,
+                "x": 294,
+                "y": 148
+              }
+            ]
+          }
+        },
+        "id_str": "2078965588928630785",
+        "indices": [
+          226,
+          249
+        ],
+        "media_key": "3_2078965588928630785",
+        "media_results": {
+          "result": {
+            "media_key": "3_2078965588928630785"
+          }
+        },
+        "media_url_https": "https://pbs.twimg.com/media/HNn4MDRaEAEokEm.jpg",
+        "original_info": {
+          "focus_rects": [
+            {
+              "h": 504,
+              "w": 900,
+              "x": 0,
+              "y": 40
+            },
+            {
+              "h": 600,
+              "w": 600,
+              "x": 172,
+              "y": 0
+            },
+            {
+              "h": 600,
+              "w": 526,
+              "x": 209,
+              "y": 0
+            },
+            {
+              "h": 600,
+              "w": 300,
+              "x": 322,
+              "y": 0
+            },
+            {
+              "h": 600,
+              "w": 900,
+              "x": 0,
+              "y": 0
+            }
+          ],
+          "height": 600,
+          "width": 900
+        },
+        "sizes": {
+          "large": {
+            "h": 600,
+            "resize": "fit",
+            "w": 900
+          },
+          "medium": {
+            "h": 600,
+            "resize": "fit",
+            "w": 900
+          },
+          "small": {
+            "h": 453,
+            "resize": "fit",
+            "w": 680
+          },
+          "thumb": {
+            "h": 150,
+            "resize": "crop",
+            "w": 150
+          }
+        },
+        "type": "photo",
+        "url": "https://t.co/tQkqPX28Ho"
+      }
+    ]
+  },
+  "card": {},
+  "place": {},
+  "entities": {
+    "hashtags": [
+      {
+        "indices": [
+          92,
+          96
+        ],
+        "text": "dst"
+      },
+      {
+        "indices": [
+          165,
+          172
+        ],
+        "text": "enddst"
+      },
+      {
+        "indices": [
+          173,
+          186
+        ],
+        "text": "christianity"
+      },
+      {
+        "indices": [
+          187,
+          199
+        ],
+        "text": "yegchurches"
+      },
+      {
+        "indices": [
+          200,
+          212
+        ],
+        "text": "yyzchurches"
+      },
+      {
+        "indices": [
+          213,
+          225
+        ],
+        "text": "yycchurches"
+      }
+    ],
+    "media": [
+      {
+        "allow_download_status": {
+          "allow_download": true
+        },
+        "display_url": "pic.x.com/tQkqPX28Ho",
+        "expanded_url": "https://x.com/dsyadallee/status/2078965613884764572/photo/1",
+        "ext_media_availability": {
+          "status": "Available"
+        },
+        "features": {
+          "large": {
+            "faces": [
+              {
+                "h": 117,
+                "w": 117,
+                "x": 198,
+                "y": 102
+              },
+              {
+                "h": 133,
+                "w": 133,
+                "x": 390,
+                "y": 197
+              }
+            ]
+          },
+          "medium": {
+            "faces": [
+              {
+                "h": 117,
+                "w": 117,
+                "x": 198,
+                "y": 102
+              },
+              {
+                "h": 133,
+                "w": 133,
+                "x": 390,
+                "y": 197
+              }
+            ]
+          },
+          "orig": {
+            "faces": [
+              {
+                "h": 117,
+                "w": 117,
+                "x": 198,
+                "y": 102
+              },
+              {
+                "h": 133,
+                "w": 133,
+                "x": 390,
+                "y": 197
+              }
+            ]
+          },
+          "small": {
+            "faces": [
+              {
+                "h": 88,
+                "w": 88,
+                "x": 149,
+                "y": 77
+              },
+              {
+                "h": 100,
+                "w": 100,
+                "x": 294,
+                "y": 148
+              }
+            ]
+          }
+        },
+        "id_str": "2078965588928630785",
+        "indices": [
+          226,
+          249
+        ],
+        "media_key": "3_2078965588928630785",
+        "media_results": {
+          "result": {
+            "media_key": "3_2078965588928630785"
+          }
+        },
+        "media_url_https": "https://pbs.twimg.com/media/HNn4MDRaEAEokEm.jpg",
+        "original_info": {
+          "focus_rects": [
+            {
+              "h": 504,
+              "w": 900,
+              "x": 0,
+              "y": 40
+            },
+            {
+              "h": 600,
+              "w": 600,
+              "x": 172,
+              "y": 0
+            },
+            {
+              "h": 600,
+              "w": 526,
+              "x": 209,
+              "y": 0
+            },
+            {
+              "h": 600,
+              "w": 300,
+              "x": 322,
+              "y": 0
+            },
+            {
+              "h": 600,
+              "w": 900,
+              "x": 0,
+              "y": 0
+            }
+          ],
+          "height": 600,
+          "width": 900
+        },
+        "sizes": {
+          "large": {
+            "h": 600,
+            "resize": "fit",
+            "w": 900
+          },
+          "medium": {
+            "h": 600,
+            "resize": "fit",
+            "w": 900
+          },
+          "small": {
+            "h": 453,
+            "resize": "fit",
+            "w": 680
+          },
+          "thumb": {
+            "h": 150,
+            "resize": "crop",
+            "w": 150
+          }
+        },
+        "type": "photo",
+        "url": "https://t.co/tQkqPX28Ho"
+      }
+    ]
+  },
+  "isRetweet": false,
+  "isQuote": false,
+  "media": [
+    "https://pbs.twimg.com/media/HNn4MDRaEAEokEm.jpg"
+  ],
+  "isConversationControlled": false
+},
+{
+  "type": "tweet",
+  "id": "2078965313497161955",
+  "url": "https://x.com/yegispnk/status/2078965313497161955",
+  "twitterUrl": "https://twitter.com/yegispnk/status/2078965313497161955",
+  "text": "Daylight Saving Time goes against Judeo-Christianity for an hour of time is stolen. Fact is #dst stands for diabolic satanic time and standard time is saintly time  #enddst #christianity #yegchurches #yyzchurches #yycchurches https://t.co/5EVj37Clc2",
+  "fullText": "Daylight Saving Time goes against Judeo-Christianity for an hour of time is stolen. Fact is #dst stands for diabolic satanic time and standard time is saintly time  #enddst #christianity #yegchurches #yyzchurches #yycchurches https://t.co/5EVj37Clc2",
+  "source": "Twitter Web App",
+  "retweetCount": 0,
+  "replyCount": 0,
+  "likeCount": 0,
+  "quoteCount": 0,
+  "viewCount": 5,
+  "createdAt": "Sun Jul 19 22:08:50 +0000 2026",
+  "lang": "en",
+  "bookmarkCount": 0,
+  "isReply": false,
+  "conversationId": "2078965313497161955",
+  "possiblySensitive": false,
+  "author": {
+    "type": "user",
+    "userName": "yegispnk",
+    "url": "https://x.com/yegispnk",
+    "twitterUrl": "https://twitter.com/yegispnk",
+    "id": "2255319036",
+    "name": "Dave S Yadallee",
+    "isVerified": false,
+    "isBlueVerified": false,
+    "profilePicture": "https://pbs.twimg.com/profile_images/588423694298419200/qexmBj19_normal.jpg",
+    "coverPicture": "",
+    "description": "Building the Net Empire since 1995",
+    "followers": 10634,
+    "following": 12255,
+    "protected": false,
+    "status": "",
+    "canDm": false,
+    "canMediaTag": true,
+    "createdAt": "Fri Dec 20 17:48:17 +0000 2013",
+    "entities": {
+      "description": {},
+      "url": {
+        "urls": [
+          {
+            "display_url": "page.is/dave-s-yadallee",
+            "expanded_url": "http://page.is/dave-s-yadallee",
+            "indices": [
+              0,
+              23
+            ],
+            "url": "https://t.co/PpOaAUqrI6"
+          }
+        ]
+      }
+    },
+    "fastFollowersCount": 0,
+    "favouritesCount": 12008,
+    "hasCustomTimelines": true,
+    "isTranslator": false,
+    "mediaCount": 5131,
+    "statusesCount": 134179,
+    "affiliatesHighlightedLabel": {},
+    "possiblySensitive": false
+  },
+  "extendedEntities": {
+    "media": [
+      {
+        "allow_download_status": {
+          "allow_download": true
+        },
+        "display_url": "pic.x.com/5EVj37Clc2",
+        "expanded_url": "https://x.com/yegispnk/status/2078965313497161955/photo/1",
+        "ext_media_availability": {
+          "status": "Available"
+        },
+        "features": {
+          "large": {
+            "faces": [
+              {
+                "h": 117,
+                "w": 117,
+                "x": 198,
+                "y": 102
+              },
+              {
+                "h": 133,
+                "w": 133,
+                "x": 390,
+                "y": 197
+              }
+            ]
+          },
+          "medium": {
+            "faces": [
+              {
+                "h": 117,
+                "w": 117,
+                "x": 198,
+                "y": 102
+              },
+              {
+                "h": 133,
+                "w": 133,
+                "x": 390,
+                "y": 197
+              }
+            ]
+          },
+          "orig": {
+            "faces": [
+              {
+                "h": 117,
+                "w": 117,
+                "x": 198,
+                "y": 102
+              },
+              {
+                "h": 133,
+                "w": 133,
+                "x": 390,
+                "y": 197
+              }
+            ]
+          },
+          "small": {
+            "faces": [
+              {
+                "h": 88,
+                "w": 88,
+                "x": 149,
+                "y": 77
+              },
+              {
+                "h": 100,
+                "w": 100,
+                "x": 294,
+                "y": 148
+              }
+            ]
+          }
+        },
+        "id_str": "2078965307490856961",
+        "indices": [
+          226,
+          249
+        ],
+        "media_key": "3_2078965307490856961",
+        "media_results": {
+          "result": {
+            "media_key": "3_2078965307490856961"
+          }
+        },
+        "media_url_https": "https://pbs.twimg.com/media/HNn37q1acAEfidS.jpg",
+        "original_info": {
+          "focus_rects": [
+            {
+              "h": 504,
+              "w": 900,
+              "x": 0,
+              "y": 40
+            },
+            {
+              "h": 600,
+              "w": 600,
+              "x": 172,
+              "y": 0
+            },
+            {
+              "h": 600,
+              "w": 526,
+              "x": 209,
+              "y": 0
+            },
+            {
+              "h": 600,
+              "w": 300,
+              "x": 322,
+              "y": 0
+            },
+            {
+              "h": 600,
+              "w": 900,
+              "x": 0,
+              "y": 0
+            }
+          ],
+          "height": 600,
+          "width": 900
+        },
+        "sizes": {
+          "large": {
+            "h": 600,
+            "resize": "fit",
+            "w": 900
+          },
+          "medium": {
+            "h": 600,
+            "resize": "fit",
+            "w": 900
+          },
+          "small": {
+            "h": 453,
+            "resize": "fit",
+            "w": 680
+          },
+          "thumb": {
+            "h": 150,
+            "resize": "crop",
+            "w": 150
+          }
+        },
+        "type": "photo",
+        "url": "https://t.co/5EVj37Clc2"
+      }
+    ]
+  },
+  "card": {},
+  "place": {},
+  "entities": {
+    "hashtags": [
+      {
+        "indices": [
+          92,
+          96
+        ],
+        "text": "dst"
+      },
+      {
+        "indices": [
+          165,
+          172
+        ],
+        "text": "enddst"
+      },
+      {
+        "indices": [
+          173,
+          186
+        ],
+        "text": "christianity"
+      },
+      {
+        "indices": [
+          187,
+          199
+        ],
+        "text": "yegchurches"
+      },
+      {
+        "indices": [
+          200,
+          212
+        ],
+        "text": "yyzchurches"
+      },
+      {
+        "indices": [
+          213,
+          225
+        ],
+        "text": "yycchurches"
+      }
+    ],
+    "media": [
+      {
+        "allow_download_status": {
+          "allow_download": true
+        },
+        "display_url": "pic.x.com/5EVj37Clc2",
+        "expanded_url": "https://x.com/yegispnk/status/2078965313497161955/photo/1",
+        "ext_media_availability": {
+          "status": "Available"
+        },
+        "features": {
+          "large": {
+            "faces": [
+              {
+                "h": 117,
+                "w": 117,
+                "x": 198,
+                "y": 102
+              },
+              {
+                "h": 133,
+                "w": 133,
+                "x": 390,
+                "y": 197
+              }
+            ]
+          },
+          "medium": {
+            "faces": [
+              {
+                "h": 117,
+                "w": 117,
+                "x": 198,
+                "y": 102
+              },
+              {
+                "h": 133,
+                "w": 133,
+                "x": 390,
+                "y": 197
+              }
+            ]
+          },
+          "orig": {
+            "faces": [
+              {
+                "h": 117,
+                "w": 117,
+                "x": 198,
+                "y": 102
+              },
+              {
+                "h": 133,
+                "w": 133,
+                "x": 390,
+                "y": 197
+              }
+            ]
+          },
+          "small": {
+            "faces": [
+              {
+                "h": 88,
+                "w": 88,
+                "x": 149,
+                "y": 77
+              },
+              {
+                "h": 100,
+                "w": 100,
+                "x": 294,
+                "y": 148
+              }
+            ]
+          }
+        },
+        "id_str": "2078965307490856961",
+        "indices": [
+          226,
+          249
+        ],
+        "media_key": "3_2078965307490856961",
+        "media_results": {
+          "result": {
+            "media_key": "3_2078965307490856961"
+          }
+        },
+        "media_url_https": "https://pbs.twimg.com/media/HNn37q1acAEfidS.jpg",
+        "original_info": {
+          "focus_rects": [
+            {
+              "h": 504,
+              "w": 900,
+              "x": 0,
+              "y": 40
+            },
+            {
+              "h": 600,
+              "w": 600,
+              "x": 172,
+              "y": 0
+            },
+            {
+              "h": 600,
+              "w": 526,
+              "x": 209,
+              "y": 0
+            },
+            {
+              "h": 600,
+              "w": 300,
+              "x": 322,
+              "y": 0
+            },
+            {
+              "h": 600,
+              "w": 900,
+              "x": 0,
+              "y": 0
+            }
+          ],
+          "height": 600,
+          "width": 900
+        },
+        "sizes": {
+          "large": {
+            "h": 600,
+            "resize": "fit",
+            "w": 900
+          },
+          "medium": {
+            "h": 600,
+            "resize": "fit",
+            "w": 900
+          },
+          "small": {
+            "h": 453,
+            "resize": "fit",
+            "w": 680
+          },
+          "thumb": {
+            "h": 150,
+            "resize": "crop",
+            "w": 150
+          }
+        },
+        "type": "photo",
+        "url": "https://t.co/5EVj37Clc2"
+      }
+    ]
+  },
+  "isRetweet": false,
+  "isQuote": false,
+  "media": [
+    "https://pbs.twimg.com/media/HNn37q1acAEfidS.jpg"
+  ],
+  "isConversationControlled": false
+},
+{
+  "type": "tweet",
+  "id": "2078964699472011312",
+  "url": "https://x.com/HeardWilda/status/2078964699472011312",
+  "twitterUrl": "https://twitter.com/HeardWilda/status/2078964699472011312",
+  "text": "https://t.co/2CWxD82PGv \nSeattle Red Daily Newsletter - July 19, 2026\n\nJason Rantz of Seattle Red\n\nSun, Jul 19 at 6:53 AM\n\nConservative News Curated in Seattle\nJason Rantz Opinion\nhttps://t.co/AkVpJeVHkj~\nRantz: Permanent daylight saving time will wreck your sleep, but Washington begged for it anyway\nThe House passed permanent daylight saving time. Jason Rantz says its darker mornings and later evening light are a war on your sleep and circadian rhythm.\nPolitics\n\nhttps://t.co/3MTt6hwbuf~~\n‘It is a lie, and we’ll challenge it’: Brian Heywood readies lawsuit over I-645 ballot wording\nBrian Heywood says he will sue if Washington's ballot claims Initiative 645 cuts K-12 funding, calling the circulating language a push poll fabrication.\nJason Rantz Opinion\nhttps://t.co/smfYSvygiy~~\n\nRantz: The Left is pretending low testosterone isn’t a real men’s health crisis because of TDS\nJason Rantz says Democrats mocking the Pentagon's testosterone screening are pretending low-T isn't real. Doctors and biohackers know better. Men suffer.\nEconomy\nhttps://t.co/uKMZdfgbCD\nWA’s latest unemployment numbers paint familiar picture of an underperforming economy\n\nThe Employment Security Department of Washington State (ESD) has released its monthly unemployment numbers for June and the results are underwhelming. The Bureau of Labor Statistics reported an increase of nonfarm jobs since last month by 5,400 and the total job loss (2,400) was below ESD’s expected job lob loss of 6,400. However, that’s essentially […]\nPolitics\nhttps://t.co/5049HD0HU8~~\nRep. Emily Randall smears ICE agents as fascists after shootings, GOP challenger Teresa Fox demands she cool the rhetoric\nRep. Emily Randall labeled ICE a fascist force after two shootings still under investigation. Challenger Teresa Fox says she is prejudging cases for politics.",
+  "fullText": "https://t.co/RtTqC99MJd \nSeattle Red Daily Newsletter - July 19, 2026\n\nJason Rantz of Seattle Red\n\nSun, Jul 19 at 6:53 AM\n\nConservative News Curated in Seattle\nJason Rantz Opinion\nhttps://t.co/S7fsyf9oCI~\nRantz: Permanent daylight saving time will wreck your sleep, but Washington",
+  "source": "Twitter Web App",
+  "retweetCount": 0,
+  "replyCount": 0,
+  "likeCount": 0,
+  "quoteCount": 0,
+  "viewCount": 2,
+  "createdAt": "Sun Jul 19 22:06:24 +0000 2026",
+  "lang": "en",
+  "bookmarkCount": 0,
+  "isReply": false,
+  "conversationId": "2078964699472011312",
+  "possiblySensitive": false,
+  "author": {
+    "type": "user",
+    "userName": "HeardWilda",
+    "url": "https://x.com/HeardWilda",
+    "twitterUrl": "https://twitter.com/HeardWilda",
+    "id": "1577496331496886272",
+    "name": "drwildasays",
+    "isVerified": false,
+    "isBlueVerified": true,
+    "profilePicture": "https://pbs.twimg.com/profile_images/1577497612621877248/Y9hNoFtw_normal.png",
+    "coverPicture": "",
+    "description": "Dr. Wilda V. Heard, or Dr. Wilda, has a J.D. from Yale Law School and a doctorate in Education Leadership from Seattle University. Believes in FREEDOM, JUSTICE,",
+    "location": "Seattle, Washington",
+    "followers": 262,
+    "following": 224,
+    "protected": false,
+    "status": "",
+    "canDm": false,
+    "canMediaTag": true,
+    "createdAt": "Wed Oct 05 03:15:13 +0000 2022",
+    "entities": {
+      "description": {}
+    },
+    "fastFollowersCount": 0,
+    "favouritesCount": 1139,
+    "hasCustomTimelines": false,
+    "isTranslator": false,
+    "mediaCount": 528,
+    "statusesCount": 10768,
+    "affiliatesHighlightedLabel": {},
+    "possiblySensitive": false
+  },
+  "extendedEntities": {},
+  "card": {
+    "legacy": {
+      "binding_values": [
+        {
+          "key": "photo_image_full_size_large",
+          "value": {
+            "image_value": {
+              "height": 419,
+              "url": "https://pbs.twimg.com/card_img/2076434388485836800/xbLliW7Y?format=png&name=800x419",
+              "width": 800
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "thumbnail_image",
+          "value": {
+            "image_value": {
+              "height": 197,
+              "url": "https://pbs.twimg.com/card_img/2076434388485836800/xbLliW7Y?format=png&name=600x600",
+              "width": 600
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "description",
+          "value": {
+            "string_value": "Dr. Wilda on Gab: 'Seattle Red Daily Newsletter - July 19, 2026 Jason Rantz of Seattle Red Sun, Jul 19 at 6:53 AM Conservative News Curated in Seattle   Jason Rantz Opinion https://clicks.bonnevill...",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "domain",
+          "value": {
+            "string_value": "gab.com",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "thumbnail_image_large",
+          "value": {
+            "image_value": {
+              "height": 329,
+              "url": "https://pbs.twimg.com/card_img/2076434388485836800/xbLliW7Y?format=png&name=1000x1000",
+              "width": 1000
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "summary_photo_image_small",
+          "value": {
+            "image_value": {
+              "height": 202,
+              "url": "https://pbs.twimg.com/card_img/2076434388485836800/xbLliW7Y?format=png&name=386x202",
+              "width": 386
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "thumbnail_image_original",
+          "value": {
+            "image_value": {
+              "height": 1714,
+              "url": "https://pbs.twimg.com/card_img/2076434388485836800/xbLliW7Y?format=png&name=orig",
+              "width": 5209
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "photo_image_full_size_small",
+          "value": {
+            "image_value": {
+              "height": 202,
+              "url": "https://pbs.twimg.com/card_img/2076434388485836800/xbLliW7Y?format=png&name=386x202",
+              "width": 386
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "summary_photo_image_large",
+          "value": {
+            "image_value": {
+              "height": 419,
+              "url": "https://pbs.twimg.com/card_img/2076434388485836800/xbLliW7Y?format=png&name=800x419",
+              "width": 800
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "thumbnail_image_small",
+          "value": {
+            "image_value": {
+              "height": 79,
+              "url": "https://pbs.twimg.com/card_img/2076434388485836800/xbLliW7Y?format=png&name=240x240",
+              "width": 240
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "thumbnail_image_x_large",
+          "value": {
+            "image_value": {
+              "height": 674,
+              "url": "https://pbs.twimg.com/card_img/2076434388485836800/xbLliW7Y?format=png&name=2048x2048_2_exp",
+              "width": 2048
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "photo_image_full_size_original",
+          "value": {
+            "image_value": {
+              "height": 1714,
+              "url": "https://pbs.twimg.com/card_img/2076434388485836800/xbLliW7Y?format=png&name=orig",
+              "width": 5209
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "vanity_url",
+          "value": {
+            "scribe_key": "vanity_url",
+            "string_value": "gab.com",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "photo_image_full_size",
+          "value": {
+            "image_value": {
+              "height": 314,
+              "url": "https://pbs.twimg.com/card_img/2076434388485836800/xbLliW7Y?format=png&name=600x314",
+              "width": 600
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "thumbnail_image_color",
+          "value": {
+            "image_color_value": {
+              "palette": [
+                {
+                  "percentage": 30.19,
+                  "rgb": {
+                    "blue": 103,
+                    "green": 64,
+                    "red": 40
+                  }
+                },
+                {
+                  "percentage": 17.49,
+                  "rgb": {
+                    "blue": 27,
+                    "green": 11,
+                    "red": 219
+                  }
+                },
+                {
+                  "percentage": 4.2,
+                  "rgb": {
+                    "blue": 92,
+                    "green": 80,
+                    "red": 229
+                  }
+                },
+                {
+                  "percentage": 1.77,
+                  "rgb": {
+                    "blue": 175,
+                    "green": 155,
+                    "red": 142
+                  }
+                },
+                {
+                  "percentage": 0.2,
+                  "rgb": {
+                    "blue": 134,
+                    "green": 126,
+                    "red": 236
+                  }
+                }
+              ]
+            },
+            "type": "IMAGE_COLOR"
+          }
+        },
+        {
+          "key": "title",
+          "value": {
+            "string_value": "Dr. Wilda on Gab: 'Seattle Red Daily Newsletter - July 19, 2026 Jas…'",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "summary_photo_image_color",
+          "value": {
+            "image_color_value": {
+              "palette": [
+                {
+                  "percentage": 30.19,
+                  "rgb": {
+                    "blue": 103,
+                    "green": 64,
+                    "red": 40
+                  }
+                },
+                {
+                  "percentage": 17.49,
+                  "rgb": {
+                    "blue": 27,
+                    "green": 11,
+                    "red": 219
+                  }
+                },
+                {
+                  "percentage": 4.2,
+                  "rgb": {
+                    "blue": 92,
+                    "green": 80,
+                    "red": 229
+                  }
+                },
+                {
+                  "percentage": 1.77,
+                  "rgb": {
+                    "blue": 175,
+                    "green": 155,
+                    "red": 142
+                  }
+                },
+                {
+                  "percentage": 0.2,
+                  "rgb": {
+                    "blue": 134,
+                    "green": 126,
+                    "red": 236
+                  }
+                }
+              ]
+            },
+            "type": "IMAGE_COLOR"
+          }
+        },
+        {
+          "key": "summary_photo_image_x_large",
+          "value": {
+            "image_value": {
+              "height": 674,
+              "url": "https://pbs.twimg.com/card_img/2076434388485836800/xbLliW7Y?format=png&name=2048x2048_2_exp",
+              "width": 2048
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "summary_photo_image",
+          "value": {
+            "image_value": {
+              "height": 314,
+              "url": "https://pbs.twimg.com/card_img/2076434388485836800/xbLliW7Y?format=png&name=600x314",
+              "width": 600
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "photo_image_full_size_color",
+          "value": {
+            "image_color_value": {
+              "palette": [
+                {
+                  "percentage": 30.19,
+                  "rgb": {
+                    "blue": 103,
+                    "green": 64,
+                    "red": 40
+                  }
+                },
+                {
+                  "percentage": 17.49,
+                  "rgb": {
+                    "blue": 27,
+                    "green": 11,
+                    "red": 219
+                  }
+                },
+                {
+                  "percentage": 4.2,
+                  "rgb": {
+                    "blue": 92,
+                    "green": 80,
+                    "red": 229
+                  }
+                },
+                {
+                  "percentage": 1.77,
+                  "rgb": {
+                    "blue": 175,
+                    "green": 155,
+                    "red": 142
+                  }
+                },
+                {
+                  "percentage": 0.2,
+                  "rgb": {
+                    "blue": 134,
+                    "green": 126,
+                    "red": 236
+                  }
+                }
+              ]
+            },
+            "type": "IMAGE_COLOR"
+          }
+        },
+        {
+          "key": "photo_image_full_size_x_large",
+          "value": {
+            "image_value": {
+              "height": 674,
+              "url": "https://pbs.twimg.com/card_img/2076434388485836800/xbLliW7Y?format=png&name=2048x2048_2_exp",
+              "width": 2048
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "card_url",
+          "value": {
+            "scribe_key": "card_url",
+            "string_value": "https://t.co/RtTqC99MJd",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "summary_photo_image_original",
+          "value": {
+            "image_value": {
+              "height": 1714,
+              "url": "https://pbs.twimg.com/card_img/2076434388485836800/xbLliW7Y?format=png&name=orig",
+              "width": 5209
+            },
+            "type": "IMAGE"
+          }
+        }
+      ],
+      "card_platform": {
+        "platform": {
+          "audience": {
+            "name": "production"
+          },
+          "device": {
+            "name": "Swift",
+            "version": "12"
+          }
+        }
+      },
+      "name": "summary_large_image",
+      "url": "https://t.co/RtTqC99MJd",
+      "user_refs_results": []
+    },
+    "rest_id": "https://t.co/RtTqC99MJd"
+  },
+  "place": {},
+  "entities": {
+    "hashtags": [],
+    "symbols": [],
+    "urls": [
+      {
+        "display_url": "gab.com/Drwilda/posts/…",
+        "expanded_url": "https://gab.com/Drwilda/posts/116948911363496457",
+        "indices": [
+          0,
+          23
+        ],
+        "url": "https://t.co/2CWxD82PGv"
+      },
+      {
+        "display_url": "clicks.bonneville.com/f/a/yf7FWS1ZOb…",
+        "expanded_url": "https://clicks.bonneville.com/f/a/yf7FWS1ZOb3eFXjh5RyJxg~~/AAQRxRA~/KMMD-G2SdMbK3ElWpSw7pn6jik2iemSxf_P2uHxHmf8k-uMHSx3t50DiuevKTtLn2Wi6njE7IRfObY-4d1wJn9ItWn46YggAIBQ3b3PAGruOWax4Rix5yKyEySzIFJnFrB5XKBeSEIiq6TnlIXA3JuQQ1Vk6ltuqBYTShKmvQF5wpYvZiSrTEk3pVSG8Ry88aveJdjnhBe2zrldkl0mbQnpa3OcM64tqPgnoNbuhME4",
+        "indices": [
+          180,
+          203
+        ],
+        "url": "https://t.co/AkVpJeVHkj"
+      },
+      {
+        "display_url": "clicks.bonneville.com/f/a/_jTijk1aWf…",
+        "expanded_url": "https://clicks.bonneville.com/f/a/_jTijk1aWftEPxEkJwhqqg~~/AAQRxRA~/BLShXNG72RHmNbyH1KVcvPHLUcg-Rn0DyM11zXwGQBL7FLRjLedYJGQ1SwEkZxx-17Q98H13Uy1aLE321p4ZPeOt5tWIZamF8uasUSxc_2jUgRhftcqFe1z2xLUUl2IKF6Clxef6pVz-VDEYBG7loTPuapjegeQHaX9Q0zTHaNgGzDyGvuR-jTuDBHaL0B0UeqhI186m56IC99R35ae2LQ",
+        "indices": [
+          468,
+          491
+        ],
+        "url": "https://t.co/3MTt6hwbuf"
+      },
+      {
+        "display_url": "clicks.bonneville.com/f/a/YmHManvGRX…",
+        "expanded_url": "https://clicks.bonneville.com/f/a/YmHManvGRXlspNrjqxOnLA~~/AAQRxRA~/9Yde1QsSlU4qvlNEtTj0zkopgEo01YLLUXJqwMi1fyplJTCjwMzm-4isbkzKh7GaIBa27tGGs7UHMDLdMr8OFJrHC1YcQRCFQKXvxvbt_m7HVh4fa9h6ChRhe3ZMwrHuPVsjNvPzp_8cK0O7P7fwPchfuqzxu1Yj-lxGXWtEbOykMpTaUgL9PCKRGRYP5E7SFTNZC6uqdTLDZk1aJtOAlw",
+        "indices": [
+          762,
+          785
+        ],
+        "url": "https://t.co/smfYSvygiy"
+      },
+      {
+        "display_url": "clicks.bonneville.com/f/a/AQH1tf84Qi…",
+        "expanded_url": "https://clicks.bonneville.com/f/a/AQH1tf84Qi2evZCg_L_Jew~~/AAQRxRA~/09V-OjtEYMuos0CRzZXOfWTVE6pQX_vbHYZLrguk-lNdL5o2B96IjhE_xDKEIPlvlfUQ1bmJvO1TspP3SCtMmfmdOjP6bY_8oUDWXuUepnZK0_wPLfZjXZdalzL2BwIaKMEGTTec5UwNlfLl6PTkIltDZ89ief-_Bbj6s1kssM6T-zWj2cU-oQ_3v2NMchFlwRhyRccYnyC18Q1CS0J6BkHfkFIjT-siCcKSVxDsFfovFQ_HrcCS4r7vU6RXoxM0",
+        "indices": [
+          1046,
+          1069
+        ],
+        "url": "https://t.co/uKMZdfgbCD"
+      },
+      {
+        "display_url": "clicks.bonneville.com/f/a/1TB51J2en7…",
+        "expanded_url": "https://clicks.bonneville.com/f/a/1TB51J2en7MF40-EtQMECg~~/AAQRxRA~/z1wfoSkK4EL3y1p2u_BcaXP-1ebqSRJPatCi1O4ttfbnDGoHr9In9_SlGyTw_fGbUt21zKdvBVqCt5iowJLKesCAhuXCF1EZnYwxfooayxSgNHszv9ZiudP1nJsmeX9G360icLfUv8cu7n9tA6n0Eynt3crj30dmDLC3-vx35IJX8UFAA5l347wz0yECedXhTFXdOkdc1jjRblKqOOv5OQ",
+        "indices": [
+          1522,
+          1545
+        ],
+        "url": "https://t.co/5049HD0HU8"
+      }
+    ],
+    "user_mentions": []
+  },
+  "isRetweet": false,
+  "isQuote": false,
+  "media": [],
+  "isConversationControlled": false
+},
+{
+  "type": "tweet",
+  "id": "2078963329083507024",
+  "url": "https://x.com/Independent_IA/status/2078963329083507024",
+  "twitterUrl": "https://twitter.com/Independent_IA/status/2078963329083507024",
+  "text": "@ZachNunn @IowaStateU \"OUR bipartisan FARM AI Act builds\"\nAre you really a part of 'our'?\nI'm still fuming that you think you have the power to decide that IA-3 needs permanet Daylight Saving Time. That should have been a referendum on the ballot in the general election. The people decide those things",
+  "fullText": "@ZachNunn @IowaStateU \"OUR bipartisan FARM AI Act builds\"\nAre you really a part of 'our'?\nI'm still fuming that you think you have the power to decide that IA-3 needs permanet Daylight Saving Time. That should have been a referendum on the ballot in the general election. The people decide those things",
+  "source": "Twitter Web App",
+  "retweetCount": 0,
+  "replyCount": 0,
+  "likeCount": 0,
+  "quoteCount": 0,
+  "viewCount": 6,
+  "createdAt": "Sun Jul 19 22:00:57 +0000 2026",
+  "lang": "en",
+  "bookmarkCount": 0,
+  "isReply": true,
+  "inReplyToId": "2078920558104977828",
+  "conversationId": "2078920558104977828",
+  "inReplyToUserId": "1610323831809363971",
+  "inReplyToUsername": "ZachNunn",
+  "author": {
+    "type": "user",
+    "userName": "Independent_IA",
+    "url": "https://x.com/Independent_IA",
+    "twitterUrl": "https://twitter.com/Independent_IA",
+    "id": "897940472580239361",
+    "name": "Jim Davis 🌻⛈️",
+    "isVerified": false,
+    "isBlueVerified": false,
+    "profilePicture": "https://pbs.twimg.com/profile_images/1934292005389008897/fLoM1Fdu_normal.jpg",
+    "coverPicture": "https://pbs.twimg.com/profile_banners/897940472580239361/1617912009",
+    "description": "⛈️Vietnam Veteran ⛈️ Political Independent ⛈️ Be Kind to Animals ⛈️ Weather Enthusiast ⛈️ NWS Storm Spotter⛈️ 😠 #NeverTrump 😠",
+    "location": "Iowa",
+    "followers": 778,
+    "following": 730,
+    "protected": false,
+    "status": "",
+    "canDm": false,
+    "canMediaTag": true,
+    "createdAt": "Wed Aug 16 21:57:46 +0000 2017",
+    "entities": {
+      "description": {}
+    },
+    "fastFollowersCount": 0,
+    "favouritesCount": 115919,
+    "hasCustomTimelines": true,
+    "isTranslator": false,
+    "mediaCount": 430,
+    "statusesCount": 18359,
+    "affiliatesHighlightedLabel": {},
+    "possiblySensitive": false
+  },
+  "extendedEntities": {},
+  "card": {},
+  "place": {},
+  "entities": {
+    "user_mentions": [
+      {
+        "id_str": "1610323831809363971",
+        "indices": [
+          0,
+          9
+        ],
+        "name": "Congressman Zach Nunn",
+        "screen_name": "ZachNunn"
+      },
+      {
+        "id_str": "211258879",
+        "indices": [
+          10,
+          21
+        ],
+        "name": "Iowa State University",
+        "screen_name": "IowaStateU"
+      }
+    ]
+  },
+  "isRetweet": false,
+  "isQuote": false,
+  "media": [],
+  "isConversationControlled": false
+},
+{
+  "type": "tweet",
+  "id": "2078963144253133200",
+  "url": "https://x.com/9NEWSWeather/status/2078963144253133200",
+  "twitterUrl": "https://twitter.com/9NEWSWeather/status/2078963144253133200",
+  "text": "The House passed a bill to make daylight saving time permanent. What would this mean for Colorado? https://t.co/6oBK0SEI6h",
+  "fullText": "The House passed a bill to make daylight saving time permanent. What would this mean for Colorado? https://t.co/6oBK0SEI6h",
+  "source": "SocialNewsDesk",
+  "retweetCount": 0,
+  "replyCount": 1,
+  "likeCount": 0,
+  "quoteCount": 0,
+  "viewCount": 377,
+  "createdAt": "Sun Jul 19 22:00:13 +0000 2026",
+  "lang": "en",
+  "bookmarkCount": 0,
+  "isReply": false,
+  "conversationId": "2078963144253133200",
+  "possiblySensitive": false,
+  "author": {
+    "type": "user",
+    "userName": "9NEWSWeather",
+    "url": "https://x.com/9NEWSWeather",
+    "twitterUrl": "https://twitter.com/9NEWSWeather",
+    "id": "18732075",
+    "name": "9NEWS Weather",
+    "isVerified": false,
+    "isBlueVerified": false,
+    "profilePicture": "https://pbs.twimg.com/profile_images/705537545115926528/cXg0G6tm_normal.jpg",
+    "coverPicture": "",
+    "description": "This is the official Twitter account for the @9NEWS Weather Team  - Colorado's Weather Leader!",
+    "location": "Denver",
+    "followers": 69543,
+    "following": 4209,
+    "protected": false,
+    "status": "",
+    "canDm": false,
+    "canMediaTag": true,
+    "createdAt": "Wed Jan 07 18:37:35 +0000 2009",
+    "entities": {
+      "description": {},
+      "url": {
+        "urls": [
+          {
+            "display_url": "9news.com/weather",
+            "expanded_url": "http://9news.com/weather",
+            "indices": [
+              0,
+              22
+            ],
+            "url": "http://t.co/W2xoNxQ1VT"
+          }
+        ]
+      }
+    },
+    "fastFollowersCount": 0,
+    "favouritesCount": 56,
+    "hasCustomTimelines": false,
+    "isTranslator": false,
+    "mediaCount": 22228,
+    "statusesCount": 38102,
+    "affiliatesHighlightedLabel": {},
+    "possiblySensitive": false
+  },
+  "extendedEntities": {},
+  "card": {
+    "legacy": {
+      "binding_values": [
+        {
+          "key": "photo_image_full_size_large",
+          "value": {
+            "image_value": {
+              "height": 419,
+              "url": "https://pbs.twimg.com/card_img/2077469534756409344/uX3_s9lh?format=jpg&name=800x419",
+              "width": 800
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "thumbnail_image",
+          "value": {
+            "image_value": {
+              "height": 150,
+              "url": "https://pbs.twimg.com/card_img/2077469534756409344/uX3_s9lh?format=jpg&name=280x150",
+              "width": 267
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "description",
+          "value": {
+            "string_value": "The U.S. House passed a bill to make daylight saving time permanent. If it becomes law, Colorado and other states would experience later sunsets year-round.",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "domain",
+          "value": {
+            "string_value": "www.9news.com",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "thumbnail_image_large",
+          "value": {
+            "image_value": {
+              "height": 320,
+              "url": "https://pbs.twimg.com/card_img/2077469534756409344/uX3_s9lh?format=jpg&name=800x320_1",
+              "width": 569
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "summary_photo_image_small",
+          "value": {
+            "image_value": {
+              "height": 202,
+              "url": "https://pbs.twimg.com/card_img/2077469534756409344/uX3_s9lh?format=jpg&name=386x202",
+              "width": 386
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "thumbnail_image_original",
+          "value": {
+            "image_value": {
+              "height": 641,
+              "url": "https://pbs.twimg.com/card_img/2077469534756409344/uX3_s9lh?format=jpg&name=orig",
+              "width": 1140
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "site",
+          "value": {
+            "scribe_key": "publisher_id",
+            "type": "USER",
+            "user_value": {
+              "id_str": "19032473",
+              "path": []
+            }
+          }
+        },
+        {
+          "key": "photo_image_full_size_small",
+          "value": {
+            "image_value": {
+              "height": 202,
+              "url": "https://pbs.twimg.com/card_img/2077469534756409344/uX3_s9lh?format=jpg&name=386x202",
+              "width": 386
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "summary_photo_image_large",
+          "value": {
+            "image_value": {
+              "height": 419,
+              "url": "https://pbs.twimg.com/card_img/2077469534756409344/uX3_s9lh?format=jpg&name=800x419",
+              "width": 800
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "thumbnail_image_small",
+          "value": {
+            "image_value": {
+              "height": 81,
+              "url": "https://pbs.twimg.com/card_img/2077469534756409344/uX3_s9lh?format=jpg&name=144x144",
+              "width": 144
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "thumbnail_image_x_large",
+          "value": {
+            "image_value": {
+              "height": 641,
+              "url": "https://pbs.twimg.com/card_img/2077469534756409344/uX3_s9lh?format=png&name=2048x2048_2_exp",
+              "width": 1140
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "photo_image_full_size_original",
+          "value": {
+            "image_value": {
+              "height": 641,
+              "url": "https://pbs.twimg.com/card_img/2077469534756409344/uX3_s9lh?format=jpg&name=orig",
+              "width": 1140
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "vanity_url",
+          "value": {
+            "scribe_key": "vanity_url",
+            "string_value": "9news.com",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "photo_image_full_size",
+          "value": {
+            "image_value": {
+              "height": 314,
+              "url": "https://pbs.twimg.com/card_img/2077469534756409344/uX3_s9lh?format=jpg&name=600x314",
+              "width": 600
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "thumbnail_image_color",
+          "value": {
+            "image_color_value": {
+              "palette": [
+                {
+                  "percentage": 46.55,
+                  "rgb": {
+                    "blue": 74,
+                    "green": 68,
+                    "red": 71
+                  }
+                },
+                {
+                  "percentage": 27.22,
+                  "rgb": {
+                    "blue": 227,
+                    "green": 167,
+                    "red": 138
+                  }
+                },
+                {
+                  "percentage": 6.65,
+                  "rgb": {
+                    "blue": 165,
+                    "green": 149,
+                    "red": 163
+                  }
+                },
+                {
+                  "percentage": 5.96,
+                  "rgb": {
+                    "blue": 145,
+                    "green": 117,
+                    "red": 178
+                  }
+                },
+                {
+                  "percentage": 5.35,
+                  "rgb": {
+                    "blue": 123,
+                    "green": 59,
+                    "red": 48
+                  }
+                }
+              ]
+            },
+            "type": "IMAGE_COLOR"
+          }
+        },
+        {
+          "key": "title",
+          "value": {
+            "string_value": "Here's what permanent daylight saving time would look like in Colorado",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "summary_photo_image_color",
+          "value": {
+            "image_color_value": {
+              "palette": [
+                {
+                  "percentage": 46.55,
+                  "rgb": {
+                    "blue": 74,
+                    "green": 68,
+                    "red": 71
+                  }
+                },
+                {
+                  "percentage": 27.22,
+                  "rgb": {
+                    "blue": 227,
+                    "green": 167,
+                    "red": 138
+                  }
+                },
+                {
+                  "percentage": 6.65,
+                  "rgb": {
+                    "blue": 165,
+                    "green": 149,
+                    "red": 163
+                  }
+                },
+                {
+                  "percentage": 5.96,
+                  "rgb": {
+                    "blue": 145,
+                    "green": 117,
+                    "red": 178
+                  }
+                },
+                {
+                  "percentage": 5.35,
+                  "rgb": {
+                    "blue": 123,
+                    "green": 59,
+                    "red": 48
+                  }
+                }
+              ]
+            },
+            "type": "IMAGE_COLOR"
+          }
+        },
+        {
+          "key": "summary_photo_image_x_large",
+          "value": {
+            "image_value": {
+              "height": 641,
+              "url": "https://pbs.twimg.com/card_img/2077469534756409344/uX3_s9lh?format=png&name=2048x2048_2_exp",
+              "width": 1140
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "summary_photo_image",
+          "value": {
+            "image_value": {
+              "height": 314,
+              "url": "https://pbs.twimg.com/card_img/2077469534756409344/uX3_s9lh?format=jpg&name=600x314",
+              "width": 600
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "photo_image_full_size_color",
+          "value": {
+            "image_color_value": {
+              "palette": [
+                {
+                  "percentage": 46.55,
+                  "rgb": {
+                    "blue": 74,
+                    "green": 68,
+                    "red": 71
+                  }
+                },
+                {
+                  "percentage": 27.22,
+                  "rgb": {
+                    "blue": 227,
+                    "green": 167,
+                    "red": 138
+                  }
+                },
+                {
+                  "percentage": 6.65,
+                  "rgb": {
+                    "blue": 165,
+                    "green": 149,
+                    "red": 163
+                  }
+                },
+                {
+                  "percentage": 5.96,
+                  "rgb": {
+                    "blue": 145,
+                    "green": 117,
+                    "red": 178
+                  }
+                },
+                {
+                  "percentage": 5.35,
+                  "rgb": {
+                    "blue": 123,
+                    "green": 59,
+                    "red": 48
+                  }
+                }
+              ]
+            },
+            "type": "IMAGE_COLOR"
+          }
+        },
+        {
+          "key": "photo_image_full_size_x_large",
+          "value": {
+            "image_value": {
+              "height": 641,
+              "url": "https://pbs.twimg.com/card_img/2077469534756409344/uX3_s9lh?format=png&name=2048x2048_2_exp",
+              "width": 1140
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "card_url",
+          "value": {
+            "scribe_key": "card_url",
+            "string_value": "https://t.co/6oBK0SEI6h",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "summary_photo_image_original",
+          "value": {
+            "image_value": {
+              "height": 641,
+              "url": "https://pbs.twimg.com/card_img/2077469534756409344/uX3_s9lh?format=jpg&name=orig",
+              "width": 1140
+            },
+            "type": "IMAGE"
+          }
+        }
+      ],
+      "card_platform": {
+        "platform": {
+          "audience": {
+            "name": "production"
+          },
+          "device": {
+            "name": "Swift",
+            "version": "12"
+          }
+        }
+      },
+      "name": "summary_large_image",
+      "url": "https://t.co/6oBK0SEI6h",
+      "user_refs_results": [
+        {
+          "result": {
+            "__typename": "User",
+            "affiliates_highlighted_label": {},
+            "avatar": {
+              "image_url": "https://pbs.twimg.com/profile_images/943583595482046464/h5ePo5gp_normal.jpg"
+            },
+            "core": {
+              "created_at": "Thu Jan 15 18:32:46 +0000 2009",
+              "name": "9NEWS Denver",
+              "screen_name": "9NEWS"
+            },
+            "dm_permissions": {
+              "can_dm": false
+            },
+            "follow_request_sent": false,
+            "has_graduated_access": true,
+            "id": "VXNlcjoxOTAzMjQ3Mw==",
+            "is_blue_verified": true,
+            "legacy": {
+              "default_profile": false,
+              "default_profile_image": false,
+              "description": "The official X account for 9NEWS in Denver, CO. Interact with us! #9NEWSMornings #9WX We also retweet the #9NEWS team.",
+              "entities": {
+                "description": {},
+                "url": {
+                  "urls": [
+                    {
+                      "display_url": "9news.com",
+                      "expanded_url": "http://www.9news.com",
+                      "indices": [
+                        0,
+                        23
+                      ],
+                      "url": "https://t.co/M6g5y0e1rF"
+                    }
+                  ]
+                }
+              },
+              "fast_followers_count": 0,
+              "favourites_count": 10800,
+              "follow_request_sent": false,
+              "followers_count": 555025,
+              "friends_count": 912,
+              "has_custom_timelines": true,
+              "is_translator": false,
+              "listed_count": 3405,
+              "media_count": 101468,
+              "needs_phone_verification": false,
+              "normal_followers_count": 555025,
+              "notifications": false,
+              "possibly_sensitive": false,
+              "profile_banner_url": "https://pbs.twimg.com/profile_banners/19032473/1596108343",
+              "profile_interstitial_type": "",
+              "statuses_count": 576947,
+              "time_zone": "",
+              "translator_type": "none",
+              "url": "https://t.co/M6g5y0e1rF",
+              "utc_offset": 0,
+              "want_retweets": false,
+              "withheld_description": "",
+              "withheld_scope": ""
+            },
+            "location": {
+              "location": "Denver, Colorado"
+            },
+            "media_permissions": {
+              "can_media_tag": true
+            },
+            "parody_commentary_fan_label": "None",
+            "privacy": {
+              "protected": false
+            },
+            "profile_bio": {
+              "description": "The official X account for 9NEWS in Denver, CO. Interact with us! #9NEWSMornings #9WX We also retweet the #9NEWS team."
+            },
+            "profile_description_language": "en",
+            "profile_image_shape": "Circle",
+            "relationship_perspectives": {
+              "blocked_by": false,
+              "blocking": false,
+              "followed_by": false,
+              "following": false,
+              "live_following": false,
+              "muting": false
+            },
+            "rest_id": "19032473",
+            "super_follow_eligible": false,
+            "super_followed_by": false,
+            "super_following": false,
+            "verification": {
+              "verified": false
+            }
+          }
+        }
+      ]
+    },
+    "rest_id": "https://t.co/6oBK0SEI6h"
+  },
+  "place": {},
+  "entities": {
+    "urls": [
+      {
+        "display_url": "9news.com/article/weathe…",
+        "expanded_url": "https://www.9news.com/article/weather/local-weather/permanent-daylight-saving-time-colorado/73-56bc1314-3fed-418b-a0bc-124c8ea6b097",
+        "indices": [
+          99,
+          122
+        ],
+        "url": "https://t.co/6oBK0SEI6h"
+      }
+    ]
+  },
+  "isRetweet": false,
+  "isQuote": false,
+  "media": [],
+  "isConversationControlled": false
+},
+{
+  "type": "tweet",
+  "id": "2078963142705479779",
+  "url": "https://x.com/9NEWS/status/2078963142705479779",
+  "twitterUrl": "https://twitter.com/9NEWS/status/2078963142705479779",
+  "text": "The House passed a bill to make daylight saving time permanent. What would this mean for Colorado? https://t.co/L0y8efopLy",
+  "fullText": "The House passed a bill to make daylight saving time permanent. What would this mean for Colorado? https://t.co/L0y8efopLy",
+  "source": "SocialNewsDesk",
+  "retweetCount": 1,
+  "replyCount": 1,
+  "likeCount": 1,
+  "quoteCount": 0,
+  "viewCount": 1383,
+  "createdAt": "Sun Jul 19 22:00:13 +0000 2026",
+  "lang": "en",
+  "bookmarkCount": 0,
+  "isReply": false,
+  "conversationId": "2078963142705479779",
+  "possiblySensitive": false,
+  "author": {
+    "type": "user",
+    "userName": "9NEWS",
+    "url": "https://x.com/9NEWS",
+    "twitterUrl": "https://twitter.com/9NEWS",
+    "id": "19032473",
+    "name": "9NEWS Denver",
+    "isVerified": false,
+    "isBlueVerified": true,
+    "profilePicture": "https://pbs.twimg.com/profile_images/943583595482046464/h5ePo5gp_normal.jpg",
+    "coverPicture": "https://pbs.twimg.com/profile_banners/19032473/1596108343",
+    "description": "The official X account for 9NEWS in Denver, CO. Interact with us! #9NEWSMornings #9WX We also retweet the #9NEWS team.",
+    "location": "Denver, Colorado",
+    "followers": 555025,
+    "following": 912,
+    "protected": false,
+    "status": "",
+    "canDm": false,
+    "canMediaTag": true,
+    "createdAt": "Thu Jan 15 18:32:46 +0000 2009",
+    "entities": {
+      "description": {},
+      "url": {
+        "urls": [
+          {
+            "display_url": "9news.com",
+            "expanded_url": "http://www.9news.com",
+            "indices": [
+              0,
+              23
+            ],
+            "url": "https://t.co/M6g5y0e1rF"
+          }
+        ]
+      }
+    },
+    "fastFollowersCount": 0,
+    "favouritesCount": 10800,
+    "hasCustomTimelines": true,
+    "isTranslator": false,
+    "mediaCount": 101468,
+    "statusesCount": 576947,
+    "affiliatesHighlightedLabel": {},
+    "possiblySensitive": false
+  },
+  "extendedEntities": {},
+  "card": {
+    "legacy": {
+      "binding_values": [
+        {
+          "key": "photo_image_full_size_large",
+          "value": {
+            "image_value": {
+              "height": 419,
+              "url": "https://pbs.twimg.com/card_img/2077469534756409344/uX3_s9lh?format=jpg&name=800x419",
+              "width": 800
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "thumbnail_image",
+          "value": {
+            "image_value": {
+              "height": 150,
+              "url": "https://pbs.twimg.com/card_img/2077469534756409344/uX3_s9lh?format=jpg&name=280x150",
+              "width": 267
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "description",
+          "value": {
+            "string_value": "The U.S. House passed a bill to make daylight saving time permanent. If it becomes law, Colorado and other states would experience later sunsets year-round.",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "domain",
+          "value": {
+            "string_value": "www.9news.com",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "thumbnail_image_large",
+          "value": {
+            "image_value": {
+              "height": 320,
+              "url": "https://pbs.twimg.com/card_img/2077469534756409344/uX3_s9lh?format=jpg&name=800x320_1",
+              "width": 569
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "summary_photo_image_small",
+          "value": {
+            "image_value": {
+              "height": 202,
+              "url": "https://pbs.twimg.com/card_img/2077469534756409344/uX3_s9lh?format=jpg&name=386x202",
+              "width": 386
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "thumbnail_image_original",
+          "value": {
+            "image_value": {
+              "height": 641,
+              "url": "https://pbs.twimg.com/card_img/2077469534756409344/uX3_s9lh?format=jpg&name=orig",
+              "width": 1140
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "site",
+          "value": {
+            "scribe_key": "publisher_id",
+            "type": "USER",
+            "user_value": {
+              "id_str": "19032473",
+              "path": []
+            }
+          }
+        },
+        {
+          "key": "photo_image_full_size_small",
+          "value": {
+            "image_value": {
+              "height": 202,
+              "url": "https://pbs.twimg.com/card_img/2077469534756409344/uX3_s9lh?format=jpg&name=386x202",
+              "width": 386
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "summary_photo_image_large",
+          "value": {
+            "image_value": {
+              "height": 419,
+              "url": "https://pbs.twimg.com/card_img/2077469534756409344/uX3_s9lh?format=jpg&name=800x419",
+              "width": 800
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "thumbnail_image_small",
+          "value": {
+            "image_value": {
+              "height": 81,
+              "url": "https://pbs.twimg.com/card_img/2077469534756409344/uX3_s9lh?format=jpg&name=144x144",
+              "width": 144
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "thumbnail_image_x_large",
+          "value": {
+            "image_value": {
+              "height": 641,
+              "url": "https://pbs.twimg.com/card_img/2077469534756409344/uX3_s9lh?format=png&name=2048x2048_2_exp",
+              "width": 1140
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "photo_image_full_size_original",
+          "value": {
+            "image_value": {
+              "height": 641,
+              "url": "https://pbs.twimg.com/card_img/2077469534756409344/uX3_s9lh?format=jpg&name=orig",
+              "width": 1140
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "vanity_url",
+          "value": {
+            "scribe_key": "vanity_url",
+            "string_value": "9news.com",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "photo_image_full_size",
+          "value": {
+            "image_value": {
+              "height": 314,
+              "url": "https://pbs.twimg.com/card_img/2077469534756409344/uX3_s9lh?format=jpg&name=600x314",
+              "width": 600
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "thumbnail_image_color",
+          "value": {
+            "image_color_value": {
+              "palette": [
+                {
+                  "percentage": 46.55,
+                  "rgb": {
+                    "blue": 74,
+                    "green": 68,
+                    "red": 71
+                  }
+                },
+                {
+                  "percentage": 27.22,
+                  "rgb": {
+                    "blue": 227,
+                    "green": 167,
+                    "red": 138
+                  }
+                },
+                {
+                  "percentage": 6.65,
+                  "rgb": {
+                    "blue": 165,
+                    "green": 149,
+                    "red": 163
+                  }
+                },
+                {
+                  "percentage": 5.96,
+                  "rgb": {
+                    "blue": 145,
+                    "green": 117,
+                    "red": 178
+                  }
+                },
+                {
+                  "percentage": 5.35,
+                  "rgb": {
+                    "blue": 123,
+                    "green": 59,
+                    "red": 48
+                  }
+                }
+              ]
+            },
+            "type": "IMAGE_COLOR"
+          }
+        },
+        {
+          "key": "title",
+          "value": {
+            "string_value": "Here's what permanent daylight saving time would look like in Colorado",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "summary_photo_image_color",
+          "value": {
+            "image_color_value": {
+              "palette": [
+                {
+                  "percentage": 46.55,
+                  "rgb": {
+                    "blue": 74,
+                    "green": 68,
+                    "red": 71
+                  }
+                },
+                {
+                  "percentage": 27.22,
+                  "rgb": {
+                    "blue": 227,
+                    "green": 167,
+                    "red": 138
+                  }
+                },
+                {
+                  "percentage": 6.65,
+                  "rgb": {
+                    "blue": 165,
+                    "green": 149,
+                    "red": 163
+                  }
+                },
+                {
+                  "percentage": 5.96,
+                  "rgb": {
+                    "blue": 145,
+                    "green": 117,
+                    "red": 178
+                  }
+                },
+                {
+                  "percentage": 5.35,
+                  "rgb": {
+                    "blue": 123,
+                    "green": 59,
+                    "red": 48
+                  }
+                }
+              ]
+            },
+            "type": "IMAGE_COLOR"
+          }
+        },
+        {
+          "key": "summary_photo_image_x_large",
+          "value": {
+            "image_value": {
+              "height": 641,
+              "url": "https://pbs.twimg.com/card_img/2077469534756409344/uX3_s9lh?format=png&name=2048x2048_2_exp",
+              "width": 1140
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "summary_photo_image",
+          "value": {
+            "image_value": {
+              "height": 314,
+              "url": "https://pbs.twimg.com/card_img/2077469534756409344/uX3_s9lh?format=jpg&name=600x314",
+              "width": 600
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "photo_image_full_size_color",
+          "value": {
+            "image_color_value": {
+              "palette": [
+                {
+                  "percentage": 46.55,
+                  "rgb": {
+                    "blue": 74,
+                    "green": 68,
+                    "red": 71
+                  }
+                },
+                {
+                  "percentage": 27.22,
+                  "rgb": {
+                    "blue": 227,
+                    "green": 167,
+                    "red": 138
+                  }
+                },
+                {
+                  "percentage": 6.65,
+                  "rgb": {
+                    "blue": 165,
+                    "green": 149,
+                    "red": 163
+                  }
+                },
+                {
+                  "percentage": 5.96,
+                  "rgb": {
+                    "blue": 145,
+                    "green": 117,
+                    "red": 178
+                  }
+                },
+                {
+                  "percentage": 5.35,
+                  "rgb": {
+                    "blue": 123,
+                    "green": 59,
+                    "red": 48
+                  }
+                }
+              ]
+            },
+            "type": "IMAGE_COLOR"
+          }
+        },
+        {
+          "key": "photo_image_full_size_x_large",
+          "value": {
+            "image_value": {
+              "height": 641,
+              "url": "https://pbs.twimg.com/card_img/2077469534756409344/uX3_s9lh?format=png&name=2048x2048_2_exp",
+              "width": 1140
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "card_url",
+          "value": {
+            "scribe_key": "card_url",
+            "string_value": "https://t.co/L0y8efopLy",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "summary_photo_image_original",
+          "value": {
+            "image_value": {
+              "height": 641,
+              "url": "https://pbs.twimg.com/card_img/2077469534756409344/uX3_s9lh?format=jpg&name=orig",
+              "width": 1140
+            },
+            "type": "IMAGE"
+          }
+        }
+      ],
+      "card_platform": {
+        "platform": {
+          "audience": {
+            "name": "production"
+          },
+          "device": {
+            "name": "Swift",
+            "version": "12"
+          }
+        }
+      },
+      "name": "summary_large_image",
+      "url": "https://t.co/L0y8efopLy",
+      "user_refs_results": [
+        {
+          "result": {
+            "__typename": "User",
+            "affiliates_highlighted_label": {},
+            "avatar": {
+              "image_url": "https://pbs.twimg.com/profile_images/943583595482046464/h5ePo5gp_normal.jpg"
+            },
+            "core": {
+              "created_at": "Thu Jan 15 18:32:46 +0000 2009",
+              "name": "9NEWS Denver",
+              "screen_name": "9NEWS"
+            },
+            "dm_permissions": {
+              "can_dm": false
+            },
+            "follow_request_sent": false,
+            "has_graduated_access": true,
+            "id": "VXNlcjoxOTAzMjQ3Mw==",
+            "is_blue_verified": true,
+            "legacy": {
+              "default_profile": false,
+              "default_profile_image": false,
+              "description": "The official X account for 9NEWS in Denver, CO. Interact with us! #9NEWSMornings #9WX We also retweet the #9NEWS team.",
+              "entities": {
+                "description": {},
+                "url": {
+                  "urls": [
+                    {
+                      "display_url": "9news.com",
+                      "expanded_url": "http://www.9news.com",
+                      "indices": [
+                        0,
+                        23
+                      ],
+                      "url": "https://t.co/M6g5y0e1rF"
+                    }
+                  ]
+                }
+              },
+              "fast_followers_count": 0,
+              "favourites_count": 10800,
+              "follow_request_sent": false,
+              "followers_count": 555025,
+              "friends_count": 912,
+              "has_custom_timelines": true,
+              "is_translator": false,
+              "listed_count": 3405,
+              "media_count": 101468,
+              "needs_phone_verification": false,
+              "normal_followers_count": 555025,
+              "notifications": false,
+              "possibly_sensitive": false,
+              "profile_banner_url": "https://pbs.twimg.com/profile_banners/19032473/1596108343",
+              "profile_interstitial_type": "",
+              "statuses_count": 576947,
+              "time_zone": "",
+              "translator_type": "none",
+              "url": "https://t.co/M6g5y0e1rF",
+              "utc_offset": 0,
+              "want_retweets": false,
+              "withheld_description": "",
+              "withheld_scope": ""
+            },
+            "location": {
+              "location": "Denver, Colorado"
+            },
+            "media_permissions": {
+              "can_media_tag": true
+            },
+            "parody_commentary_fan_label": "None",
+            "privacy": {
+              "protected": false
+            },
+            "profile_bio": {
+              "description": "The official X account for 9NEWS in Denver, CO. Interact with us! #9NEWSMornings #9WX We also retweet the #9NEWS team."
+            },
+            "profile_description_language": "en",
+            "profile_image_shape": "Circle",
+            "relationship_perspectives": {
+              "blocked_by": false,
+              "blocking": false,
+              "followed_by": false,
+              "following": false,
+              "live_following": false,
+              "muting": false
+            },
+            "rest_id": "19032473",
+            "super_follow_eligible": false,
+            "super_followed_by": false,
+            "super_following": false,
+            "verification": {
+              "verified": false
+            }
+          }
+        }
+      ]
+    },
+    "rest_id": "https://t.co/L0y8efopLy"
+  },
+  "place": {},
+  "entities": {
+    "urls": [
+      {
+        "display_url": "9news.com/article/weathe…",
+        "expanded_url": "https://www.9news.com/article/weather/local-weather/permanent-daylight-saving-time-colorado/73-56bc1314-3fed-418b-a0bc-124c8ea6b097",
+        "indices": [
+          99,
+          122
+        ],
+        "url": "https://t.co/L0y8efopLy"
+      }
+    ]
+  },
+  "isRetweet": false,
+  "isQuote": false,
+  "media": [],
+  "isConversationControlled": false
+},
+{
+  "type": "tweet",
+  "id": "2078963139345801294",
+  "url": "https://x.com/FOX21News/status/2078963139345801294",
+  "twitterUrl": "https://twitter.com/FOX21News/status/2078963139345801294",
+  "text": "Airlines for America is against a permanent switch to daylight saving time — unless its rollout is delayed by up to two years.\nhttps://t.co/H6mMAlWgbS",
+  "fullText": "Airlines for America is against a permanent switch to daylight saving time — unless its rollout is delayed by up to two years.\nhttps://t.co/H6mMAlWgbS",
+  "source": "SocialNewsDesk",
+  "retweetCount": 0,
+  "replyCount": 0,
+  "likeCount": 0,
+  "quoteCount": 0,
+  "viewCount": 139,
+  "createdAt": "Sun Jul 19 22:00:12 +0000 2026",
+  "lang": "en",
+  "bookmarkCount": 0,
+  "isReply": false,
+  "conversationId": "2078963139345801294",
+  "possiblySensitive": false,
+  "author": {
+    "type": "user",
+    "userName": "FOX21News",
+    "url": "https://x.com/FOX21News",
+    "twitterUrl": "https://twitter.com/FOX21News",
+    "id": "21233136",
+    "name": "FOX21 News",
+    "isVerified": false,
+    "isBlueVerified": false,
+    "profilePicture": "https://pbs.twimg.com/profile_images/1814077591067791360/oTIVSY_I_normal.png",
+    "coverPicture": "https://pbs.twimg.com/profile_banners/21233136/1633204696",
+    "description": "Dedicated to the Southern Colorado community and passionate about telling your stories. 🏔 Connect with us here! 📷 IG: FOX21News",
+    "location": "Colorado Springs, Colo.",
+    "followers": 56247,
+    "following": 2798,
+    "protected": false,
+    "status": "",
+    "canDm": false,
+    "canMediaTag": true,
+    "createdAt": "Wed Feb 18 19:48:42 +0000 2009",
+    "entities": {
+      "description": {},
+      "url": {
+        "urls": [
+          {
+            "display_url": "fox21news.com",
+            "expanded_url": "https://www.fox21news.com/",
+            "indices": [
+              0,
+              23
+            ],
+            "url": "https://t.co/q3JeKBo9U7"
+          }
+        ]
+      }
+    },
+    "fastFollowersCount": 0,
+    "favouritesCount": 5895,
+    "hasCustomTimelines": false,
+    "isTranslator": false,
+    "mediaCount": 16764,
+    "statusesCount": 129749,
+    "affiliatesHighlightedLabel": {},
+    "possiblySensitive": false,
+    "professional": {
+      "category": [
+        {
+          "icon_name": "IconBriefcaseStroke",
+          "id": 580,
+          "name": "Media & News Company"
+        }
+      ],
+      "professional_type": "Business",
+      "rest_id": "1582408091122794498"
+    }
+  },
+  "extendedEntities": {},
+  "card": {
+    "legacy": {
+      "binding_values": [
+        {
+          "key": "photo_image_full_size_large",
+          "value": {
+            "image_value": {
+              "height": 335,
+              "url": "https://pbs.twimg.com/card_img/2078963143405916160/qbkewJv-?format=jpg&name=800x419",
+              "width": 640
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "thumbnail_image",
+          "value": {
+            "image_value": {
+              "height": 150,
+              "url": "https://pbs.twimg.com/card_img/2078963143405916160/qbkewJv-?format=jpg&name=280x150",
+              "width": 225
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "description",
+          "value": {
+            "string_value": "Airlines for America is against a permanent switch to daylight saving time — unless its rollout is delayed by up to two years.",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "domain",
+          "value": {
+            "string_value": "www.fox21news.com",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "thumbnail_image_large",
+          "value": {
+            "image_value": {
+              "height": 320,
+              "url": "https://pbs.twimg.com/card_img/2078963143405916160/qbkewJv-?format=jpg&name=800x320_1",
+              "width": 481
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "summary_photo_image_small",
+          "value": {
+            "image_value": {
+              "height": 202,
+              "url": "https://pbs.twimg.com/card_img/2078963143405916160/qbkewJv-?format=jpg&name=386x202",
+              "width": 386
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "thumbnail_image_original",
+          "value": {
+            "image_value": {
+              "height": 426,
+              "url": "https://pbs.twimg.com/card_img/2078963143405916160/qbkewJv-?format=jpg&name=orig",
+              "width": 640
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "photo_image_full_size_small",
+          "value": {
+            "image_value": {
+              "height": 202,
+              "url": "https://pbs.twimg.com/card_img/2078963143405916160/qbkewJv-?format=jpg&name=386x202",
+              "width": 386
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "summary_photo_image_large",
+          "value": {
+            "image_value": {
+              "height": 335,
+              "url": "https://pbs.twimg.com/card_img/2078963143405916160/qbkewJv-?format=jpg&name=800x419",
+              "width": 640
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "thumbnail_image_small",
+          "value": {
+            "image_value": {
+              "height": 67,
+              "url": "https://pbs.twimg.com/card_img/2078963143405916160/qbkewJv-?format=jpg&name=100x100",
+              "width": 100
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "thumbnail_image_x_large",
+          "value": {
+            "image_value": {
+              "height": 426,
+              "url": "https://pbs.twimg.com/card_img/2078963143405916160/qbkewJv-?format=png&name=2048x2048_2_exp",
+              "width": 640
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "photo_image_full_size_original",
+          "value": {
+            "image_value": {
+              "height": 426,
+              "url": "https://pbs.twimg.com/card_img/2078963143405916160/qbkewJv-?format=jpg&name=orig",
+              "width": 640
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "vanity_url",
+          "value": {
+            "scribe_key": "vanity_url",
+            "string_value": "fox21news.com",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "photo_image_full_size",
+          "value": {
+            "image_value": {
+              "height": 314,
+              "url": "https://pbs.twimg.com/card_img/2078963143405916160/qbkewJv-?format=jpg&name=600x314",
+              "width": 600
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "thumbnail_image_color",
+          "value": {
+            "image_color_value": {
+              "palette": [
+                {
+                  "percentage": 49.33,
+                  "rgb": {
+                    "blue": 191,
+                    "green": 189,
+                    "red": 188
+                  }
+                },
+                {
+                  "percentage": 23.24,
+                  "rgb": {
+                    "blue": 92,
+                    "green": 87,
+                    "red": 86
+                  }
+                },
+                {
+                  "percentage": 7.76,
+                  "rgb": {
+                    "blue": 163,
+                    "green": 111,
+                    "red": 93
+                  }
+                },
+                {
+                  "percentage": 2.77,
+                  "rgb": {
+                    "blue": 74,
+                    "green": 64,
+                    "red": 158
+                  }
+                },
+                {
+                  "percentage": 2,
+                  "rgb": {
+                    "blue": 79,
+                    "green": 166,
+                    "red": 218
+                  }
+                }
+              ]
+            },
+            "type": "IMAGE_COLOR"
+          }
+        },
+        {
+          "key": "title",
+          "value": {
+            "string_value": "Airline group opposes year-round daylight saving time. Why?",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "summary_photo_image_color",
+          "value": {
+            "image_color_value": {
+              "palette": [
+                {
+                  "percentage": 49.33,
+                  "rgb": {
+                    "blue": 191,
+                    "green": 189,
+                    "red": 188
+                  }
+                },
+                {
+                  "percentage": 23.24,
+                  "rgb": {
+                    "blue": 92,
+                    "green": 87,
+                    "red": 86
+                  }
+                },
+                {
+                  "percentage": 7.76,
+                  "rgb": {
+                    "blue": 163,
+                    "green": 111,
+                    "red": 93
+                  }
+                },
+                {
+                  "percentage": 2.77,
+                  "rgb": {
+                    "blue": 74,
+                    "green": 64,
+                    "red": 158
+                  }
+                },
+                {
+                  "percentage": 2,
+                  "rgb": {
+                    "blue": 79,
+                    "green": 166,
+                    "red": 218
+                  }
+                }
+              ]
+            },
+            "type": "IMAGE_COLOR"
+          }
+        },
+        {
+          "key": "summary_photo_image_x_large",
+          "value": {
+            "image_value": {
+              "height": 426,
+              "url": "https://pbs.twimg.com/card_img/2078963143405916160/qbkewJv-?format=png&name=2048x2048_2_exp",
+              "width": 640
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "summary_photo_image",
+          "value": {
+            "image_value": {
+              "height": 314,
+              "url": "https://pbs.twimg.com/card_img/2078963143405916160/qbkewJv-?format=jpg&name=600x314",
+              "width": 600
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "photo_image_full_size_color",
+          "value": {
+            "image_color_value": {
+              "palette": [
+                {
+                  "percentage": 49.33,
+                  "rgb": {
+                    "blue": 191,
+                    "green": 189,
+                    "red": 188
+                  }
+                },
+                {
+                  "percentage": 23.24,
+                  "rgb": {
+                    "blue": 92,
+                    "green": 87,
+                    "red": 86
+                  }
+                },
+                {
+                  "percentage": 7.76,
+                  "rgb": {
+                    "blue": 163,
+                    "green": 111,
+                    "red": 93
+                  }
+                },
+                {
+                  "percentage": 2.77,
+                  "rgb": {
+                    "blue": 74,
+                    "green": 64,
+                    "red": 158
+                  }
+                },
+                {
+                  "percentage": 2,
+                  "rgb": {
+                    "blue": 79,
+                    "green": 166,
+                    "red": 218
+                  }
+                }
+              ]
+            },
+            "type": "IMAGE_COLOR"
+          }
+        },
+        {
+          "key": "photo_image_full_size_x_large",
+          "value": {
+            "image_value": {
+              "height": 426,
+              "url": "https://pbs.twimg.com/card_img/2078963143405916160/qbkewJv-?format=png&name=2048x2048_2_exp",
+              "width": 640
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "card_url",
+          "value": {
+            "scribe_key": "card_url",
+            "string_value": "https://t.co/H6mMAlWgbS",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "summary_photo_image_original",
+          "value": {
+            "image_value": {
+              "height": 426,
+              "url": "https://pbs.twimg.com/card_img/2078963143405916160/qbkewJv-?format=jpg&name=orig",
+              "width": 640
+            },
+            "type": "IMAGE"
+          }
+        }
+      ],
+      "card_platform": {
+        "platform": {
+          "audience": {
+            "name": "production"
+          },
+          "device": {
+            "name": "Swift",
+            "version": "12"
+          }
+        }
+      },
+      "name": "summary_large_image",
+      "url": "https://t.co/H6mMAlWgbS",
+      "user_refs_results": []
+    },
+    "rest_id": "https://t.co/H6mMAlWgbS"
+  },
+  "place": {},
+  "entities": {
+    "urls": [
+      {
+        "display_url": "fox21news.com/news/airline-g…",
+        "expanded_url": "https://www.fox21news.com/news/airline-group-opposes-year-round-daylight-saving-time-why/?utm_medium=social&utm_source=twitter_FOX21News",
+        "indices": [
+          127,
+          150
+        ],
+        "url": "https://t.co/H6mMAlWgbS"
+      }
+    ]
+  },
+  "isRetweet": false,
+  "isQuote": false,
+  "media": [],
+  "isConversationControlled": false
+},
+{
+  "type": "tweet",
+  "id": "2078959141096443964",
+  "url": "https://x.com/Chris9ws1/status/2078959141096443964",
+  "twitterUrl": "https://twitter.com/Chris9ws1/status/2078959141096443964",
+  "text": "@GovofCO Permanent daylight saving time doesn’t stop the clock shift, it just makes schools and businesses do the math. Instead of changing our clocks twice a year, we’ll just end up changing school start times and work hours to avoid a 8:30 AM winter sunrise.",
+  "fullText": "@GovofCO Permanent daylight saving time doesn’t stop the clock shift, it just makes schools and businesses do the math. Instead of changing our clocks twice a year, we’ll just end up changing school start times and work hours to avoid a 8:30 AM winter sunrise.",
+  "source": "Twitter for iPhone",
+  "retweetCount": 0,
+  "replyCount": 0,
+  "likeCount": 0,
+  "quoteCount": 0,
+  "viewCount": 51,
+  "createdAt": "Sun Jul 19 21:44:19 +0000 2026",
+  "lang": "en",
+  "bookmarkCount": 0,
+  "isReply": true,
+  "inReplyToId": "2078948052811829248",
+  "conversationId": "2078948052811829248",
+  "inReplyToUserId": "728344273620344832",
+  "inReplyToUsername": "GovofCO",
+  "author": {
+    "type": "user",
+    "userName": "Chris9ws1",
+    "url": "https://x.com/Chris9ws1",
+    "twitterUrl": "https://twitter.com/Chris9ws1",
+    "id": "1971756372279939074",
+    "name": "Chris",
+    "isVerified": false,
+    "isBlueVerified": false,
+    "profilePicture": "https://pbs.twimg.com/profile_images/2050300645165670400/mcse40fz_normal.jpg",
+    "coverPicture": "https://pbs.twimg.com/profile_banners/1971756372279939074/1770954492",
+    "description": "",
+    "followers": 49,
+    "following": 173,
+    "protected": false,
+    "status": "",
+    "canDm": false,
+    "canMediaTag": true,
+    "createdAt": "Sat Sep 27 01:59:04 +0000 2025",
+    "entities": {
+      "description": {}
+    },
+    "fastFollowersCount": 0,
+    "favouritesCount": 3051,
+    "hasCustomTimelines": false,
+    "isTranslator": false,
+    "mediaCount": 19,
+    "statusesCount": 716,
+    "affiliatesHighlightedLabel": {},
+    "possiblySensitive": false
+  },
+  "extendedEntities": {},
+  "card": {},
+  "place": {},
+  "entities": {
+    "user_mentions": [
+      {
+        "id_str": "728344273620344832",
+        "indices": [
+          0,
+          8
+        ],
+        "name": "Governor Jared Polis",
+        "screen_name": "GovofCO"
+      }
+    ]
+  },
+  "isRetweet": false,
+  "isQuote": false,
+  "media": [],
+  "isConversationControlled": false
+},
+{
+  "type": "tweet",
+  "id": "2078958770982375766",
+  "url": "https://x.com/sharonrnbdiva/status/2078958770982375766",
+  "twitterUrl": "https://twitter.com/sharonrnbdiva/status/2078958770982375766",
+  "text": "Hopefully daylight saving time will be all year round going forward 🙏",
+  "fullText": "Hopefully daylight saving time will be all year round going forward 🙏",
+  "source": "Twitter for iPhone",
+  "retweetCount": 0,
+  "replyCount": 0,
+  "likeCount": 0,
+  "quoteCount": 0,
+  "viewCount": 2,
+  "createdAt": "Sun Jul 19 21:42:50 +0000 2026",
+  "lang": "en",
+  "bookmarkCount": 0,
+  "isReply": false,
+  "conversationId": "2078958770982375766",
+  "author": {
+    "type": "user",
+    "userName": "sharonrnbdiva",
+    "url": "https://x.com/sharonrnbdiva",
+    "twitterUrl": "https://twitter.com/sharonrnbdiva",
+    "id": "710007380860407808",
+    "name": "Sharon",
+    "isVerified": false,
+    "isBlueVerified": true,
+    "profilePicture": "https://pbs.twimg.com/profile_images/1620699650234662912/5kj-2Zx2_normal.jpg",
+    "coverPicture": "",
+    "description": "Proud Capricorn Independent R&B Artist/Songwriter - Going forward all of my music projects will be released under Ultra Music LLC #MusicComingSoon #StayTuned 🎵",
+    "location": "Bronx, NY",
+    "followers": 1778,
+    "following": 3700,
+    "protected": false,
+    "status": "",
+    "canDm": true,
+    "canMediaTag": true,
+    "createdAt": "Wed Mar 16 07:38:45 +0000 2016",
+    "entities": {
+      "description": {},
+      "url": {
+        "urls": [
+          {
+            "display_url": "instagram.com/sharonrnbdiva",
+            "expanded_url": "http://www.instagram.com/sharonrnbdiva",
+            "indices": [
+              0,
+              23
+            ],
+            "url": "https://t.co/rPjPqloIGs"
+          }
+        ]
+      }
+    },
+    "fastFollowersCount": 0,
+    "favouritesCount": 4004,
+    "hasCustomTimelines": true,
+    "isTranslator": false,
+    "mediaCount": 211,
+    "statusesCount": 7908,
+    "affiliatesHighlightedLabel": {},
+    "possiblySensitive": false
+  },
+  "extendedEntities": {},
+  "card": {},
+  "place": {},
+  "entities": {},
+  "isRetweet": false,
+  "isQuote": false,
+  "media": [],
+  "isConversationControlled": false
+},
+{
+  "type": "tweet",
+  "id": "2078948616652402955",
+  "url": "https://x.com/HTBF1968/status/2078948616652402955",
+  "twitterUrl": "https://twitter.com/HTBF1968/status/2078948616652402955",
+  "text": "Reminder that \"Daylight Saving Time\" has no S. It's not \"Savings.\"\n\nI will not be taking questions on why this took me until paragraph four to figure out.\n\n👇",
+  "fullText": "Reminder that \"Daylight Saving Time\" has no S. It's not \"Savings.\"\n\nI will not be taking questions on why this took me until paragraph four to figure out.\n\n👇",
+  "source": "Twitter for iPhone",
+  "retweetCount": 0,
+  "replyCount": 1,
+  "likeCount": 8,
+  "quoteCount": 0,
+  "viewCount": 151,
+  "createdAt": "Sun Jul 19 21:02:29 +0000 2026",
+  "lang": "en",
+  "bookmarkCount": 0,
+  "isReply": false,
+  "conversationId": "2078948616652402955",
+  "isPinned": false,
+  "author": {
+    "type": "user",
+    "userName": "HTBF1968",
+    "url": "https://x.com/HTBF1968",
+    "twitterUrl": "https://twitter.com/HTBF1968",
+    "id": "1622795119924752384",
+    "name": "Hoisttheblackflag",
+    "isVerified": false,
+    "isBlueVerified": true,
+    "profilePicture": "https://pbs.twimg.com/profile_images/1829218619655417856/ejv8hqDG_normal.jpg",
+    "coverPicture": "https://pbs.twimg.com/profile_banners/1622795119924752384/1724954178",
+    "description": "https://t.co/3Hb392UIZY",
+    "followers": 5886,
+    "following": 3281,
+    "protected": false,
+    "status": "",
+    "canDm": false,
+    "canMediaTag": true,
+    "createdAt": "Tue Feb 07 03:11:35 +0000 2023",
+    "entities": {
+      "description": {
+        "urls": [
+          {
+            "display_url": "open.substack.com/pub/hoistthebl…",
+            "expanded_url": "https://open.substack.com/pub/hoisttheblackflag?r=26wsm2&utm_medium=ios",
+            "indices": [
+              0,
+              23
+            ],
+            "url": "https://t.co/3Hb392UIZY"
+          }
+        ]
+      },
+      "url": {
+        "urls": [
+          {
+            "display_url": "buymeacoffee.com/hoisttheblackf…",
+            "expanded_url": "https://buymeacoffee.com/hoisttheblackflag",
+            "indices": [
+              0,
+              23
+            ],
+            "url": "https://t.co/3SmT71nbUF"
+          }
+        ]
+      }
+    },
+    "fastFollowersCount": 0,
+    "favouritesCount": 8888,
+    "hasCustomTimelines": true,
+    "isTranslator": false,
+    "mediaCount": 4189,
+    "statusesCount": 26238,
+    "affiliatesHighlightedLabel": {},
+    "possiblySensitive": false,
+    "pinnedTweetIds": [
+      "2078148244732076206"
+    ]
+  },
+  "extendedEntities": {},
+  "card": {},
+  "place": {},
+  "entities": {},
+  "isRetweet": false,
+  "isQuote": false,
+  "media": [],
+  "isConversationControlled": false
+},
+{
+  "type": "tweet",
+  "id": "2078948052811829248",
+  "url": "https://x.com/GovofCO/status/2078948052811829248",
+  "twitterUrl": "https://twitter.com/GovofCO/status/2078948052811829248",
+  "text": "We are ready to stop moving our clocks around twice each year in Colorado! Changing the clocks twice a year can be confusing and disrupt our sleep cycles. That’s why I signed a law called \"Daylight Saving Time Year Round,\" HB22-1297, to keep Colorado in daylight saving time. This law can only take effect if the federal government and four other states in our time zone agree to do the same.\n\nThis week, the U.S. House passed a bill to make daylight saving time permanent. It now moves on to the Senate. \n\nhttps://t.co/Zhiljy3HCh",
+  "fullText": "We are ready to stop moving our clocks around twice each year in Colorado! Changing the clocks twice a year can be confusing and disrupt our sleep cycles. That’s why I signed a law called \"Daylight Saving Time Year Round,\" HB22-1297, to keep Colorado in daylight saving time. This https://t.co/Fxd8LdZlTF",
+  "source": "Hootsuite Inc.",
+  "retweetCount": 3,
+  "replyCount": 16,
+  "likeCount": 26,
+  "quoteCount": 0,
+  "viewCount": 3229,
+  "createdAt": "Sun Jul 19 21:00:15 +0000 2026",
+  "lang": "en",
+  "bookmarkCount": 0,
+  "isReply": false,
+  "conversationId": "2078948052811829248",
+  "possiblySensitive": false,
+  "author": {
+    "type": "user",
+    "userName": "GovofCO",
+    "url": "https://x.com/GovofCO",
+    "twitterUrl": "https://twitter.com/GovofCO",
+    "id": "728344273620344832",
+    "name": "Governor Jared Polis",
+    "isVerified": false,
+    "isBlueVerified": true,
+    "profilePicture": "https://pbs.twimg.com/profile_images/1803885826947821568/mfhDeqv5_normal.jpg",
+    "coverPicture": "https://pbs.twimg.com/profile_banners/728344273620344832/1738088727",
+    "description": "Governor of Colorado. Fighting for affordable health care, better education, an economy that works for everyone, and protecting our Colorado way of life.",
+    "location": "Colorado, USA",
+    "followers": 221783,
+    "following": 1161,
+    "protected": false,
+    "status": "",
+    "canDm": false,
+    "canMediaTag": true,
+    "createdAt": "Thu May 05 22:03:01 +0000 2016",
+    "entities": {
+      "description": {},
+      "url": {
+        "urls": [
+          {
+            "display_url": "linktr.ee/govofco",
+            "expanded_url": "https://linktr.ee/govofco",
+            "indices": [
+              0,
+              23
+            ],
+            "url": "https://t.co/PgTcfmEMKS"
+          }
+        ]
+      }
+    },
+    "fastFollowersCount": 0,
+    "favouritesCount": 1420,
+    "hasCustomTimelines": false,
+    "isTranslator": false,
+    "mediaCount": 6807,
+    "statusesCount": 9192,
+    "affiliatesHighlightedLabel": {},
+    "possiblySensitive": false
+  },
+  "extendedEntities": {
+    "media": [
+      {
+        "display_url": "pic.x.com/Fxd8LdZlTF",
+        "expanded_url": "https://x.com/GovofCO/status/2078948052811829248/photo/1",
+        "ext_alt_text": "Comparison of 7:30 AM light conditions in Denver from early January to mid-March showing increasing daylight.",
+        "ext_media_availability": {
+          "status": "Available"
+        },
+        "features": {
+          "large": {
+            "faces": [
+              {
+                "h": 72,
+                "w": 72,
+                "x": 787,
+                "y": 781
+              }
+            ]
+          },
+          "medium": {
+            "faces": [
+              {
+                "h": 64,
+                "w": 64,
+                "x": 699,
+                "y": 694
+              }
+            ]
+          },
+          "orig": {
+            "faces": [
+              {
+                "h": 72,
+                "w": 72,
+                "x": 787,
+                "y": 781
+              }
+            ]
+          },
+          "small": {
+            "faces": [
+              {
+                "h": 36,
+                "w": 36,
+                "x": 396,
+                "y": 393
+              }
+            ]
+          }
+        },
+        "id_str": "2078948049452240896",
+        "indices": [
+          281,
+          304
+        ],
+        "media_key": "3_2078948049452240896",
+        "media_results": {
+          "result": {
+            "media_key": "3_2078948049452240896"
+          }
+        },
+        "media_url_https": "https://pbs.twimg.com/media/HNnoPHoXkAABtnT.jpg",
+        "original_info": {
+          "focus_rects": [
+            {
+              "h": 605,
+              "w": 1080,
+              "x": 0,
+              "y": 406
+            },
+            {
+              "h": 1080,
+              "w": 1080,
+              "x": 0,
+              "y": 168
+            },
+            {
+              "h": 1231,
+              "w": 1080,
+              "x": 0,
+              "y": 93
+            },
+            {
+              "h": 1350,
+              "w": 675,
+              "x": 169,
+              "y": 0
+            },
+            {
+              "h": 1350,
+              "w": 1080,
+              "x": 0,
+              "y": 0
+            }
+          ],
+          "height": 1350,
+          "width": 1080
+        },
+        "sizes": {
+          "large": {
+            "h": 1350,
+            "resize": "fit",
+            "w": 1080
+          },
+          "medium": {
+            "h": 1200,
+            "resize": "fit",
+            "w": 960
+          },
+          "small": {
+            "h": 680,
+            "resize": "fit",
+            "w": 544
+          },
+          "thumb": {
+            "h": 150,
+            "resize": "crop",
+            "w": 150
+          }
+        },
+        "type": "photo",
+        "url": "https://t.co/Fxd8LdZlTF"
+      }
+    ]
+  },
+  "card": {},
+  "place": {},
+  "entities": {
+    "hashtags": [],
+    "symbols": [],
+    "urls": [
+      {
+        "display_url": "9news.com/article/weathe…",
+        "expanded_url": "https://www.9news.com/article/weather/local-weather/permanent-daylight-saving-time-colorado/73-56bc1314-3fed-418b-a0bc-124c8ea6b097",
+        "indices": [
+          507,
+          530
+        ],
+        "url": "https://t.co/Zhiljy3HCh"
+      }
+    ],
+    "user_mentions": []
+  },
+  "isRetweet": false,
+  "isQuote": false,
+  "media": [
+    "https://pbs.twimg.com/media/HNnoPHoXkAABtnT.jpg"
+  ],
+  "isConversationControlled": false
+},
+{
+  "type": "tweet",
+  "id": "2078946775302361401",
+  "url": "https://x.com/RiverCityESQ/status/2078946775302361401",
+  "twitterUrl": "https://twitter.com/RiverCityESQ/status/2078946775302361401",
+  "text": "@JedediahBila The DST Radical Floridians pushing this bill could move Florida to year- round Atlantic Standard Time, the time equivalent to Eastern Daylight Saving Time, and this whole problem goes away. This bill is totally unnecessary. #StandardTime #DaylightSavingTime",
+  "fullText": "@JedediahBila The DST Radical Floridians pushing this bill could move Florida to year- round Atlantic Standard Time, the time equivalent to Eastern Daylight Saving Time, and this whole problem goes away. This bill is totally unnecessary. #StandardTime #DaylightSavingTime",
+  "source": "Twitter Web App",
+  "retweetCount": 0,
+  "replyCount": 0,
+  "likeCount": 0,
+  "quoteCount": 0,
+  "viewCount": 31,
+  "createdAt": "Sun Jul 19 20:55:10 +0000 2026",
+  "lang": "en",
+  "bookmarkCount": 0,
+  "isReply": true,
+  "inReplyToId": "2078581188730478835",
+  "conversationId": "2078581188730478835",
+  "inReplyToUserId": "60680268",
+  "inReplyToUsername": "JedediahBila",
+  "author": {
+    "type": "user",
+    "userName": "RiverCityESQ",
+    "url": "https://x.com/RiverCityESQ",
+    "twitterUrl": "https://twitter.com/RiverCityESQ",
+    "id": "2019144736796241921",
+    "name": "RiverCityLawyer",
+    "isVerified": false,
+    "isBlueVerified": false,
+    "profilePicture": "https://pbs.twimg.com/profile_images/2019145016778563584/1ctr-eig_normal.jpg",
+    "coverPicture": "",
+    "description": "",
+    "followers": 14,
+    "following": 182,
+    "protected": false,
+    "status": "",
+    "canDm": false,
+    "canMediaTag": true,
+    "createdAt": "Wed Feb 04 20:23:41 +0000 2026",
+    "entities": {
+      "description": {}
+    },
+    "fastFollowersCount": 0,
+    "favouritesCount": 623,
+    "hasCustomTimelines": false,
+    "isTranslator": false,
+    "mediaCount": 2,
+    "statusesCount": 43,
+    "affiliatesHighlightedLabel": {},
+    "possiblySensitive": false
+  },
+  "extendedEntities": {},
+  "card": {},
+  "place": {},
+  "entities": {
+    "hashtags": [
+      {
+        "indices": [
+          238,
+          251
+        ],
+        "text": "StandardTime"
+      },
+      {
+        "indices": [
+          252,
+          271
+        ],
+        "text": "DaylightSavingTime"
+      }
+    ],
+    "user_mentions": [
+      {
+        "id_str": "60680268",
+        "indices": [
+          0,
+          13
+        ],
+        "name": "Jedediah Bila",
+        "screen_name": "JedediahBila"
+      }
+    ]
+  },
+  "isRetweet": false,
+  "isQuote": false,
+  "media": [],
+  "isConversationControlled": false
+},
+{
+  "type": "tweet",
+  "id": "2078944221709426962",
+  "url": "https://x.com/WOWK13News/status/2078944221709426962",
+  "twitterUrl": "https://twitter.com/WOWK13News/status/2078944221709426962",
+  "text": "Congress is closer to making daylight saving time permanent in the U.S. once again after the House passed the Sunshine Protection Act on Tuesday.\n\nhttps://t.co/NEUL46Tcvg https://t.co/9P30Vshrx9",
+  "fullText": "Congress is closer to making daylight saving time permanent in the U.S. once again after the House passed the Sunshine Protection Act on Tuesday.\n\nhttps://t.co/NEUL46Tcvg https://t.co/9P30Vshrx9",
+  "source": "SocialNewsDesk",
+  "retweetCount": 0,
+  "replyCount": 0,
+  "likeCount": 0,
+  "quoteCount": 0,
+  "viewCount": 211,
+  "createdAt": "Sun Jul 19 20:45:02 +0000 2026",
+  "lang": "en",
+  "bookmarkCount": 0,
+  "isReply": false,
+  "conversationId": "2078944221709426962",
+  "possiblySensitive": false,
+  "isPinned": false,
+  "author": {
+    "type": "user",
+    "userName": "WOWK13News",
+    "url": "https://x.com/WOWK13News",
+    "twitterUrl": "https://twitter.com/WOWK13News",
+    "id": "25903919",
+    "name": "WOWK 13 News",
+    "isVerified": false,
+    "isBlueVerified": false,
+    "profilePicture": "https://pbs.twimg.com/profile_images/1080502705385140224/3ApZYgeC_normal.jpg",
+    "coverPicture": "https://pbs.twimg.com/profile_banners/25903919/1680631670",
+    "description": "WORKING FOR YOU in the Huntington/Charleston TV market. NEWS TIPS: news@wowktv.com or (304) 720-6550. Also follow @StormTracker13, @WOWK13Sports, & @WVTonight",
+    "location": "Huntington/Charleston, WV",
+    "followers": 76976,
+    "following": 668,
+    "protected": false,
+    "status": "",
+    "canDm": false,
+    "canMediaTag": false,
+    "createdAt": "Sun Mar 22 23:18:48 +0000 2009",
+    "entities": {
+      "description": {},
+      "url": {
+        "urls": [
+          {
+            "display_url": "WOWKTV.com",
+            "expanded_url": "http://www.WOWKTV.com",
+            "indices": [
+              0,
+              23
+            ],
+            "url": "https://t.co/A2HZLradD5"
+          }
+        ]
+      }
+    },
+    "fastFollowersCount": 0,
+    "favouritesCount": 4234,
+    "hasCustomTimelines": true,
+    "isTranslator": false,
+    "mediaCount": 30749,
+    "statusesCount": 141028,
+    "affiliatesHighlightedLabel": {},
+    "possiblySensitive": false,
+    "pinnedTweetIds": [
+      "1332049155246723072"
+    ]
+  },
+  "extendedEntities": {
+    "media": [
+      {
+        "display_url": "pic.x.com/9P30Vshrx9",
+        "expanded_url": "https://x.com/WOWK13News/status/2078944221709426962/photo/1",
+        "ext_media_availability": {
+          "status": "Available"
+        },
+        "features": {
+          "large": {
+            "faces": []
+          },
+          "medium": {
+            "faces": []
+          },
+          "orig": {
+            "faces": []
+          },
+          "small": {
+            "faces": []
+          }
+        },
+        "id_str": "2078944217523429376",
+        "indices": [
+          171,
+          194
+        ],
+        "media_key": "3_2078944217523429376",
+        "media_results": {
+          "result": {
+            "media_key": "3_2078944217523429376"
+          }
+        },
+        "media_url_https": "https://pbs.twimg.com/media/HNnkwElWIAAR7r9.jpg",
+        "original_info": {
+          "focus_rects": [
+            {
+              "h": 605,
+              "w": 1080,
+              "x": 0,
+              "y": 475
+            },
+            {
+              "h": 1080,
+              "w": 1080,
+              "x": 0,
+              "y": 0
+            },
+            {
+              "h": 1080,
+              "w": 947,
+              "x": 0,
+              "y": 0
+            },
+            {
+              "h": 1080,
+              "w": 540,
+              "x": 27,
+              "y": 0
+            },
+            {
+              "h": 1080,
+              "w": 1080,
+              "x": 0,
+              "y": 0
+            }
+          ],
+          "height": 1080,
+          "width": 1080
+        },
+        "sizes": {
+          "large": {
+            "h": 1080,
+            "resize": "fit",
+            "w": 1080
+          },
+          "medium": {
+            "h": 1080,
+            "resize": "fit",
+            "w": 1080
+          },
+          "small": {
+            "h": 680,
+            "resize": "fit",
+            "w": 680
+          },
+          "thumb": {
+            "h": 150,
+            "resize": "crop",
+            "w": 150
+          }
+        },
+        "type": "photo",
+        "url": "https://t.co/9P30Vshrx9"
+      }
+    ]
+  },
+  "card": {},
+  "place": {},
+  "entities": {
+    "media": [
+      {
+        "display_url": "pic.x.com/9P30Vshrx9",
+        "expanded_url": "https://x.com/WOWK13News/status/2078944221709426962/photo/1",
+        "ext_media_availability": {
+          "status": "Available"
+        },
+        "features": {
+          "large": {
+            "faces": []
+          },
+          "medium": {
+            "faces": []
+          },
+          "orig": {
+            "faces": []
+          },
+          "small": {
+            "faces": []
+          }
+        },
+        "id_str": "2078944217523429376",
+        "indices": [
+          171,
+          194
+        ],
+        "media_key": "3_2078944217523429376",
+        "media_results": {
+          "result": {
+            "media_key": "3_2078944217523429376"
+          }
+        },
+        "media_url_https": "https://pbs.twimg.com/media/HNnkwElWIAAR7r9.jpg",
+        "original_info": {
+          "focus_rects": [
+            {
+              "h": 605,
+              "w": 1080,
+              "x": 0,
+              "y": 475
+            },
+            {
+              "h": 1080,
+              "w": 1080,
+              "x": 0,
+              "y": 0
+            },
+            {
+              "h": 1080,
+              "w": 947,
+              "x": 0,
+              "y": 0
+            },
+            {
+              "h": 1080,
+              "w": 540,
+              "x": 27,
+              "y": 0
+            },
+            {
+              "h": 1080,
+              "w": 1080,
+              "x": 0,
+              "y": 0
+            }
+          ],
+          "height": 1080,
+          "width": 1080
+        },
+        "sizes": {
+          "large": {
+            "h": 1080,
+            "resize": "fit",
+            "w": 1080
+          },
+          "medium": {
+            "h": 1080,
+            "resize": "fit",
+            "w": 1080
+          },
+          "small": {
+            "h": 680,
+            "resize": "fit",
+            "w": 680
+          },
+          "thumb": {
+            "h": 150,
+            "resize": "crop",
+            "w": 150
+          }
+        },
+        "type": "photo",
+        "url": "https://t.co/9P30Vshrx9"
+      }
+    ],
+    "urls": [
+      {
+        "display_url": "wowktv.com/national-news/…",
+        "expanded_url": "https://www.wowktv.com/national-news/why-permanent-daylight-saving-time-has-failed-in-the-us-before/?utm_medium=social&utm_source=twitter_WOWK13News",
+        "indices": [
+          147,
+          170
+        ],
+        "url": "https://t.co/NEUL46Tcvg"
+      }
+    ]
+  },
+  "isRetweet": false,
+  "isQuote": false,
+  "media": [
+    "https://pbs.twimg.com/media/HNnkwElWIAAR7r9.jpg"
+  ],
+  "isConversationControlled": false
+},
+{
+  "type": "tweet",
+  "id": "2078941622046507064",
+  "url": "https://x.com/mcr91bs/status/2078941622046507064",
+  "twitterUrl": "https://twitter.com/mcr91bs/status/2078941622046507064",
+  "text": "@VernBuchanan \"Permanent daylight saving time brings many health, economic and lifestyle benefits.\"\n\nSuch as? I'm sure you have a list, which will expose exactly why you are pushing for the WORST of the three options (pDST, biannual clock changes, pST).",
+  "fullText": "@VernBuchanan \"Permanent daylight saving time brings many health, economic and lifestyle benefits.\"\n\nSuch as? I'm sure you have a list, which will expose exactly why you are pushing for the WORST of the three options (pDST, biannual clock changes, pST).",
+  "source": "Twitter Web App",
+  "retweetCount": 0,
+  "replyCount": 0,
+  "likeCount": 0,
+  "quoteCount": 0,
+  "viewCount": 3,
+  "createdAt": "Sun Jul 19 20:34:42 +0000 2026",
+  "lang": "en",
+  "bookmarkCount": 0,
+  "isReply": true,
+  "inReplyToId": "2078186400881479883",
+  "conversationId": "2078186400881479883",
+  "inReplyToUserId": "20467163",
+  "inReplyToUsername": "VernBuchanan",
+  "author": {
+    "type": "user",
+    "userName": "mcr91bs",
+    "url": "https://x.com/mcr91bs",
+    "twitterUrl": "https://twitter.com/mcr91bs",
+    "id": "2655587407",
+    "name": "Fatigued",
+    "isVerified": false,
+    "isBlueVerified": false,
+    "profilePicture": "https://pbs.twimg.com/profile_images/2017597030819098624/4692lyH0_normal.jpg",
+    "coverPicture": "https://pbs.twimg.com/profile_banners/2655587407/1769829017",
+    "description": "America is for White Americans ONLY.\n\nNational Socialism is the only solution.\n\nDiversity is code for White Genocide.\n\nLimiting replies = Instant Block.",
+    "followers": 116,
+    "following": 5,
+    "protected": false,
+    "status": "",
+    "canDm": false,
+    "canMediaTag": false,
+    "createdAt": "Fri Jul 18 03:31:14 +0000 2014",
+    "entities": {
+      "description": {}
+    },
+    "fastFollowersCount": 0,
+    "favouritesCount": 30547,
+    "hasCustomTimelines": true,
+    "isTranslator": false,
+    "mediaCount": 742,
+    "statusesCount": 12388,
+    "affiliatesHighlightedLabel": {},
+    "possiblySensitive": false
+  },
+  "extendedEntities": {},
+  "card": {},
+  "place": {},
+  "entities": {
+    "user_mentions": [
+      {
+        "id_str": "20467163",
+        "indices": [
+          0,
+          13
+        ],
+        "name": "Rep. Vern Buchanan",
+        "screen_name": "VernBuchanan"
+      }
+    ]
+  },
+  "isRetweet": false,
+  "isQuote": false,
+  "media": [],
+  "isConversationControlled": false
+},
+{
+  "type": "tweet",
+  "id": "2078937815954473158",
+  "url": "https://x.com/hjtherealj/status/2078937815954473158",
+  "twitterUrl": "https://twitter.com/hjtherealj/status/2078937815954473158",
+  "text": "GSN-Despite bipartisan backing, lawmakers continue to disagree over whether permanent daylight saving time is the healthiest long-term solution. House Democrats raised concerns about darker winter mornings, particularly for children traveling to school\nhttps://t.co/raDU7ootYk",
+  "fullText": "GSN-Despite bipartisan backing, lawmakers continue to disagree over whether permanent daylight saving time is the healthiest long-term solution. House Democrats raised concerns about darker winter mornings, particularly for children traveling to school\nhttps://t.co/raDU7ootYk",
+  "source": "Twitter Web App",
+  "retweetCount": 0,
+  "replyCount": 0,
+  "likeCount": 0,
+  "quoteCount": 0,
+  "viewCount": 4,
+  "createdAt": "Sun Jul 19 20:19:34 +0000 2026",
+  "lang": "en",
+  "bookmarkCount": 0,
+  "isReply": false,
+  "conversationId": "2078937815954473158",
+  "possiblySensitive": false,
+  "author": {
+    "type": "user",
+    "userName": "hjtherealj",
+    "url": "https://x.com/hjtherealj",
+    "twitterUrl": "https://twitter.com/hjtherealj",
+    "id": "29104068",
+    "name": "HJ (Hank) Ellison",
+    "isVerified": false,
+    "isBlueVerified": false,
+    "profilePicture": "https://pbs.twimg.com/profile_images/1230032671/msnorfolk_normal.jpg",
+    "coverPicture": "https://pbs.twimg.com/profile_banners/29104068/1722055492",
+    "description": "Radio Talent/CEO-Gospel Spotlight/Teacher/ Sports Fan",
+    "location": "America",
+    "followers": 1551,
+    "following": 2444,
+    "protected": false,
+    "status": "",
+    "canDm": false,
+    "canMediaTag": true,
+    "createdAt": "Mon Apr 06 00:30:44 +0000 2009",
+    "entities": {
+      "description": {},
+      "url": {
+        "urls": [
+          {
+            "display_url": "gospel-spotlight.com",
+            "expanded_url": "http://www.gospel-spotlight.com",
+            "indices": [
+              0,
+              23
+            ],
+            "url": "https://t.co/dvMQSaO6RY"
+          }
+        ]
+      }
+    },
+    "fastFollowersCount": 0,
+    "favouritesCount": 50,
+    "hasCustomTimelines": true,
+    "isTranslator": false,
+    "mediaCount": 52073,
+    "statusesCount": 73660,
+    "affiliatesHighlightedLabel": {},
+    "possiblySensitive": false
+  },
+  "extendedEntities": {},
+  "card": {
+    "legacy": {
+      "binding_values": [
+        {
+          "key": "player_url",
+          "value": {
+            "string_value": "https://www.youtube.com/embed/lWWMrQhtChU",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "player_image_large",
+          "value": {
+            "image_value": {
+              "height": 320,
+              "url": "https://pbs.twimg.com/card_img/2078425142384861184/SGDtyA1J?format=jpg&name=800x320_1",
+              "width": 569
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "player_image",
+          "value": {
+            "image_value": {
+              "height": 158,
+              "url": "https://pbs.twimg.com/card_img/2078425142384861184/SGDtyA1J?format=jpg&name=280x280",
+              "width": 280
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "app_star_rating",
+          "value": {
+            "string_value": "4.66988",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "description",
+          "value": {
+            "string_value": "Subscribe to our YouTube channel: http://bit.ly/2Ybi4tM MORE FROM...",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "player_width",
+          "value": {
+            "string_value": "1280",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "domain",
+          "value": {
+            "string_value": "www.youtube.com",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "app_is_free",
+          "value": {
+            "string_value": "true",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "site",
+          "value": {
+            "scribe_key": "publisher_id",
+            "type": "USER",
+            "user_value": {
+              "id_str": "10228272",
+              "path": []
+            }
+          }
+        },
+        {
+          "key": "player_image_original",
+          "value": {
+            "image_value": {
+              "height": 720,
+              "url": "https://pbs.twimg.com/card_img/2078425142384861184/SGDtyA1J?format=jpg&name=orig",
+              "width": 1280
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "app_num_ratings",
+          "value": {
+            "string_value": "48,142,765",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "app_price_amount",
+          "value": {
+            "string_value": "0.0",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "player_height",
+          "value": {
+            "string_value": "720",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "vanity_url",
+          "value": {
+            "scribe_key": "vanity_url",
+            "string_value": "youtube.com",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "app_name",
+          "value": {
+            "string_value": "YouTube",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "player_image_small",
+          "value": {
+            "image_value": {
+              "height": 81,
+              "url": "https://pbs.twimg.com/card_img/2078425142384861184/SGDtyA1J?format=jpg&name=144x144",
+              "width": 144
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "title",
+          "value": {
+            "string_value": "House Passes Bill To Make Daylight Saving Time Permanent | The View",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "app_price_currency",
+          "value": {
+            "string_value": "USD",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "card_url",
+          "value": {
+            "scribe_key": "card_url",
+            "string_value": "https://t.co/raDU7ootYk",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "player_image_color",
+          "value": {
+            "image_color_value": {
+              "palette": [
+                {
+                  "percentage": 26.22,
+                  "rgb": {
+                    "blue": 19,
+                    "green": 33,
+                    "red": 74
+                  }
+                },
+                {
+                  "percentage": 10.64,
+                  "rgb": {
+                    "blue": 24,
+                    "green": 52,
+                    "red": 109
+                  }
+                },
+                {
+                  "percentage": 9.18,
+                  "rgb": {
+                    "blue": 26,
+                    "green": 41,
+                    "red": 41
+                  }
+                },
+                {
+                  "percentage": 8.36,
+                  "rgb": {
+                    "blue": 179,
+                    "green": 183,
+                    "red": 191
+                  }
+                },
+                {
+                  "percentage": 5.18,
+                  "rgb": {
+                    "blue": 55,
+                    "green": 139,
+                    "red": 130
+                  }
+                }
+              ]
+            },
+            "type": "IMAGE_COLOR"
+          }
+        },
+        {
+          "key": "player_image_x_large",
+          "value": {
+            "image_value": {
+              "height": 720,
+              "url": "https://pbs.twimg.com/card_img/2078425142384861184/SGDtyA1J?format=png&name=2048x2048_2_exp",
+              "width": 1280
+            },
+            "type": "IMAGE"
+          }
+        }
+      ],
+      "card_platform": {
+        "platform": {
+          "audience": {
+            "name": "production"
+          },
+          "device": {
+            "name": "Swift",
+            "version": "12"
+          }
+        }
+      },
+      "name": "player",
+      "url": "https://t.co/raDU7ootYk",
+      "user_refs_results": [
+        {
+          "result": {
+            "__typename": "User",
+            "affiliates_highlighted_label": {},
+            "avatar": {
+              "image_url": "https://pbs.twimg.com/profile_images/1984471345854566400/5pd8GpgC_normal.jpg"
+            },
+            "core": {
+              "created_at": "Tue Nov 13 21:43:46 +0000 2007",
+              "name": "YouTube",
+              "screen_name": "YouTube"
+            },
+            "dm_permissions": {
+              "can_dm": false
+            },
+            "follow_request_sent": false,
+            "has_graduated_access": true,
+            "id": "VXNlcjoxMDIyODI3Mg==",
+            "is_blue_verified": true,
+            "legacy": {
+              "default_profile": false,
+              "default_profile_image": false,
+              "description": "score & subscribe",
+              "entities": {
+                "description": {},
+                "url": {
+                  "urls": [
+                    {
+                      "display_url": "youtube.com",
+                      "expanded_url": "http://youtube.com/",
+                      "indices": [
+                        0,
+                        23
+                      ],
+                      "url": "https://t.co/GIOK0JwI68"
+                    }
+                  ]
+                }
+              },
+              "fast_followers_count": 0,
+              "favourites_count": 6023,
+              "follow_request_sent": false,
+              "followers_count": 68712145,
+              "friends_count": 1144,
+              "has_custom_timelines": true,
+              "is_translator": false,
+              "listed_count": 74073,
+              "media_count": 16168,
+              "needs_phone_verification": false,
+              "normal_followers_count": 68712145,
+              "notifications": false,
+              "pinned_tweet_ids_str": [
+                "2064694071537352925"
+              ],
+              "possibly_sensitive": false,
+              "profile_banner_url": "https://pbs.twimg.com/profile_banners/10228272/1773248035",
+              "profile_interstitial_type": "",
+              "statuses_count": 61271,
+              "time_zone": "",
+              "translator_type": "regular",
+              "url": "https://t.co/GIOK0JwI68",
+              "utc_offset": 0,
+              "want_retweets": false,
+              "withheld_description": "",
+              "withheld_scope": ""
+            },
+            "location": {
+              "location": "San Bruno, CA"
+            },
+            "media_permissions": {
+              "can_media_tag": true
+            },
+            "parody_commentary_fan_label": "None",
+            "privacy": {
+              "protected": false
+            },
+            "profile_bio": {
+              "description": "score & subscribe"
+            },
+            "profile_description_language": "en",
+            "profile_image_shape": "Square",
+            "relationship_perspectives": {
+              "blocked_by": false,
+              "blocking": false,
+              "followed_by": false,
+              "following": false,
+              "live_following": false,
+              "muting": false
+            },
+            "rest_id": "10228272",
+            "super_follow_eligible": false,
+            "super_followed_by": false,
+            "super_following": false,
+            "verification": {
+              "verified": false,
+              "verified_type": "Business"
+            }
+          }
+        }
+      ]
+    },
+    "rest_id": "https://t.co/raDU7ootYk"
+  },
+  "place": {},
+  "entities": {
+    "urls": [
+      {
+        "display_url": "youtube.com/watch?v=lWWMrQ…",
+        "expanded_url": "https://www.youtube.com/watch?v=lWWMrQhtChU",
+        "indices": [
+          253,
+          276
+        ],
+        "url": "https://t.co/raDU7ootYk"
+      }
+    ]
+  },
+  "isRetweet": false,
+  "isQuote": false,
+  "media": [],
+  "isConversationControlled": false
+},
+{
+  "type": "tweet",
+  "id": "2078937793636544573",
+  "url": "https://x.com/CtgjrJr/status/2078937793636544573",
+  "twitterUrl": "https://twitter.com/CtgjrJr/status/2078937793636544573",
+  "text": "Why permanent daylight saving time has failed in the US before https://t.co/6XQX47vDhy",
+  "fullText": "Why permanent daylight saving time has failed in the US before https://t.co/6XQX47vDhy",
+  "source": "Twitter for iPad",
+  "retweetCount": 0,
+  "replyCount": 0,
+  "likeCount": 0,
+  "quoteCount": 0,
+  "viewCount": 2,
+  "createdAt": "Sun Jul 19 20:19:29 +0000 2026",
+  "lang": "en",
+  "bookmarkCount": 0,
+  "isReply": false,
+  "conversationId": "2078937793636544573",
+  "possiblySensitive": false,
+  "author": {
+    "type": "user",
+    "userName": "CtgjrJr",
+    "url": "https://x.com/CtgjrJr",
+    "twitterUrl": "https://twitter.com/CtgjrJr",
+    "id": "498324020",
+    "name": "@CTGJR",
+    "isVerified": false,
+    "isBlueVerified": true,
+    "profilePicture": "https://pbs.twimg.com/profile_images/1758679599456600064/obpg1es6_normal.jpg",
+    "coverPicture": "https://pbs.twimg.com/profile_banners/498324020/1712776719",
+    "description": "The GOP has became the party of no moral values and all about the rich this is no longer a party for true conservatives the White House is used for a cash cow",
+    "location": "midwest ",
+    "followers": 2312,
+    "following": 3804,
+    "protected": false,
+    "status": "",
+    "canDm": false,
+    "canMediaTag": true,
+    "createdAt": "Mon Feb 20 22:48:22 +0000 2012",
+    "entities": {
+      "description": {}
+    },
+    "fastFollowersCount": 0,
+    "favouritesCount": 2490,
+    "hasCustomTimelines": false,
+    "isTranslator": false,
+    "mediaCount": 24647,
+    "statusesCount": 161599,
+    "affiliatesHighlightedLabel": {},
+    "possiblySensitive": false
+  },
+  "extendedEntities": {},
+  "card": {
+    "legacy": {
+      "binding_values": [
+        {
+          "key": "photo_image_full_size_large",
+          "value": {
+            "image_value": {
+              "height": 262,
+              "url": "https://pbs.twimg.com/card_img/2076688199653498881/blKL8PXb?format=jpg&name=600x314",
+              "width": 500
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "thumbnail_image",
+          "value": {
+            "image_value": {
+              "height": 150,
+              "url": "https://pbs.twimg.com/card_img/2076688199653498881/blKL8PXb?format=jpg&name=280x150",
+              "width": 187
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "description",
+          "value": {
+            "string_value": "We could soon be observing year-round daylight saving time – again.",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "domain",
+          "value": {
+            "string_value": "thehill.com",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "thumbnail_image_large",
+          "value": {
+            "image_value": {
+              "height": 320,
+              "url": "https://pbs.twimg.com/card_img/2076688199653498881/blKL8PXb?format=jpg&name=800x320_1",
+              "width": 398
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "summary_photo_image_small",
+          "value": {
+            "image_value": {
+              "height": 202,
+              "url": "https://pbs.twimg.com/card_img/2076688199653498881/blKL8PXb?format=jpg&name=386x202",
+              "width": 386
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "thumbnail_image_original",
+          "value": {
+            "image_value": {
+              "height": 402,
+              "url": "https://pbs.twimg.com/card_img/2076688199653498881/blKL8PXb?format=jpg&name=orig",
+              "width": 500
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "photo_image_full_size_small",
+          "value": {
+            "image_value": {
+              "height": 202,
+              "url": "https://pbs.twimg.com/card_img/2076688199653498881/blKL8PXb?format=jpg&name=386x202",
+              "width": 386
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "summary_photo_image_large",
+          "value": {
+            "image_value": {
+              "height": 262,
+              "url": "https://pbs.twimg.com/card_img/2076688199653498881/blKL8PXb?format=jpg&name=600x314",
+              "width": 500
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "thumbnail_image_small",
+          "value": {
+            "image_value": {
+              "height": 80,
+              "url": "https://pbs.twimg.com/card_img/2076688199653498881/blKL8PXb?format=jpg&name=100x100",
+              "width": 100
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "thumbnail_image_x_large",
+          "value": {
+            "image_value": {
+              "height": 402,
+              "url": "https://pbs.twimg.com/card_img/2076688199653498881/blKL8PXb?format=png&name=2048x2048_2_exp",
+              "width": 500
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "photo_image_full_size_original",
+          "value": {
+            "image_value": {
+              "height": 402,
+              "url": "https://pbs.twimg.com/card_img/2076688199653498881/blKL8PXb?format=jpg&name=orig",
+              "width": 500
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "vanity_url",
+          "value": {
+            "scribe_key": "vanity_url",
+            "string_value": "thehill.com",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "photo_image_full_size",
+          "value": {
+            "image_value": {
+              "height": 262,
+              "url": "https://pbs.twimg.com/card_img/2076688199653498881/blKL8PXb?format=jpg&name=600x314",
+              "width": 500
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "thumbnail_image_color",
+          "value": {
+            "image_color_value": {
+              "palette": [
+                {
+                  "percentage": 72.89,
+                  "rgb": {
+                    "blue": 127,
+                    "green": 127,
+                    "red": 127
+                  }
+                },
+                {
+                  "percentage": 19.25,
+                  "rgb": {
+                    "blue": 30,
+                    "green": 30,
+                    "red": 30
+                  }
+                }
+              ]
+            },
+            "type": "IMAGE_COLOR"
+          }
+        },
+        {
+          "key": "title",
+          "value": {
+            "string_value": "Why permanent daylight saving time has failed in the US before",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "summary_photo_image_color",
+          "value": {
+            "image_color_value": {
+              "palette": [
+                {
+                  "percentage": 72.89,
+                  "rgb": {
+                    "blue": 127,
+                    "green": 127,
+                    "red": 127
+                  }
+                },
+                {
+                  "percentage": 19.25,
+                  "rgb": {
+                    "blue": 30,
+                    "green": 30,
+                    "red": 30
+                  }
+                }
+              ]
+            },
+            "type": "IMAGE_COLOR"
+          }
+        },
+        {
+          "key": "summary_photo_image_x_large",
+          "value": {
+            "image_value": {
+              "height": 402,
+              "url": "https://pbs.twimg.com/card_img/2076688199653498881/blKL8PXb?format=png&name=2048x2048_2_exp",
+              "width": 500
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "summary_photo_image",
+          "value": {
+            "image_value": {
+              "height": 262,
+              "url": "https://pbs.twimg.com/card_img/2076688199653498881/blKL8PXb?format=jpg&name=600x314",
+              "width": 500
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "photo_image_full_size_color",
+          "value": {
+            "image_color_value": {
+              "palette": [
+                {
+                  "percentage": 72.89,
+                  "rgb": {
+                    "blue": 127,
+                    "green": 127,
+                    "red": 127
+                  }
+                },
+                {
+                  "percentage": 19.25,
+                  "rgb": {
+                    "blue": 30,
+                    "green": 30,
+                    "red": 30
+                  }
+                }
+              ]
+            },
+            "type": "IMAGE_COLOR"
+          }
+        },
+        {
+          "key": "photo_image_full_size_x_large",
+          "value": {
+            "image_value": {
+              "height": 402,
+              "url": "https://pbs.twimg.com/card_img/2076688199653498881/blKL8PXb?format=png&name=2048x2048_2_exp",
+              "width": 500
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "card_url",
+          "value": {
+            "scribe_key": "card_url",
+            "string_value": "https://t.co/6XQX47vDhy",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "summary_photo_image_original",
+          "value": {
+            "image_value": {
+              "height": 402,
+              "url": "https://pbs.twimg.com/card_img/2076688199653498881/blKL8PXb?format=jpg&name=orig",
+              "width": 500
+            },
+            "type": "IMAGE"
+          }
+        }
+      ],
+      "card_platform": {
+        "platform": {
+          "audience": {
+            "name": "production"
+          },
+          "device": {
+            "name": "Swift",
+            "version": "12"
+          }
+        }
+      },
+      "name": "summary_large_image",
+      "url": "https://t.co/6XQX47vDhy",
+      "user_refs_results": []
+    },
+    "rest_id": "https://t.co/6XQX47vDhy"
+  },
+  "place": {},
+  "entities": {
+    "urls": [
+      {
+        "display_url": "thehill.com/policy/energy-…",
+        "expanded_url": "https://thehill.com/policy/energy-environment/5969835-why-permanent-daylight-saving-time-has-failed-in-the-us-before/",
+        "indices": [
+          63,
+          86
+        ],
+        "url": "https://t.co/6XQX47vDhy"
+      }
+    ]
+  },
+  "isRetweet": false,
+  "isQuote": false,
+  "media": [],
+  "isConversationControlled": false
+},
+{
+  "type": "tweet",
+  "id": "2078937547980374509",
+  "url": "https://x.com/hjtherealj/status/2078937547980374509",
+  "twitterUrl": "https://twitter.com/hjtherealj/status/2078937547980374509",
+  "text": "GSN-The U.S. House has approved legislation that would end the twice-yearly clock change, advancing a proposal that would place most of the country on permanent daylight-saving time if it clears the Senate and receives President Donald Trump’s signature.  https://t.co/zZqSnPReFx",
+  "fullText": "GSN-The U.S. House has approved legislation that would end the twice-yearly clock change, advancing a proposal that would place most of the country on permanent daylight-saving time if it clears the Senate and receives President Donald Trump’s signature.  https://t.co/zZqSnPReFx",
+  "source": "Twitter Web App",
+  "retweetCount": 0,
+  "replyCount": 0,
+  "likeCount": 0,
+  "quoteCount": 0,
+  "viewCount": 2,
+  "createdAt": "Sun Jul 19 20:18:30 +0000 2026",
+  "lang": "en",
+  "bookmarkCount": 0,
+  "isReply": false,
+  "conversationId": "2078937547980374509",
+  "possiblySensitive": false,
+  "author": {
+    "type": "user",
+    "userName": "hjtherealj",
+    "url": "https://x.com/hjtherealj",
+    "twitterUrl": "https://twitter.com/hjtherealj",
+    "id": "29104068",
+    "name": "HJ (Hank) Ellison",
+    "isVerified": false,
+    "isBlueVerified": false,
+    "profilePicture": "https://pbs.twimg.com/profile_images/1230032671/msnorfolk_normal.jpg",
+    "coverPicture": "https://pbs.twimg.com/profile_banners/29104068/1722055492",
+    "description": "Radio Talent/CEO-Gospel Spotlight/Teacher/ Sports Fan",
+    "location": "America",
+    "followers": 1551,
+    "following": 2444,
+    "protected": false,
+    "status": "",
+    "canDm": false,
+    "canMediaTag": true,
+    "createdAt": "Mon Apr 06 00:30:44 +0000 2009",
+    "entities": {
+      "description": {},
+      "url": {
+        "urls": [
+          {
+            "display_url": "gospel-spotlight.com",
+            "expanded_url": "http://www.gospel-spotlight.com",
+            "indices": [
+              0,
+              23
+            ],
+            "url": "https://t.co/dvMQSaO6RY"
+          }
+        ]
+      }
+    },
+    "fastFollowersCount": 0,
+    "favouritesCount": 50,
+    "hasCustomTimelines": true,
+    "isTranslator": false,
+    "mediaCount": 52073,
+    "statusesCount": 73660,
+    "affiliatesHighlightedLabel": {},
+    "possiblySensitive": false
+  },
+  "extendedEntities": {},
+  "card": {
+    "legacy": {
+      "binding_values": [
+        {
+          "key": "player_url",
+          "value": {
+            "string_value": "https://www.youtube.com/embed/Y1x_1VWVWvc",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "player_image_large",
+          "value": {
+            "image_value": {
+              "height": 627,
+              "url": "https://pbs.twimg.com/card_img/2078937548362027008/Uegan4LQ?format=jpg&name=1200x627",
+              "width": 1200
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "player_image",
+          "value": {
+            "image_value": {
+              "height": 210,
+              "url": "https://pbs.twimg.com/card_img/2078937548362027008/Uegan4LQ?format=jpg&name=280x280",
+              "width": 280
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "app_star_rating",
+          "value": {
+            "string_value": "4.66988",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "description",
+          "value": {
+            "string_value": "A bill to make daylight saving time permanent passed the U.S. House...",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "player_width",
+          "value": {
+            "string_value": "405",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "domain",
+          "value": {
+            "string_value": "www.youtube.com",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "app_is_free",
+          "value": {
+            "string_value": "true",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "site",
+          "value": {
+            "scribe_key": "publisher_id",
+            "type": "USER",
+            "user_value": {
+              "id_str": "10228272",
+              "path": []
+            }
+          }
+        },
+        {
+          "key": "player_image_original",
+          "value": {
+            "image_value": {
+              "height": 360,
+              "url": "https://pbs.twimg.com/card_img/2078937548362027008/Uegan4LQ?format=jpg&name=orig",
+              "width": 480
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "app_num_ratings",
+          "value": {
+            "string_value": "48,142,765",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "app_price_amount",
+          "value": {
+            "string_value": "0.0",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "player_height",
+          "value": {
+            "string_value": "720",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "vanity_url",
+          "value": {
+            "scribe_key": "vanity_url",
+            "string_value": "youtube.com",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "app_name",
+          "value": {
+            "string_value": "YouTube",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "player_image_small",
+          "value": {
+            "image_value": {
+              "height": 108,
+              "url": "https://pbs.twimg.com/card_img/2078937548362027008/Uegan4LQ?format=jpg&name=144x144",
+              "width": 144
+            },
+            "type": "IMAGE"
+          }
+        },
+        {
+          "key": "title",
+          "value": {
+            "string_value": "Bill to make daylight saving time permanent passes the U.S. House",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "app_price_currency",
+          "value": {
+            "string_value": "USD",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "card_url",
+          "value": {
+            "scribe_key": "card_url",
+            "string_value": "https://t.co/zZqSnPReFx",
+            "type": "STRING"
+          }
+        },
+        {
+          "key": "player_image_color",
+          "value": {
+            "image_color_value": {
+              "palette": [
+                {
+                  "percentage": 78.13,
+                  "rgb": {
+                    "blue": 123,
+                    "green": 76,
+                    "red": 53
+                  }
+                },
+                {
+                  "percentage": 7.79,
+                  "rgb": {
+                    "blue": 158,
+                    "green": 115,
+                    "red": 94
+                  }
+                },
+                {
+                  "percentage": 6.21,
+                  "rgb": {
+                    "blue": 132,
+                    "green": 120,
+                    "red": 118
+                  }
+                },
+                {
+                  "percentage": 5.72,
+                  "rgb": {
+                    "blue": 73,
+                    "green": 57,
+                    "red": 51
+                  }
+                },
+                {
+                  "percentage": 1.17,
+                  "rgb": {
+                    "blue": 219,
+                    "green": 210,
+                    "red": 207
+                  }
+                }
+              ]
+            },
+            "type": "IMAGE_COLOR"
+          }
+        },
+        {
+          "key": "player_image_x_large",
+          "value": {
+            "image_value": {
+              "height": 360,
+              "url": "https://pbs.twimg.com/card_img/2078937548362027008/Uegan4LQ?format=png&name=2048x2048_2_exp",
+              "width": 480
+            },
+            "type": "IMAGE"
+          }
+        }
+      ],
+      "card_platform": {
+        "platform": {
+          "audience": {
+            "name": "production"
+          },
+          "device": {
+            "name": "Swift",
+            "version": "12"
+          }
+        }
+      },
+      "name": "player",
+      "url": "https://t.co/zZqSnPReFx",
+      "user_refs_results": [
+        {
+          "result": {
+            "__typename": "User",
+            "affiliates_highlighted_label": {},
+            "avatar": {
+              "image_url": "https://pbs.twimg.com/profile_images/1984471345854566400/5pd8GpgC_normal.jpg"
+            },
+            "core": {
+              "created_at": "Tue Nov 13 21:43:46 +0000 2007",
+              "name": "YouTube",
+              "screen_name": "YouTube"
+            },
+            "dm_permissions": {
+              "can_dm": false
+            },
+            "follow_request_sent": false,
+            "has_graduated_access": true,
+            "id": "VXNlcjoxMDIyODI3Mg==",
+            "is_blue_verified": true,
+            "legacy": {
+              "default_profile": false,
+              "default_profile_image": false,
+              "description": "score & subscribe",
+              "entities": {
+                "description": {},
+                "url": {
+                  "urls": [
+                    {
+                      "display_url": "youtube.com",
+                      "expanded_url": "http://youtube.com/",
+                      "indices": [
+                        0,
+                        23
+                      ],
+                      "url": "https://t.co/GIOK0JwI68"
+                    }
+                  ]
+                }
+              },
+              "fast_followers_count": 0,
+              "favourites_count": 6023,
+              "follow_request_sent": false,
+              "followers_count": 68712145,
+              "friends_count": 1144,
+              "has_custom_timelines": true,
+              "is_translator": false,
+              "listed_count": 74073,
+              "media_count": 16168,
+              "needs_phone_verification": false,
+              "normal_followers_count": 68712145,
+              "notifications": false,
+              "pinned_tweet_ids_str": [
+                "2064694071537352925"
+              ],
+              "possibly_sensitive": false,
+              "profile_banner_url": "https://pbs.twimg.com/profile_banners/10228272/1773248035",
+              "profile_interstitial_type": "",
+              "statuses_count": 61271,
+              "time_zone": "",
+              "translator_type": "regular",
+              "url": "https://t.co/GIOK0JwI68",
+              "utc_offset": 0,
+              "want_retweets": false,
+              "withheld_description": "",
+              "withheld_scope": ""
+            },
+            "location": {
+              "location": "San Bruno, CA"
+            },
+            "media_permissions": {
+              "can_media_tag": true
+            },
+            "parody_commentary_fan_label": "None",
+            "privacy": {
+              "protected": false
+            },
+            "profile_bio": {
+              "description": "score & subscribe"
+            },
+            "profile_description_language": "en",
+            "profile_image_shape": "Square",
+            "relationship_perspectives": {
+              "blocked_by": false,
+              "blocking": false,
+              "followed_by": false,
+              "following": false,
+              "live_following": false,
+              "muting": false
+            },
+            "rest_id": "10228272",
+            "super_follow_eligible": false,
+            "super_followed_by": false,
+            "super_following": false,
+            "verification": {
+              "verified": false,
+              "verified_type": "Business"
+            }
+          }
+        }
+      ]
+    },
+    "rest_id": "https://t.co/zZqSnPReFx"
+  },
+  "place": {},
+  "entities": {
+    "urls": [
+      {
+        "display_url": "youtu.be/Y1x_1VWVWvc?si…",
+        "expanded_url": "https://youtu.be/Y1x_1VWVWvc?si=_F5GPa1y44VTMZUK",
+        "indices": [
+          256,
+          279
+        ],
+        "url": "https://t.co/zZqSnPReFx"
+      }
+    ]
+  },
+  "isRetweet": false,
+  "isQuote": false,
+  "media": [],
+  "isConversationControlled": false
+}]

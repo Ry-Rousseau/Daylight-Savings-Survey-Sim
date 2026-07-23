@@ -26,7 +26,7 @@ sandbox/_*
 
 # Regenerable build data (see conventions.md); dir kept via .gitkeep.
 # output/figures/ stays tracked — figures have stable names and render on GitHub.
-data/*
+# data/*
 !data/.gitkeep
 
 # Per-run artifacts (versioned by config, not git)
@@ -37,5 +37,5 @@ runs/
 
 # reference/ holds local reading material (papers + vendored repos), not tracked here.
 # Vendored repos carry their own .git and would become broken embedded gitlinks.
-reference/*
+# reference/*
 !reference/.gitkeep

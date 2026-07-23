@@ -1,0 +1,3 @@
+model,question,n,tvd_vs_yougov,secs
+claude_sonnet5,Q2_eliminate,100,0.26,37
+claude_sonnet5,Q4_permanent,100,0.22,44

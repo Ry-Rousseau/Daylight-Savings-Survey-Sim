@@ -1,0 +1,3 @@
+mode,n,dom_share,top,DST,STD,SWITCH,NOPREF,secs
+broadcast,100,0.98,STD,1,98,1,0,260
+deliberate,100,0.86,STD,2,86,12,0,273

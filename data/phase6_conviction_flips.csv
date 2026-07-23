@@ -1,0 +1,3 @@
+arm,flips,flips_per_agent,pct_references_others,mean_heard_at_flip
+baseline,19,0.47,53.0,3.05
+conviction,26,0.65,38.0,3.0

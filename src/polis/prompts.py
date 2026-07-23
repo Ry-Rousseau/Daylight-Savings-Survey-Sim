@@ -64,8 +64,27 @@ def survey_user(text: str, options: Iterable[str], *, memories: Sequence[str] = 
     return memory_block(memories) + body
 
 
+# Prompt-level persistence clause: real people hold a considered opinion and don't
+# abandon it just to match the room. Diagnosing the P6 runs showed flips are dominated
+# by social-proof language ("I'm with the ladies", "the consensus here") toward the
+# majority, not by new arguments — LLM sycophancy read straight off the utterances. This
+# clause is the counter-pressure, opt-in (default off = byte-identical prompt) and A/B-able.
+PERSISTENCE_CLAUSE = (
+    "You already hold your own settled view on this, formed from your life and the kind "
+    "of person you are. Hold to it. Reconsider only if you hear a genuinely new argument "
+    "that actually applies to your situation — not merely because others disagree, sound "
+    "confident, or seem to be the majority. Real people don't drop a considered opinion "
+    "just to match the room, and neither do you.\n"
+)
+
+
 def action_user(
-    topic: str, stances: Sequence[str], *, memories: Sequence[str] = (), mode: str = "broadcast"
+    topic: str,
+    stances: Sequence[str],
+    *,
+    memories: Sequence[str] = (),
+    mode: str = "broadcast",
+    persistence: bool = False,
 ) -> str:
     """The per-tick action decision, prefixed with any retrieved memories.
 
@@ -80,8 +99,14 @@ def action_user(
       or abstain; their position is never announced during the run and is asked
       separately at survey time. Tests whether reason-exchange, stripped of the
       per-turn vote signal, still homogenizes the eventual vote.
+
+    ``persistence`` (default off): prepend ``PERSISTENCE_CLAUSE`` — the anti-sycophancy
+    counter-pressure that tells the agent to hold its view absent a genuinely new
+    argument. Off leaves the prompt byte-identical to before.
     """
     intro = f"You are talking with your neighbors about {topic}. Decide what you do this turn.\n"
+    if persistence:
+        intro += PERSISTENCE_CLAUSE
     if mode == "deliberate":
         body = intro + (
             '- To add to the discussion, set "action_type" to "share_consideration" and put a '

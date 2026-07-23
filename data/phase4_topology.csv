@@ -1,0 +1,13 @@
+topology,tick,n,dominant_stance,dominant_share,distinct,entropy
+fully_connected,0,20,"Adopt permanent daylight saving time (clocks stay on summer time all year: later sunrises, later sunsets)",0.5,2,0.5
+fully_connected,1,20,"Adopt permanent daylight saving time (clocks stay on summer time all year: later sunrises, later sunsets)",1.0,1,0.0
+fully_connected,2,20,"Adopt permanent daylight saving time (clocks stay on summer time all year: later sunrises, later sunsets)",1.0,1,0.0
+fully_connected,3,20,"Adopt permanent daylight saving time (clocks stay on summer time all year: later sunrises, later sunsets)",1.0,1,0.0
+small_world,0,20,"Adopt permanent daylight saving time (clocks stay on summer time all year: later sunrises, later sunsets)",0.5,2,0.5
+small_world,1,20,"Adopt permanent daylight saving time (clocks stay on summer time all year: later sunrises, later sunsets)",0.5,2,0.5
+small_world,2,20,"Adopt permanent daylight saving time (clocks stay on summer time all year: later sunrises, later sunsets)",0.5,2,0.5
+small_world,3,20,"Adopt permanent daylight saving time (clocks stay on summer time all year: later sunrises, later sunsets)",0.55,2,0.49638722699390414
+stochastic_block,0,20,"Adopt permanent daylight saving time (clocks stay on summer time all year: later sunrises, later sunsets)",0.5,2,0.5
+stochastic_block,1,20,"Adopt permanent daylight saving time (clocks stay on summer time all year: later sunrises, later sunsets)",0.5,2,0.5
+stochastic_block,2,20,"Adopt permanent daylight saving time (clocks stay on summer time all year: later sunrises, later sunsets)",0.5,2,0.5
+stochastic_block,3,20,"Adopt permanent daylight saving time (clocks stay on summer time all year: later sunrises, later sunsets)",0.55,2,0.49638722699390414

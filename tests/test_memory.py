@@ -83,3 +83,32 @@ def test_roundtrip_serialization():
     r = back.records[0]
     assert r.text == "hi" and r.importance == 7.0 and r.kind == KIND_SURVEY
     assert np.allclose(r.embedding, store.records[0].embedding)
+
+
+def test_kind_weights_empty_is_byte_identical():
+    """Default (no kind_weights) must leave the score exactly as before — the P0-P5
+    null-baseline byte-identity that other regression tests depend on."""
+    store = MemoryStore([_rec([1, 0], text="a"), _rec([0, 1], text="b")])
+    q = np.asarray([1, 0], dtype=np.float32)
+    base = store.score(q, 0.0, RetrievalConfig())
+    weighted = store.score(q, 0.0, RetrievalConfig(kind_weights=()))
+    assert np.array_equal(base, weighted)
+
+
+def test_kind_weights_downrank_a_kind():
+    """A heard memory that would otherwise rank first drops below an own-memory once
+    KIND_HEARD is down-weighted — the stickiness lever. Heard wins on relevance+importance
+    but is older; own wins only on recency, so unweighted heard leads and a down-weight flips
+    the single slot to own."""
+    from polis.memory import KIND_HEARD, KIND_SEED
+    heard = _rec([1, 0], importance=9.0, created_at=-10.0, text="peer says standard")
+    heard.kind = KIND_HEARD
+    own = _rec([0, 1], importance=1.0, created_at=0.0, text="my own view")
+    own.kind = KIND_SEED
+    store = MemoryStore([heard, own])
+    q = np.asarray([1, 0], dtype=np.float32)
+    # Unweighted: heard leads (relevance + importance outweigh own's recency edge).
+    assert store.retrieve(q, 0.0, RetrievalConfig(top_n=1))[0].text == "peer says standard"
+    # Down-weight heard: its combined score drops below own, which takes the single slot.
+    cfg = RetrievalConfig(top_n=1, kind_weights=((KIND_HEARD, 0.2),))
+    assert store.retrieve(q, 0.0, cfg)[0].text == "my own view"

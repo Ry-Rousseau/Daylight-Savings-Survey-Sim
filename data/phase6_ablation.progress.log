@@ -1,0 +1,27 @@
+[23:52:10] loading corpus + embedding seed memories once…
+[23:52:19] population ready: 100 agents
+[23:52:19] [A_32b_control] qwen/qwen3-32b — polling 100 agents (0-tick, non-mutating)…
+[23:53:02] [A_32b_control] done 42s | answered 100 skipped 0 | distinct 3 | dom_share 0.81
+[23:53:02]       4  Adopt permanent daylight saving time (clocks stay on summe
+[23:53:02]      81  Adopt permanent standard time (clocks stay on winter time 
+[23:53:02]      15  Keep switching the clocks twice a year
+[23:53:02]       0  No preference
+[23:53:02] [B_qwenmax_noreason] qwen/qwen3.7-max — polling 100 agents (0-tick, non-mutating)…
+[23:53:30] [B_qwenmax_noreason] done 28s | answered 100 skipped 0 | distinct 3 | dom_share 0.63
+[23:53:30]       1  Adopt permanent daylight saving time (clocks stay on summe
+[23:53:30]      63  Adopt permanent standard time (clocks stay on winter time 
+[23:53:30]      36  Keep switching the clocks twice a year
+[23:53:30]       0  No preference
+[23:53:30] [C_qwenmax_reason] qwen/qwen3.7-max — polling 100 agents (0-tick, non-mutating)…
+[23:57:07] [C_qwenmax_reason] done 217s | answered 100 skipped 0 | distinct 3 | dom_share 0.64
+[23:57:07]       4  Adopt permanent daylight saving time (clocks stay on summe
+[23:57:07]      32  Adopt permanent standard time (clocks stay on winter time 
+[23:57:07]      64  Keep switching the clocks twice a year
+[23:57:07]       0  No preference
+[23:57:07] ======================================================================
+[23:57:07] ABLATION SUMMARY (individual, 0-tick):
+[23:57:07]   A_32b_control    qwen/qwen3-32b         | distinct 3 | dom_share 0.81 | [4,81,15,0]
+[23:57:07]   B_qwenmax_noreason qwen/qwen3.7-max       | distinct 3 | dom_share 0.63 | [1,63,36,0]
+[23:57:07]   C_qwenmax_reason qwen/qwen3.7-max       | distinct 3 | dom_share 0.64 | [4,32,64,0]
+[23:57:07] opt order: [permanent-DST, permanent-standard, keep-switching, no-preference]
+[23:57:07] wrote data/phase6_ablation.csv

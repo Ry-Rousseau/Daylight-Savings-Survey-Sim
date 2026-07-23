@@ -1,0 +1,23 @@
+[22:56:33] loading persona corpus + opinion corpus + embedder…
+[22:56:33] opinion poles available: DST=175 STD=167
+[22:56:43] [baseline] seeded 0/100 (committed 0) — running…
+[22:59:25] [baseline] done in 172s | dom_share 1.00 | clusters 1 | distinct_stances 1 | top 'Adopt permanent standard time ' x100
+[22:59:28] [polar25_seen] seeded 50/100 (committed 0) — running…
+[23:02:22] [polar25_seen] done in 177s | dom_share 1.00 | clusters 2 | distinct_stances 1 | top 'Adopt permanent standard time ' x100
+[23:02:25] [polar50_seen] seeded 100/100 (committed 0) — running…
+[23:05:11] [polar50_seen] done in 170s | dom_share 0.99 | clusters 3 | distinct_stances 2 | top 'Adopt permanent standard time ' x99
+[23:05:14] [polar25_conviction] seeded 50/100 (committed 0) — running…
+[23:08:25] [polar25_conviction] done in 193s | dom_share 0.91 | clusters 2 | distinct_stances 2 | top 'Adopt permanent standard time ' x91
+[23:08:27] [polar25_committed] seeded 50/100 (committed 50) — running…
+[23:10:27] [polar25_committed] done in 123s | dom_share 0.56 | clusters 3 | distinct_stances 2 | top 'Adopt permanent standard time ' x56
+[23:10:30] [random50_seen] seeded 50/100 (committed 0) — running…
+[23:13:21] [random50_seen] done in 174s | dom_share 0.97 | clusters 1 | distinct_stances 2 | top 'Adopt permanent standard time ' x97
+[23:13:21] ======================================================================
+[23:13:21] COMPARISON (endpoint):
+[23:13:21]   baseline             seeded   0 | dom_share 1.00 | clusters  1 | stances 1 | top×100
+[23:13:21]   polar25_seen         seeded  50 | dom_share 1.00 | clusters  2 | stances 1 | top×100
+[23:13:21]   polar50_seen         seeded 100 | dom_share 0.99 | clusters  3 | stances 2 | top×99
+[23:13:21]   polar25_conviction   seeded  50 | dom_share 0.91 | clusters  2 | stances 2 | top×91
+[23:13:21]   polar25_committed    seeded  50 | dom_share 0.56 | clusters  3 | stances 2 | top×56
+[23:13:21]   random50_seen        seeded  50 | dom_share 0.97 | clusters  1 | stances 2 | top×97
+[23:13:21] wrote data/phase6_opinion_experiments.csv

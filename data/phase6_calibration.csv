@@ -1,0 +1,7 @@
+model,question,n,tvd_vs_yougov,secs
+32b,Q2_eliminate,100,0.35,32
+32b,Q4_permanent,100,0.52,35
+qwenmax,Q2_eliminate,100,0.14,26
+qwenmax,Q4_permanent,100,0.68,29
+qwenmax_reason,Q2_eliminate,100,0.06,254
+qwenmax_reason,Q4_permanent,100,0.63,204

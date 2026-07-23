@@ -62,6 +62,13 @@ class RetrievalConfig:
     w_relevance: float = 1.0
     decay: float = 0.995  # recency = decay ** age
     top_n: int = 5
+    # Per-kind multiplier on a memory's combined score, as (kind, weight) pairs — a
+    # tuple (not a dict) so the config stays frozen/hashable and R17-serializable. A
+    # weight < 1 for KIND_HEARD makes peer opinions rank below the agent's own seeds/
+    # convictions, so fewer make the injected top-N: the "stickiness" knob that dials
+    # down social contagion without silencing it. Empty () = no reweighting, so the
+    # default score is byte-identical to the P0-P5 baseline (a pinned regression).
+    kind_weights: tuple[tuple[str, float], ...] = ()
 
 
 def _min_max(x: np.ndarray) -> np.ndarray:
@@ -107,6 +114,12 @@ class MemoryStore:
             + cfg.w_importance * importance
             + cfg.w_relevance * relevance
         )
+        if cfg.kind_weights:
+            kw = dict(cfg.kind_weights)
+            mult = np.array(
+                [kw.get(r.kind, 1.0) for r in self.records], dtype=np.float32
+            )
+            total = total * mult
         return recency, importance, relevance, total
 
     def score(
